@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>聖經問答遊戲</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 聖經問答遊戲</h1>
+  <div id="timer">⏱️ 剩餘時間：10 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《耶肋米亞 1:17》，天主吩咐耶肋米亞要如何面對使命？",
+        options: ["A. 默默祈禱", "B. 勇敢站起來宣講", "C. 逃避迫害", "D. 尋求人的支持 ", "E. 依靠財富"],
+        answer: "B",
+        explanation: "勇敢站起來宣講"
+      },
+      {
+        text: "2. 《耶肋米亞 1:18》形容先知被天主堅固為什麼？",
+        options: ["A. 銅牆鐵壁", "B. 火焰之柱", "C. 天上的堡壘", "D. 聖殿之門 ", "E. 天主的盾牌"],
+        answer: "A",
+        explanation: "銅牆鐵壁"
+      },
+      {
+        text: "3. 根據《耶肋米亞 1:19》，為何敵人不能勝過耶肋米亞？",
+        options: ["A. 他有軍隊保護", "B. 他有智者輔佐", "C. 天主與他同在 ", "D. 他擁有財富", "E. 他善於辯論"],
+        answer: "C",
+        explanation: "天主與他同在"
+      },
+      {
+        text: "4. 根據《聖詠 71:1》，詩人祈求天主賜予君王什麼？",
+        options: ["A. 智慧與勇氣", "B. 正義與公平", "C. 財富與權力", "D. 榮耀與勝利 ", "E. 慈悲與寬恕 "],
+        answer: "B",
+        explanation: "正義與公平"
+      },
+      {
+        text: "5. 《聖詠 71:2》指出君王應如何治理人民？",
+        options: ["A. 以武力統治", "B. 以法律懲罰", "C. 以正義審判", "D. 以智慧教導", "E. 以慈悲赦免"],
+        answer: "C",
+        explanation: "以正義審判"
+      },
+      {
+        text: "6. 根據《聖詠 71:4》，君王應如何對待貧苦者？",
+        options: ["A. 賜予財物  ", "B. 保護並拯救", "C. 教導工作技能", "D. 鼓勵自立", "E. 分配土地"],
+        answer: "B",
+        explanation: "保護並拯救"
+      },
+      {
+        text: "7. 《聖詠 71:6》以什麼自然現象形容君王的恩惠？",
+        options: ["A. 雷霆與閃電", "B. 雨露滋潤 ", "C. 星光閃耀", "D. 海浪翻騰  ", "E. 日光普照 "],
+        answer: "B",
+        explanation: "雨露滋潤"
+      },
+      {
+        text: "8. 根據《聖詠 71:15》，詩人決心每日做什麼？",
+        options: ["A. 宣講天主的正義", "B. 讚美君王的功績", "C. 默想法律條文", "D. 祈求平安", "E. 施予貧者"],
+        answer: "A",
+        explanation: "宣講天主的正義"
+      },
+      {
+        text: "9. 《聖詠 71:17》指出君王的名號將如何？",
+        options: ["A. 被刻在聖殿", "B. 傳遍萬邦", "C. 永遠流傳", "D. 被天使讚美 ", "E. 被先知記錄"],
+        answer: "C",
+        explanation: "永遠流傳"
+      },
+      {
+        text: "10. 根據《馬爾谷福音 6:17》，誰曾囚禁若翰？",
+        options: ["A. 比拉多", "B. 黑落德", "C. 撒杜塞人", "D. 法利塞人", "E. 羅馬兵丁 "],
+        answer: "B",
+        explanation: "黑落德"
+      },
+      {
+        text: "11. 黑落德為何囚禁若翰？",
+        options: ["A. 若翰反對羅馬", "B. 若翰批評聖殿", "C. 若翰責斥他娶兄弟之妻", "D. 若翰拒絕朝拜君王", "E. 若翰宣講末日"],
+        answer: "C",
+        explanation: "若翰責斥他娶兄弟之"
+      },
+      {
+        text: "12. 黑落德的妻子黑落狄雅對若翰有何態度？",
+        options: ["A. 欣賞他的誠實", "B. 請求他祝福", "C. 想要殺害他", "D. 邀請他赴宴", "E. 求他為子祈禱"],
+        answer: "C",
+        explanation: "想要殺害他"
+      },
+      {
+        text: "13. 黑落德在什麼場合發誓要給少女所求的一切？",
+        options: ["A. 宗教節日", "B. 皇室婚禮", "C. 生日宴會", "D. 聖殿獻祭", "E. 公開審判"],
+        answer: "C",
+        explanation: "生日宴會"
+      },
+      {
+        text: "14. 少女在母親指使下要求什麼？",
+        options: ["A. 一座宮殿", "B. 一筆財富", "C. 若翰的頭", "D. 一匹駿馬", "E. 一件聖衣"],
+        answer: "C",
+        explanation: "若翰的頭"
+      },
+      {
+        text: "15. 15. 若翰的殉道象徵了什麼？",
+        options: ["A. 天主對罪人的寬恕", "B. 為真理作證的勇氣", "C. 教會的建立", "D. 聖神的降臨", "E. 彌撒的開始"],
+        answer: "B",
+        explanation: "為真理作證的勇氣"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 10;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `❌ 答錯了。正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
