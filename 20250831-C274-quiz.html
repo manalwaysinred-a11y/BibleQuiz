@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>聖經問答遊戲</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 聖經問答遊戲</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《德訓篇 3:19》，天主如何對待謙卑的人？",
+        options: ["A. 賜予財富", "B. 揭示奧秘", "C. 賜予權力", "D. 使其受苦", "E. E. 使其受讚美"],
+        answer: "B",
+        explanation: "經文解釋：「謙卑的人，天主向他們揭示奧秘。」這句話強調謙卑是通往屬神智慧的途徑。"
+      },
+      {
+        text: "2. 《德訓篇 3:20》勸勉人要如何面對榮耀？",
+        options: ["A. 自誇己德", "B. 炫耀成就", "C. 保持謙遜", "D. 爭取名聲", "E. 遠離群眾"],
+        answer: "C",
+        explanation: "經文解釋：「你越是偉大，就越要謙遜。」這是德訓篇中最具代表性的勸誡之一，提醒人在榮耀中仍要謙卑。"
+      },
+      {
+        text: "3. 根據《德訓篇 3:21》，人應如何尋求智慧？",
+        options: ["A. 依靠財富", "B. 追求權勢", "C. 尋求天主的旨意", "D. 遠離世俗", "E. 自行判斷"],
+        answer: "C",
+        explanation: "經文解釋：「不要追求你力不能及的事，要尋求天主的旨意。」這教導人要在信仰中尋求智慧，而非靠世俗手段。"
+      },
+      {
+        text: "4. 《德訓篇 3:30》指出火能熄滅什麼？",
+        options: ["A. 憤怒", "B. 嫉妒", "C. 爭吵", "D. 水", "E. 罪惡"],
+        answer: "C",
+        explanation: "經文解釋：「水能熄滅火，施捨能消除罪惡；火能熄滅爭吵。」這是比喻性的語言，說明爭吵如火，可被熄滅。"
+      },
+      {
+        text: "5. 根據《德訓篇 3:31》，施捨者將會怎樣？",
+        options: ["A. 得到財富", "B. 被人尊敬", "C. 被天主記念", "D. 得到智慧", "E. 被提升為領袖"],
+        answer: "C",
+        explanation: "經文解釋：「施捨者的善行，天主必記念。」這強調施捨不僅是道德行為，更是與天主的關係連結。"
+      },
+      {
+        text: "6. 根據《聖詠 68:4》，信徒應如何對待天主？",
+        options: ["A. 默默祈禱", "B. 高聲讚美", "C. 祭獻牲畜", "D. 禁食悔改", "E. 默觀聖言"],
+        answer: "B",
+        explanation: "經文解釋：「要歌頌天主的名，要高聲讚美他。」這是一種公開且熱烈的敬拜方式。"
+      },
+      {
+        text: "7. 《聖詠 68:5》稱天主為什麼？",
+        options: ["A. 公義的審判者", "B. 慈悲的父親", "C. 孤兒的父親與寡婦的保護者", "D. 萬軍的主宰", "E. 生命的泉源"],
+        answer: "C",
+        explanation: " 經文解釋：「天主在聖所中，是孤兒的父親，是寡婦的保護者。」這展現天主的慈愛與憐憫。"
+      },
+      {
+        text: "8. 根據《聖詠 68:6》，天主如何對待孤獨的人？",
+        options: ["A. 使其富足", "B. 使其成聖", "C. 安置在家庭中", "D. 賜予智慧", "E. 引入聖殿"],
+        answer: "C",
+        explanation: "經文解釋：「天主使孤獨的人有家可歸。」這是對天主關懷的具體描寫。"
+      },
+      {
+        text: "9. 《聖詠 68:7》提到天主如何引導被囚者？",
+        options: ["A. 進入曠野", "B. 走向自由", "C. 進入聖城", "D. 走向光明", "E. 進入安息"],
+        answer: "B",
+        explanation: " 經文解釋：「他使被囚者走向自由。」這象徵天主的解放與救贖。"
+      },
+      {
+        text: "10. 根據《聖詠 68:10》，天主如何對待疲乏的人？",
+        options: ["A. 賜予力量", "B. 賜予食糧", "C. 賜予安慰", "D. 賜予喜樂", "E. 賜予聖神"],
+        answer: "B",
+        explanation: "經文解釋：「你為疲乏的人準備了食糧。」這是天主供應的表現。"
+      },
+      {
+        text: "聖詠 68:11》提到誰宣講天主的話？",
+        options: ["A. 司祭", "B. 君王", "C. 信徒婦女", "D. 天使", "E. 先知"],
+        answer: "C",
+        explanation: "經文解釋：「宣講佳音的婦女大有軍隊。」這強調婦女在傳揚天主話語上的角色。"
+      },
+      {
+        text: "12. 根據《希伯來人書 12:18》，信徒並未來到哪裡？",
+        options: ["A. 天上的耶路撒冷", "B. 火焰與黑暗之地", "C. 聖殿", "D. 懲罰之地", "E. 天堂的門口"],
+        answer: "B",
+        explanation: "經文解釋：「你們並不是來到那可觸摸的火焰、黑暗、暴風之地。」這是指舊約西奈山的可怕景象。"
+      },
+      {
+        text: "13. 《希伯來人書 12:22》指出信徒來到哪裡？",
+        options: ["A. 地上的聖城", "B. 天上的耶路撒冷", "C. 懲罰之地", "D. 先知的居所", "E. 聖殿的至聖所"],
+        answer: "B",
+        explanation: "經文解釋：「你們卻來到天上的耶路撒冷。」這是新約信仰的屬靈目標。"
+      },
+      {
+        text: "14. 根據《希伯來人書 12:23》，信徒與誰相聚？",
+        options: ["A. 天主的使者", "B. 眾先知", "C. 完全成義的人靈", "D. 地上的教會", "E. 聖母瑪利亞"],
+        answer: "C",
+        explanation: "經文解釋：「與登記在天上的教會、以及完全成義的人靈相聚。」這是指在天上的信徒團契。"
+      },
+      {
+        text: "14. 根據《瑪竇福音 25:30》，被丟在外面黑暗中的人將會怎樣？",
+        options: ["A. 自誇的人", "B. 富有的人", "C. 謙卑的人", "D. 聰明的人", "E. 公義的人"],
+        answer: "C",
+        explanation: "經文解釋：「凡高舉自己的，必被貶抑；凡謙卑自己的，必被高舉。」這是耶穌對謙卑的讚賞與應許。"
+      },
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `❌ 答錯了。正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
