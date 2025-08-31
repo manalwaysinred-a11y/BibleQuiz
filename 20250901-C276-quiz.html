@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>聖經問答遊戲</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 聖經問答遊戲</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致得撒洛尼人前書 》5:2，主的日子將如何來臨？",
+        options: ["A. 如同天使降臨", "B. 如同賊夜間來到", "C. 如同晨曦照耀", "D. 如同火焰燃燒", "E. 如同雷聲震動"],
+        answer: "B",
+        explanation: "主的日子來到，如夜間的賊一般，表示突如其來、無法預測。"
+      },
+      {
+        text: "2. 在《保祿宗徒致得撒洛尼人前書 》 5:5 中，信徒被稱為什麼？",
+        options: ["AA. 黑暗之子", "B. 沉睡之人", "C. 真理之子", "D. 光明與白晝之子", "E. 火焰之子"],
+        answer: "D",
+        explanation: "信徒是光明與白晝之子，象徵活在真理與清醒中。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致得撒洛尼人前書 》 5:6，信徒應如何生活？",
+        options: ["A. 沉睡如其他人", "A. 沉睡如其他人", "C. 醉酒放縱", "D. 隱居祈禱", "E. 警醒清醒"],
+        answer: "E",
+        explanation: "信徒應警醒清醒，不沉睡於世俗之中。"
+      },
+      {
+text: "4. 根據《保祿宗徒致得撒洛尼人前書 》 5:9，天主預定我們得什麼？",
+        options: ["A. 救恩", "B. 試煉", "C. 忿怒", "D. 審判", "E. 懲罰"],
+        answer: "A",
+        explanation: "天主預定我們藉主耶穌基督得救恩，而非遭忿怒。"      },
+      {
+text: "5. 根據《保祿宗徒致得撒洛尼人前書 》 5:11，信徒應彼此怎樣？",
+        options: ["A. 責備", "B. 競爭", "C. 安慰與建立, "D. 懷疑", "E. 忽視"],
+        answer: "C",
+        explanation: "信徒應彼此安慰，互相建立，活出團體精神。"      },
+      {
+		text: "6. 根據《聖詠 》 27:1，上主是什麼？",
+        options: ["A. 我的光明與救援", "B. 我的審判者", "C. 我的敵人", "D. 我的試煉", "E. 我的恐懼"],
+        answer: "A»",
+        explanation: "上主是光明與救援，使人無所畏懼。"      },
+      {
+		text: "7. 在 《聖詠 》27:4 中，詠唱者渴望什麼？",
+        options: ["A. 征服敵人", "B. 住在上主的殿中", "C. 長壽與健康", "D. 財富與權力", "E. 逃離世界"],
+        answer: "B",
+        explanation: "詠唱者渴望與天主共融，住在祂的聖殿中。"      },
+      {
+		text: "8. 根據《聖詠 》 27:13，詠唱者相信自己會看到什麼？",
+        options: ["A. 敵人的滅亡", "B. 上主的美善", "C. 世界的終結", "D. 自己的榮耀", "E. 死亡的陰影"],
+        answer: "B",
+        explanation: "詠唱者深信在活人之地會見到上主的美善。"      },
+      {
+		text: "9. 在 《聖詠 》27:14 中，詠唱者勸勉我們要怎樣？",
+        options: ["A. 仰望上主，鼓起勇氣", "B. 逃避困難", "C. 尋求報復", "D. 懷疑一切", "E. 依靠自己"],
+        answer: "A",
+        explanation: "要仰望上主，鼓起勇氣，堅強心志。"      },
+      {
+		text: "10. 根據 《聖詠 》27:1，若上主是保障，詠唱者還怕誰？",
+        options: ["A. 沒有人", "B. 死亡", "C. 黑暗", "D. 敵人", "E. 魔鬼"],
+        answer: "A",
+        explanation: "上主是生命的保障，無需畏懼任何人。"      },
+      {
+		text: "11. 根據《路加福音  》4:31，耶穌在哪裡教導人？",
+        options: ["A. 耶路撒冷", "B. 納匝肋", "C. 伯達尼", "D. 葛法翁", "E. 加里肋亞"],
+        answer: "D",
+        explanation: "耶穌來到加里肋亞的葛法翁，在安息日教導人。"      },
+      {
+		text: "12. 根據《路加福音  》 4:32，人們對耶穌的教導有何反應？",
+        options: ["A. 嘲笑祂", "B. 不予理會", "C. 感到困惑", "D. 感到忿怒", "E. 驚訝，因祂的話有權威"],
+        answer: "E",
+        explanation: "耶穌的話語有權威，與一般師傅不同。"      },
+      {
+		text: "13. 在《路加福音  》 4:33 中，耶穌遇到什麼人？",
+        options: ["A. 附魔的人", "B. 門徒", "C. 病人", "D. 法利塞人", "E. 稅吏"],
+        answer: "A",
+        explanation: "耶穌在會堂中遇到一個附魔的人，顯示祂的權能。"      },
+      {
+		text: "14. 根據《路加福音  》 4:34，魔鬼如何稱呼耶穌？",
+        options: ["A. 拯救者", "B. 天主的聖者", "C. 先知", "D. 教師", "E. 彌撒亞"],
+        answer: "B",
+        explanation: "魔鬼認出耶穌是天主的聖者，顯示祂的神性。"      },
+      {
+		text: "15. 根據《路加福音  》 4:35，耶穌如何驅魔？",
+        options: ["A. 以祈禱", "B. 以聖水", "C. 以權威命令魔鬼離開", "D. 以手觸摸", "E. 以門徒協助"],
+        answer: "C",
+        explanation: "耶穌以權威命令魔鬼離開，顯示祂的神能與主權。"
+      },
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `❌ 答錯了。正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
