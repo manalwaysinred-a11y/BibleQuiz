@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>聖經問答遊戲</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 聖經問答遊戲</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 《哥羅森人書》1:1中，保祿自稱是誰的宗徒？",
+        options: ["A. 耶穌基督", "B. 伯多祿", "C. 梅瑟", "D. 聖神", "E. 若望"],
+        answer: "A",
+        explanation: "保祿自稱是「耶穌基督的宗徒」，顯示其使命來自基督。"
+      },
+      {
+        text: "2. 保祿在《哥羅森人書》1:2中向誰致候？",
+        options: ["AA. 在耶路撒冷的信徒", "B. 在哥林多的弟兄", "C. 在安提約基雅的教會", "D. 在哥羅森的聖徒和忠信弟兄", "E. 在羅馬的外邦人"],
+        answer: "D",
+        explanation: "他向「在哥羅森的聖徒和忠信弟兄」致候，表達祝福與關懷。"
+      },
+      {
+        text: "3. 保祿在《哥羅森人書》1:3中常為哥羅森人做什麼？",
+        options: ["A. 施洗", "A. 施洗", "C. 禁食", "D. 朝聖", "E. 講道"],
+        answer: "B",
+        explanation: "保祿常為哥羅森人祈禱，並感謝天主。"
+      },
+      {
+text: "4. 保祿在《哥羅森人書》1:4中讚美哥羅森人具備哪兩項德行？",
+        options: ["A. 信德與望德", "B. 信德與愛德", "C. 忍耐與節制", "D. 愛德與謙遜", "E. 忠信與勇氣"],
+        answer: "B",
+        explanation: "他讚美他們對基督的信德與對眾聖徒的愛德。"      },
+      {
+text: "5. 根據《哥羅森人書》1:5，哥羅森人的信德與愛德是基於什麼？",
+        options: ["A. 教會的教導", "B. 天上所存的希望", "C. 他們的修行, "D. 聖神的恩賜", "E. 天主的召命"],
+        answer: "B",
+        explanation: "他們的德行是基於「天上所存的希望」。"      },
+      {
+		text: "6. 《哥羅森人書》1:6中提到福音在世界各地如何發展？",
+        options: ["A. 結果並增長", "B. 被誤解", "C. 被禁止", "D. 被隱藏", "E. 被拒絕"],
+        answer: "A»",
+        explanation: "福音在世界各地「結果並增長」，顯示其生命力與普遍性。"      },
+      {
+		text: "7. 保祿在《哥羅森人書》1:7中提到誰是哥羅森人的福音教師？",
+        options: ["A. 厄巴弗辣", "B. 路加", "C. 西默盎", "D. 若望", "E. 提摩德"],
+        answer: "A",
+        explanation: "厄巴弗辣是哥羅森人的福音教師，也是保祿的忠信同工。"      },
+      {
+		text: "8. 根據《哥羅森人書》1:8，厄巴弗辣向保祿報告了哥羅森人什麼？",
+        options: ["A. 他們的罪過", "B. 他們的家庭狀況", "C. 他們在聖神中的愛德", "D. 他們的政治活動", "E. 他們的財富"],
+        answer: "C",
+        explanation: "厄巴弗辣報告他們「在聖神中的愛德」，顯示信仰的成長。"      },
+      {
+		text: "9. 《聖詠》52:10中，詩人稱自己像什麼？",
+        options: ["A. 一隻羊", "B. 一座城堡", "C. 一棵橄欖樹", "D. 一條河流", "E. 一隻鴿子"],
+        answer: "C",
+        explanation: "詩人自比為「橄欖樹」，象徵生命與信賴。"      },
+      {
+		text: "10. 《聖詠》52:10中，詩人信賴的是誰的仁慈？",
+        options: ["A. 君王", "B. 天使", "C. 司祭", "D. 天主", "E. 先知"],
+        answer: "D",
+        explanation: "他信賴的是「天主的仁慈」，相信其永不改變。"      },
+      {
+		text: "11. 《聖詠》52:11中，詩人表示要做什麼？",
+        options: ["A. 逃避敵人", "B. 寫詩", "C. 讚美天主", "D. 悔改", "E. 建造聖殿"],
+        answer: "C",
+        explanation: "詩人要「讚美天主」，並在忠信者面前宣揚祂的名。"      },
+      {
+		text: "12. 在《路加福音》4:38中，耶穌離開會堂後去了誰的家？",
+        options: ["A. 撒瑪黎雅人的家", "B. 若望的家", "C. 伯多祿的家", "D. 瑪爾大的家", "E. 瑪利亞的家"],
+        answer: "C",
+        explanation: "耶穌去了「伯多祿的家」，是祂在加里肋亞的行程之一。"      },
+      {
+		text: "13. 在《路加福音》4:38中，伯多祿的岳母患了什麼病？",
+        options: ["A. 癱瘓", "B. 麻風", "C. 高燒", "D. 失明", "E. 中風"],
+        answer: "C",
+        explanation: "伯多祿的岳母患了「高燒」，群眾為她求耶穌治癒。"      },
+      {
+		text: "14. 在《路加福音》4:39中，耶穌如何治癒伯多祿的岳母？",
+        options: ["A. 叫她吃藥", "B. 命令熱病離開她", "C. 為她祈禱", "D. 給她施洗", "E. 給她塗油"],
+        answer: "B",
+        explanation: "耶穌「命令熱病離開她」，她立刻痊癒並服侍他們。"      },
+      {
+		text: "15. 根據《路加福音》4:40-44，耶穌治癒病人後，群眾希望祂留下，但祂說自己必須做什麼？",
+        options: ["A. 回到納匝肋", "B. 建造聖殿", "C. 傳報天主國的福音", "D. 與門徒共進晚餐", "E. 休息"],
+        answer: "C",
+        explanation: "耶穌說：「我也必須向其他城鎮宣報天主國的福音」，顯示祂的使命。"
+      },
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `❌ 答錯了。正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
