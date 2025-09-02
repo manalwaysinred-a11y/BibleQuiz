@@ -15,7 +15,7 @@
 </head>
 <body>
   <h1>📖 聖經問答遊戲</h1>
-  <div id="timer">⏱️ 剩餘時間：10 秒</div>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
   <div id="questionBox"></div>
   <div id="result"></div>
 
@@ -32,10 +32,10 @@
         explanation: "保祿自稱是「耶穌基督的宗徒」，顯示其使命來自基督。"
       },
       {
-        text: "2. 《耶肋米亞 1:18》形容先知被天主堅固為什麼？",
-        options: ["A. 銅牆鐵壁", "B. 火焰之柱", "C. 天上的堡壘", "D. 聖殿之門 ", "E. 天主的盾牌"],
-        answer: "A",
-        explanation: "銅牆鐵壁"
+        text: "2. 保祿在《哥羅森人書》1:2中向誰致候？",
+        options: ["A. 在耶路撒冷的信徒", "B. 在哥林多的弟兄", "C. 在安提約基雅的教會", "D. 在哥羅森的聖徒和忠信弟兄", "E. 在羅馬的外邦人"],
+        answer: "D",
+        explanation: "他向「在哥羅森的聖徒和忠信弟兄」致候，表達祝福與關懷。"
       },
       {
         text: "3. 根據《耶肋米亞 1:19》，為何敵人不能勝過耶肋米亞？",
@@ -142,7 +142,7 @@
     }
 
     function startTimer() {
-      let time = 10;
+      let time = 15;
       timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
       clearInterval(timer);
       timer = setInterval(() => {
@@ -187,5 +187,6 @@
   </script>
 </body>
 </html>
+
 
 
