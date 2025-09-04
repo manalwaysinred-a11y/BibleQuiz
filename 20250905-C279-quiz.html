@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>聖經問答遊戲</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 聖經問答遊戲</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 保祿宗徒在哥羅森書中為信徒祈求什麼恩典？",
+        options: ["A. 財富與成功", "B. 身體健康", "C. 明瞭天主的旨意", "D. 政治權力", "E. 世界和平"],
+        answer: "C",
+        explanation: "保祿宗徒祈求信徒能充滿認識天主旨意的智慧與悟性，以過合乎主的生活。"
+      },
+      {
+        text: "2. 根據哥羅森書，信徒應如何生活以取悅天主？",
+        options: ["A. 遵守法律", "B. 多做善事", "C. 結出各種善果並認識天主", "D. 每日祈禱三次", "E. 捐獻財物"],
+        answer: "C",
+        explanation: "保祿宗徒教導信徒要結出善果並不斷認識天主，這樣的生活才能取悅祂。"
+      },
+      {
+        text: "3. 哥羅森書中提到信徒應以什麼力量堅忍不拔？",
+        options: ["A. 自己的意志", "B. 社會支持", "C. 天主的光榮能力", "D. 教會的教導", "E. 家人的鼓勵"],
+        answer: "C",
+        explanation: "保祿常為哥羅森人祈禱，並感謝天主。"
+      },
+      {
+        text: "4. 天主如何拯救信徒脫離黑暗權勢？",
+        options: ["A. 派遣天使", "B. 賜予法律", "C. 使他們進入祂愛子的國度", "D. 給予財富", "E. 建立教會"],
+        answer: "C",
+        explanation: "保祿宗徒說天主救我們脫離黑暗權勢，並使我們進入祂愛子的國度。"
+      },
+      {
+        text: "5. 根據哥羅森書，信徒藉著誰得蒙救贖和罪赦？",
+        options: ["A. 聖母瑪利亞", "B. 若望宗徒", "C. 耶穌基督", "D. 聖神", "E. 教宗 "],
+        answer: "C",
+        explanation: "保祿宗徒明言信徒藉著耶穌基督得蒙救贖，罪過得以赦免。"
+      },
+      {
+        text: "6. 聖詠98篇中，天主向萬民顯示了什麼？",
+        options: ["A. 祂的憤怒", "B. 祂的智慧", "C. 祂的正義", "D. 祂的救恩", "E. 祂的創造"],
+        answer: "D",
+        explanation: "聖詠中讚美天主向萬民顯示祂的救恩，彰顯祂的正義。 "
+      },
+      {
+        text: "7. 天主記念了祂對以色列家所立的什麼？",
+        options: ["A. 法律", "B. 盟約", "C. 懲罰", "D. 預言", "E. 聖殿"],
+        answer: "B",
+        explanation: "聖詠指出天主記念了祂對以色列家所立的聖約，顯示祂的忠信。"
+      },
+      {
+        text: "8. 根據聖詠，萬民應如何回應天主的救恩？",
+        options: ["A. 沉默祈禱", "B. 禁食", "C. 歡呼讚美", "D. 建造聖殿", "E. 捐獻財物"],
+        answer: "C",
+        explanation: "聖詠呼籲萬民以歡呼、歌唱、樂器讚美天主的救恩。"
+      },
+      {
+        text: "9. 聖詠中提到哪些樂器用來讚美天主？",
+        options: ["A. 鋼琴與小提琴", "B. 鼓與號角", "C. 結他與笛子", "D. 琴與號角", "E. 鈴與鐘"],
+        answer: "D",
+        explanation: "聖詠提到用琴與號角來讚美天主，表達喜樂與敬畏。"
+      },
+      {
+        text: "10. 根據聖詠，誰應在天主面前歡呼？",
+        options: ["A. 以色列人", "B. 司祭", "C. 萬民", "D. 天使", "E. 教會領袖"],
+        answer: "C",
+        explanation: "聖詠強調萬民都應在天主面前歡呼，因祂的救恩臨於全地。"
+      },
+      {
+        text: "11. 路加福音中，耶穌在哪裡遇見西滿伯多祿？",
+        options: ["A. 聖殿", "B. 山上", "C. 加里肋亞湖邊", "D. 城門口", "E. 家中"],
+        answer: "C",
+        explanation: "耶穌在加里肋亞湖邊遇見西滿伯多祿，並登上他的船講道。"
+      },
+      {
+        text: "12. 耶穌吩咐西滿做什麼以捕魚？",
+        options: ["A. 祈禱", "B. 投網到右邊", "C. 到深處撒網", "D. 等待夜晚", "E. 改變船位"],
+        answer: "C",
+        explanation: "耶穌吩咐西滿到深處撒網捕魚，顯示祂的權能。"
+      },
+      {
+        text: "13. 西滿對耶穌的話有何反應？",
+        options: ["A. 懷疑祂", "B. 拒絕祂", "C. 順從祂", "D. 嘲笑祂", "E. 無動於衷"],
+        answer: "C",
+        explanation: "儘管西滿先前整夜勞苦無獲，但他仍順從耶穌的話撒網。"
+      },
+      {
+        text: "14. 捕魚奇蹟後，西滿有何反應？",
+        options: ["A. 歡呼雀躍", "B. 感謝耶穌", "C. 跪拜耶穌並承認自己是罪人", "D. 呼叫其他人來看", "E. 將魚賣掉"],
+        answer: "C",
+        explanation: "西滿見到奇蹟後，跪拜耶穌，承認自己是罪人，顯示謙卑與敬畏。"
+      },
+      {
+        text: "15. 耶穌對西滿說他將成為什麼？",
+        options: ["A. 教會領袖", "B. 天主的僕人", "C. 捕人的漁夫", "D. 傳道者", "E. 宗徒之首"],
+        answer: "C",
+        explanation: "耶穌對西滿說：「從今以後，你要作捕人的漁夫」，預示他將成為宗徒。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `❌ 答錯了。正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
