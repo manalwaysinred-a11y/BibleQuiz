@@ -167,26 +167,27 @@
         return;
       }
 
-      const userAnswer = selected ? selected.value : "未作答";
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
       if (userAnswer === correct) {
         score++;
         document.getElementById("correctSound").play();
         explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
       } else {
         document.getElementById("wrongSound").play();
-        explainBox.innerHTML = `❌ 答錯了。正確答案是 ${correct}<br>${explanation}`;
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
       }
 
       setTimeout(() => {
         current++;
         loadQuestion();
-      }, 3000);
+      }, 6000);
     }
 
     loadQuestion();
   </script>
 </body>
 </html>
+
 
 
 
