@@ -167,7 +167,7 @@
         return;
       }
 
-      const userAnswer = selected ? selected.value : "未作答";
+      const userAnswer = selected ? selected.value : "未作答。正確答案是 ";
       if (userAnswer === correct) {
         score++;
         document.getElementById("correctSound").play();
@@ -187,6 +187,7 @@
   </script>
 </body>
 </html>
+
 
 
 
