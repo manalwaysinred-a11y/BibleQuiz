@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年常年期第二十三主日彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年常年期第二十三主日彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據智慧篇，人能明瞭天主的旨意是因為：",
+        options: ["A. 公義無瑕", "B. 與天主和好", "C. 心懷惡意，行為邪惡", "D. 忠信不渝", "E. 已得救恩"],
+        answer: "C",
+        explanation: "保祿指出信徒曾與天主隔絕，心懷惡意，行為邪惡。"
+      },
+      {
+        text: "2. 天主藉著誰使信徒與自己和好？",
+        options: ["A. 聖神", "B. 天使", "C. 教會", "D. 基督的肉身和死亡", "E. 梅瑟"],
+        answer: "D",
+        explanation: "保祿強調是藉著基督的肉身和死亡使人與天主和好。"
+      },
+      {
+        text: "3. 保祿宗徒希望信徒在信仰中如何堅定？",
+        options: ["A. 靠遵行法律", "B. 堅定不移地持守福音", "C. 常常祈禱", "D. 依靠自己的努力", "E. 追求智慧"],
+        answer: "B",
+        explanation: "保祿鼓勵信徒堅定不移地持守福音。"
+      },
+      {
+        text: "4. 福音已傳到哪裡？",
+        options: ["A. 猶太地", "B. 羅馬帝國", "C. 天主的選民中", "D. 傳遍天下", "E. 教會內部"],
+        answer: "D",
+        explanation: "保祿說福音已傳遍天下。"
+      },
+      {
+        text: "5. 保祿宗徒自稱為福音的什麼？",
+        options: ["A. 傳信者", "B. 教師", "C. 使徒", "D. 僕人", "E. 牧者"],
+        answer: "D",
+        explanation: "他自稱為福音的僕人，為此受派遣。"
+      },
+      {
+        text: "6. 達味在詠中向誰呼求？",
+        options: ["A. 天使", "B. 朋友", "C. 天主", "D. 司祭", "E. 自己的心靈"],
+        answer: "C",
+        explanation: "達味在困苦中向天主呼求。 "
+      },
+      {
+        text: "7. 達味的心情如何？",
+        options: ["A. 喜樂滿溢", "B. 平靜安穩", "C. 恐懼戰慄", "D. 憤怒不平", "E. 無動於衷"],
+        answer: "C",
+        explanation: "他說自己心神驚惶，恐懼戰慄。"
+      },
+      {
+        text: "8. 達味渴望逃離困境，他希望像什麼？",
+        options: ["A. 鷹", "B. 鴿子", "C. 羊", "D. 獅子", "E. 馬"],
+        answer: "B",
+        explanation: "他說：「恨不得我有鴿子的翅膀，飛去避難。」"
+      },
+      {
+        text: "9. 達味希望逃往何處？",
+        options: ["A. 聖殿", "B. 城市", "C. 曠野", "D. 山頂", "E. 海邊"],
+        answer: "C",
+        explanation: "他渴望逃往曠野，遠離暴風。"
+      },
+      {
+        text: "10. 達味的祈禱表達了什麼信德態度？",
+        options: ["A. 自我依靠", "B. 對天主的信賴", "C. 對人類的盼望", "D. 對法律的尊重", "E. 對命運的順從"],
+        answer: "B",
+        explanation: "他在困境中完全信賴天主的拯救。"
+      },
+      {
+        text: "11. 耶穌的門徒在安息日做了什麼？",
+        options: ["A. 祈禱", "B. 沐浴", "C. 摘麥穗吃", "D. 傳福音", "E. 治病"],
+        answer: "C",
+        explanation: "他們摘麥穗吃，因為飢餓。"
+      },
+      {
+        text: "12. 法利塞人對門徒的行為有何反應？",
+        options: ["A. 稱讚", "B. 沉默", "C. 責備", "D. 模仿", "E. 幫助"],
+        answer: "C",
+        explanation: "他們責備門徒在安息日做不合法的事。"
+      },
+      {
+        text: "13. 耶穌以誰的例子回應法利塞人？",
+        options: ["A. 梅瑟", "B. 撒慕爾", "C. 達味", "D. 亞巴郎", "E. 若瑟"],
+        answer: "C",
+        explanation: "他提到達味在飢餓時吃了供餅。"
+      },
+      {
+        text: "14. 供餅原本是給誰吃的？",
+        options: ["A. 所有人", "B. 司祭", "C. 長老", "D. 門徒", "E. 外邦人"],
+        answer: "B",
+        explanation: "供餅只許司祭食用。"
+      },
+      {
+        text: "15. 達味的祈禱表達了什麼信德態度？",
+        options: ["A. 自我依靠", "B. 對天主的信賴", "C. 對人類的盼望", "D. 對法律的尊重", "E. 對命運的順從"],
+        answer: "B",
+        explanation: "他在困境中完全信賴天主的拯救。"
+      },
+      {
+        text: "16. 耶穌的門徒在安息日做了什麼？",
+        options: ["A. 祈禱", "B. 沐浴", "C. 摘麥穗吃", "D. 傳福音", "E. 治病"],
+        answer: "C",
+        explanation: "他們摘麥穗吃，因為飢餓。"
+      },
+      {
+        text: "17. 法利塞人對門徒的行為有何反應？",
+        options: ["A. 稱讚", "B. 沉默", "C. 責備", "D. 模仿", "E. 幫助"],
+        answer: "C",
+        explanation: "他們責備門徒在安息日做不合法的事。"
+      },
+      {
+        text: "18. 耶穌以誰的例子回應法利塞人？",
+        options: ["A. 梅瑟", "B. 撒慕爾", "C. 達味", "D. 亞巴郎", "E. 若瑟"],
+        answer: "C",
+        explanation: "他提到達味在飢餓時吃了供餅。"
+      },
+      {
+        text: "19. 供餅原本是給誰吃的？",
+        options: ["A. 所有人", "B. 司祭", "C. 長老", "D. 門徒", "E. 外邦人"],
+        answer: "B",
+        explanation: "供餅只許司祭食用。"
+      },
+      {
+        text: "20. 耶穌在此段經文中宣告了什麼？",
+        options: ["A. 他是天主子", "B. 他是安息日的主", "C. 他是猶太人的王", "D. 他是律法的教師", "E. 他是先知 "],
+        answer: "B",
+        explanation: "耶穌說：「人子是安息日的主。」"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
