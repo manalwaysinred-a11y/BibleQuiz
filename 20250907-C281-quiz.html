@@ -24,6 +24,10 @@
   <audio id="wrongSound" src="wrong.mp3"></audio>
 
   <script>
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 9000);
     const questions = [
       {
         text: "1. 根據智慧篇，人能明瞭天主的旨意是因為：",
@@ -217,6 +221,7 @@
   </script>
 </body>
 </html>
+
 
 
 
