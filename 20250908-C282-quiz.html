@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 九月八日 聖母誕辰慶日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 九月八日 聖母誕辰慶日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 根據智慧篇，人能明瞭天主的旨意是因為：",
+        options: ["A. 自然理性", "B. 人類經驗", "C. 天使的啟示", "D. 天主賜予的智慧", "E. 哲學推論"],
+        answer: "D",
+        explanation: "智慧篇指出，唯有天主賜予的智慧才能使人明瞭他的旨意。"
+      },
+      {
+        text: "2. 智慧篇形容人的思想為：",
+        options: ["A. 穩固不移", "B. 高遠深邃", "C. 脆弱可誤", "D. 神聖無瑕", "E. 自由無限"],
+        answer: "C",
+        explanation: "經文說人的思想是脆弱的，難以明辨天主的計劃。"
+      },
+      {
+        text: "3. 天主如何幫助人明瞭真理？",
+        options: ["A. 藉聖神的光照", "B. 藉法律的規範", "C. 藉先知的話語", "D. 藉苦難的磨練", "E. 藉天使的顯現"],
+        answer: "A",
+        explanation: "智慧篇說天主遣發聖神，使人得以明瞭真理。"
+      },
+      {
+        text: "4. 根據智慧篇，世俗的計劃與天主的旨意相比：",
+        options: ["A. 完全一致", "B. 可互補", "C. 常常偏離", "D. 是天主的工具", "E. 無需調整"],
+        answer: "C",
+        explanation: "經文指出人難以明瞭天主的旨意，世俗的計劃常與之偏離。"
+      },
+      {
+        text: "5. 智慧篇中提到人若無智慧，便：",
+        options: ["A. 無法行善", "B. 難以認識天主", "C. 無法得救", "D. 無法愛人", "E. 無法祈禱"],
+        answer: "B",
+        explanation: "智慧篇強調，若無天主所賜的智慧，人便難以認識他的旨意。"
+      },
+      {
+        text: "6. 聖詠中提到人歸於塵土，是因為：",
+        options: ["A. 天主的懲罰", "B. 原罪的結果", "C. 人的有限性", "D. 天主的命令", "E. 死亡的自然法則"],
+        answer: "D",
+        explanation: "聖詠說：「你使人歸於塵土，說：你們要回去吧！」 "
+      },
+      {
+        text: "7. 聖詠形容天主眼中的千年如：",
+        options: ["A. 永恆的一刻", "B. 一日的晨曦", "C. 剛過去的昨天", "D. 星辰閃爍", "E. 無限的時間"],
+        answer: "C",
+        explanation: "聖詠說：「因為千年在你的眼前，好像剛過去的昨天。」"
+      },
+      {
+        text: "8. 聖詠中祈求天主教導人什麼？",
+        options: ["A. 行善避惡", "B. 愛人如己", "C. 數算自己的年日", "D. 明辨是非", "E. 遠離罪惡"],
+        answer: "C",
+        explanation: "聖詠祈求：「求你教導我們數算自己的年日，好使我們獲得智慧的心。」"
+      },
+      {
+        text: "9. 聖詠中祈求天主的仁慈如何臨於人？",
+        options: ["A. 如雨滋潤", "B. 如光照耀", "C. 使人歡欣喜樂", "D. 如盾保護", "E. 如火煉淨"],
+        answer: "C",
+        explanation: "聖詠說：「求你以仁慈使我們早晨滿心喜樂。」"
+      },
+      {
+        text: "10. 聖詠中祈求天主的作為如何顯現？",
+        options: ["A. 在聖殿中", "B. 在萬民前", "C. 在子孫身上", "D. 在敵人面前", "E. 在自然界中"],
+        answer: "C",
+        explanation: "聖詠說：「願你的作為顯示給你的僕人，願你的光榮臨於他們的子孫。」"
+      },
+      {
+        text: "11. 保祿宗徒寫信給費肋孟時的語氣是：",
+        options: ["A. 命令", "B. 勸勉", "C. 責備", "D. 教導", "E. 譴責"],
+        answer: "B",
+        explanation: "保祿以愛心勸勉費肋孟接納敖乃息摩。"
+      },
+      {
+        text: "12. 敖乃息摩原是誰的僕人？",
+        options: ["A. 保祿", "B. 費肋孟", "C. 弟茂德", "D. 路加", "E. 巴爾納伯"],
+        answer: "B",
+        explanation: "敖乃息摩原是費肋孟的僕人。"
+      },
+      {
+        text: "13. 保祿如何形容敖乃息摩的改變？",
+        options: ["A. 成為弟兄", "B. 成為司祭", "C. 成為使徒", "D. 成為教師", "E. 成為朋友"],
+        answer: "A",
+        explanation: "保祿說敖乃息摩如今不只是僕人，更是親愛的弟兄。"
+      },
+      {
+        text: "14. 保祿希望費肋孟如何接納敖乃息摩？",
+        options: ["A. 如同朋友", "B. 如同司祭", "C. 如同保祿自己", "D. 如同門徒", "E. 如同父親"],
+        answer: "C",
+        explanation: "保祿說：「你若認我為同伴，就如接納我一般接納他。」。"
+      },
+      {
+        text: "15. 保祿願意為敖乃息摩承擔什麼？",
+        options: ["A. 他的罪過", "B. 他的債務", "C. 他的責任", "D. 他的使命", "E. 他的工作"],
+        answer: "B",
+        explanation: "保祿說：「他若虧欠你什麼，或欠你什麼，請算在我身上。」"
+      },
+      {
+        text: "16. 耶穌說若不捨棄一切，便不能：",
+        options: ["A. 得永生", "B. 成為門徒", "C. 進入天國", "D. 得聖神", "E. 得赦罪"],
+        answer: "B",
+        explanation: "他耶穌說：「若不捨棄自己的一切財產，不能作我的門徒。」"
+      },
+      {
+        text: "17. 耶穌以築塔比喻門徒的決志，意指：",
+        options: ["A. 建設教會", "B. 預備資源", "C. 計算代價", "D. 建立信德", "E. 建造聖殿"],
+        answer: "C",
+        explanation: "耶穌說築塔前要先計算代價，象徵跟隨他需慎考慮清楚。"
+      },
+      {
+        text: "18. 若君王欲與敵交戰，耶穌建議應先：",
+        options: ["A. 求助盟友", "B. 召集軍隊", "C. 評估兵力", "D. 祈求天主", "E. 宣布和平"],
+        answer: "C",
+        explanation: "耶穌說君王應先衡量是否能以一萬兵迎敵的兩萬兵，象徵門徒需衡量是否能承擔跟隨他的代價。"
+      },
+      {
+        text: "19. 耶穌教導門徒的條件之一是：",
+        options: ["A. 每日祈禱", "B. 背負自己的十字架", "C. 參與聖祭", "D. 愛人如己", "E. 遵守誡命"],
+        answer: "B",
+        explanation: "耶穌說：「誰若不背起自己的十字架來跟隨我，不能作我的門徒。」"
+      },
+      {
+        text: "20. 跟隨耶穌的真正意義是：",
+        options: ["A. 追求神蹟", "B. 得到祝福", "C. 捨棄一切並全心委身", "D. 成為教會領袖", "E. 遵守法律條文"],
+        answer: "C",
+        explanation: "耶穌強調，作他的門徒需捨棄一切，象徵全心委身於他。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
