@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十三周星期三 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十三周星期三 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 保祿宗徒勸哥羅森人要怎樣生活？",
+        options: ["A. 按照梅瑟法律", "B. 跟隨猶太傳統", "C. 按照接受耶穌基督的方式", "D. 遵守羅馬法律", "E. 依靠自己的智慧"],
+        answer: "C",
+        explanation: "保祿宗徒勸哥羅森人說：你們既然接受了基督耶穌為主，就該在他內行動生活，在他內扎根成長。"
+      },
+      {
+        text: "2. 保祿宗徒如何形容基督徒在信仰上的成長？",
+        options: ["A. 像建築物一樣被拆除", "B. 像樹木一樣扎根成長", "C.  像水流一樣自由", "D. 像雲霧一樣飄忽", "E. 像石頭一樣堅硬"],
+        answer: "B",
+        explanation: "保祿宗徒用「扎根成長」來形容信仰的穩固與成長。"
+      },
+      {
+        text: "3. 保祿宗徒警告哥羅森人不要被什麼迷惑？",
+        options: ["A. 外邦人的神話", "B. 猶太人的律法", "C. 人的哲學和虛偽的妄言", "D. 異端的教導", "E. 魔鬼的誘惑"],
+        answer: "C",
+        explanation: "保祿宗徒警告他們不要被人的哲學和虛偽的妄言所迷惑。"
+      },
+      {
+        text: "4. 在基督內，信徒如何與祂一同生活？",
+        options: ["A. 透過聖洗與祂一同埋葬和復活", "B. 透過守齋與祂合一", "C. 透過朝聖與祂同行", "D. 透過祈禱與祂交談", "E. 透過施捨與祂分享"],
+        answer: "A",
+        explanation: "保祿宗徒指出信徒透過聖洗與基督一同埋葬並在信德中復活。"
+      },
+      {
+        text: "5. 基督如何戰勝掌權者和元首？",
+        options: ["A. 以武力征服", "B. 以智慧辯論", "C. 在十字架上勝過他們", "D. 以奇蹟震懾他們", "E. 以天使的力量擊敗他們"],
+        answer: "C",
+        explanation: "保祿宗徒說基督仗賴十字架，解除了率領者和掌權者的武裝，在凱旋儀式中，把他們公然示眾。"
+      },
+      {
+        text: "6. 聖詠作者如何表達對上主的讚美？",
+        options: ["A. 每週一次", "B. 在聖殿中", "C. 每日不斷讚美", "D. 在節日中", "E. 自在困難時"],
+        answer: "C",
+        explanation: "聖詠作者說：「我要每日不斷讚美你，頌揚你的名，永遠不停。」。 "
+      },
+      {
+        text: "7. 上主的慈愛如何展現？",
+        options: ["A. 僅限選民", "B. 只在聖殿中", "C. 普及萬有", "D. 只在安息日", "E. 只對義人"],
+        answer: "C",
+        explanation: "聖詠中提到上主對待萬有，溫和善良，對他的受造物，仁愛慈祥。"
+      },
+      {
+        text: "8. 聖詠作者祈願甚麼會去稱謝上主？",
+        options: ["A. 先知", "B. 司祭", "C. 一切受造物", "D. 君王", "E. 天使"],
+        answer: "C",
+        explanation: "詠說︰上主，願你的一切受造物稱謝你。"
+      },
+      {
+        text: "9. 聖詠作者認為要對上主的國度做甚麼？",
+        options: ["A. 王國是暫時的", "B. 將王國建在地上", "C. 宣傳王國的光榮", "D. 隱藏王國", "E. 使王國神秘些"],
+        answer: "C",
+        explanation: "聖詠說︰願你的所有聖徒讚美你，宣傳你王國的光榮。"
+      },
+      {
+        text: "10. 上主的作為應由誰傳述？",
+        options: ["A. 司祭", "B. 先知", "C. 君王", "D. 聖徒", "E. 天使"],
+        answer: "D",
+        explanation: "聖詠說︰上主，願你的所有聖徒讚美你。"
+      },
+      {
+        text: "11. 耶穌在選召宗徒前做了什麼？",
+        options: ["A. 與門徒商議", "B. 閉門靜思", "C. 上山徹夜祈禱", "D. 與群眾交談", "E. 閱讀聖經"],
+        answer: "C",
+        explanation: "耶穌在選召宗徒前整夜上山祈禱；他徹夜向天主祈禱。"
+      },
+      {
+        text: "12. 耶穌選了多少位宗徒？",
+        options: ["A. 七位", "B. 十位", "C. 十二位", "D. 十四位", "E. 二十位"],
+        answer: "C",
+        explanation: "耶穌選了十二位宗徒，象徵以色列十二支派。"
+      },
+      {
+        text: "13. 宗徒中誰被稱為「熱誠者」？",
+        options: ["A. 若望", "B. 伯多祿", "C. 西滿", "D. 猶達斯", "E. 安德肋"],
+        answer: "C",
+        explanation: "西滿被稱為「熱心者」，可能與激進派有關。"
+      },
+      {
+        text: "14. 群眾為何來到耶穌跟前？",
+        options: ["A. 求祂打賞金錢", "B. 看祂行奇蹟", "C. 聽祂講道及得醫治", "D. 要祂作王", "E. 與祂爭論"],
+        answer: "C",
+        explanation: "群眾來到耶穌前是為了聽祂講道，並為治好自己的病症。"
+      },
+      {
+        text: "15. 耶穌如何治癒病人？",
+        options: ["A. 用水洗", "B. 用油塗抹", "C. 祈禱後按手", "D. 叫他們起來", "E. 讓能力從祂身上出來"],
+        answer: "E",
+        explanation: "福音記載有一種能力從耶穌身上出來，治好眾人。」"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
