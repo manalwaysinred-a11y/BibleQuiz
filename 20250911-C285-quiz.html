@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十三周星期四 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十三周星期四 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 根據《哥羅森人書》，信徒既然與基督一同復活，應該追求什麼？",
+        options: ["A. 地上的財富", "B. 人間的榮耀", "C. 天上的事", "D. 世俗的快樂", "E. 自我實現"],
+        answer: "C",
+        explanation: "保祿宗徒教導信徒要思念天上的事，因為基督坐在天主的右邊，信徒的生命也藏在天主內。"
+      },
+      {
+        text: "2. 保祿宗徒指出，信徒應致死哪些屬於地上的肢體行為？",
+        options: ["A. 忍耐與慈悲", "B. 禱告與禁食", "C.  淫亂、不潔、邪情、惡欲、貪婪", "D. 公義與和平", "E. 愛德與謙遜"],
+        answer: "C",
+        explanation: "這些行為被視為屬世的罪惡，信徒應加以戒除。"
+      },
+      {
+        text: "3. 根據《哥羅森人書》，貪婪被比喻為什麼？",
+        options: ["A. 一種習慣", "B. 一種誘惑", "C. 無異於偶像崇拜", "D. 一種文化", "E. 一種需要"],
+        answer: "C",
+        explanation: "保祿宗徒將貪婪視為偶像崇拜，因為它取代了對天主的依靠。"
+      },
+      {
+        text: "4. 保祿宗徒提到，信徒應戒絕哪些言行？",
+        options: ["A. 喜樂與讚美", "B. 忿怒、暴戾、惡意、咒罵、穢言", "C. 祈禱與施捨", "D. 教導與傳福音", "E. 忍耐與寬恕"],
+        answer: "B",
+        explanation: "這些都是舊人的行為，信徒應穿上新人。"
+      },
+      {
+        text: "5. 在基督內，保祿宗徒說不再有什麼分別？",
+        options: ["A. 男女", "B. 老少", "C. 希臘人或猶太人、奴隸或自由人等", "D. 富人或窮人", "E. 教師或學生"],
+        answer: "C",
+        explanation: "保祿強調在基督內人人平等，無種族或社會地位之分。"
+      },
+      {
+        text: "6. 根據《聖詠》，上主的王國是怎樣的王國？",
+        options: ["A. 一時的王國", "B. 地上的王國", "C. 萬代的王國", "D. 人間的王國", "E. 暫時的王國"],
+        answer: "C",
+        explanation: "聖詠讚美上主的王國是永恆的，存留於無窮世。"
+      },
+      {
+        text: "7. 聖詠中提到，上主的王權如何？",
+        options: ["A. 會改變", "B. 取決於人心", "C. 存留於無窮世", "D. 由人選立", "E. 只限於以色列"],
+        answer: "C",
+        explanation: "上主的王權是永恆不變的。"
+      },
+      {
+        text: "8. 根據聖詠，誰應讚美上主？",
+        options: ["A. 只有司祭", "B. 只有聖人", "C. 一切受造物和所有聖徒", "D. 只有天使", "E. 只有選民"],
+        answer: "C",
+        explanation: "聖詠呼籲所有受造物和聖徒都要讚美上主。"
+      },
+      {
+        text: "9. 聖詠中提到，上主的偉大如何？",
+        options: ["A. 可輕易理解", "B. 高深不可推測", "C. 無法讚美", "D. 僅限於選民", "E. 只在聖殿中彰顯"],
+        answer: "B",
+        explanation: "上主的偉大超越人類理解，但仍值得讚美。"
+      },
+      {
+        text: "10. 根據聖詠，上主的威能應如何被世人認識？",
+        options: ["A. 隱藏起來", "B. 只由先知宣講", "C. 讓世人盡知", "D. 只在聖經中記載", "E. 由天使傳達"],
+        answer: "C",
+        explanation: "聖詠鼓勵宣傳上主的威能，使世人皆知。"
+      },
+      {
+        text: "11. 根據《路加福音》，耶穌說貧窮的人是有福的，因為什麼？",
+        options: ["A. 他們將得財富", "B. 他們將受尊敬", "C. 天主的國是他們的", "D. 他們將成為領袖", "E. 他們將得醫治"],
+        answer: "C",
+        explanation: "耶穌宣告貧窮者有福，因為天主的國屬於他們。"
+      },
+      {
+        text: "12. 耶穌說現今哭泣的人將會怎樣？",
+        options: ["A. 得到安慰", "B. 被記念", "C. 得到醫治", "D. 歡笑", "E. 成為聖人"],
+        answer: "D",
+        explanation: "耶穌應許哭泣者將要歡笑，顯示天主的安慰與救恩。"
+      },
+      {
+        text: "13. 耶穌指出，為人子的緣故被辱罵的人是有福的，因為什麼？",
+        options: ["A. 他們將得地上的獎賞", "B. 他們將被尊崇", "C. 他們的賞報在天上是豐厚的", "D. 他們將成為教會領袖", "E. 他們將得醫治"],
+        answer: "C",
+        explanation: "耶穌鼓勵門徒在迫害中喜樂，因為天上的賞報豐厚。"
+      },
+      {
+        text: "14. 耶穌說富有的人是有禍的，因為什麼？",
+        options: ["A. 他們不願施捨", "B. 他們不信天主", "C. 他們已獲得了安慰", "D. 他們不守誡命", "E. 他們不參與禮儀"],
+        answer: "C",
+        explanation: "耶穌指出富人已得安慰，將失去天上的賞報。"
+      },
+      {
+        text: "15. 耶穌警告那些被眾人誇讚的人是有禍的，因為什麼？",
+        options: ["A. 他們太驕傲", "B. 他們不祈禱", "C. 他們的祖先也同樣對待了假先知", "D. 他們不守安息日", "E. 他們不讀聖經"],
+        answer: "C",
+        explanation: "耶穌指出眾人誇讚可能是虛假的，正如假先知也曾被讚美。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
