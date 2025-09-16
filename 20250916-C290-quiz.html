@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十三周星期四 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十三周星期四 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 根據哥羅森書，天主所揀選的聖者應穿上哪一種德行？",
+        options: ["A. 憤怒", "B. 憐憫的心腸", "C. 驕傲", "D. 嫉妒", "E. 懷疑"],
+        answer: "B",
+        explanation: "聖保祿宗徒教導教友要穿上憐憫、仁慈、謙卑、良善和含忍，這些是天主所揀選者的德行。"
+      },
+      {
+        text: "2. 根據聖保祿的教導，在一切德行之上，最重要的是哪一項？",
+        options: ["A. 信德", "B. 希望", "C.  愛德", "D. 忍耐", "E. 智慧"],
+        answer: "C",
+        explanation: "保祿宗徒指出「在這一切以上，尤該有愛德，因為愛德是全德的聯繫」。"
+      },
+      {
+        text: "3. 基督的平安在信友心中應有什麼地位？",
+        options: ["A. 被忽略", "B. 作主", "C. 被挑戰", "D. 被懷疑", "E. 被拒絕"],
+        answer: "B",
+        explanation: "保祿宗徒教導信友要讓基督的平安在心中作主，因為我們蒙召存於一個身體內。"
+      },
+      {
+        text: "4. 信友應如何讓基督的話充份地存在心中？",
+        options: ["A. 只靠默想", "B. 透過懲罰", "C. 以各種智慧彼此教導規勸", "D. 透過沉默", "E. 只靠祈禱"],
+        answer: "C",
+        explanation: "保祿宗徒鼓勵信友以智慧彼此教導與規勸，使基督的話充份地存在心中。"
+      },
+      {
+        text: "5. 信友在言語與行為上應如何行事？",
+        options: ["A. 為自己利益", "B. 為社會公義", "C. 因主耶穌的名而作", "D. 為家庭榮耀", "E. 為教會制度"],
+        answer: "C",
+        explanation: "保祿宗徒教導信友無論作什麼，都該因主耶穌的名而作，並藉著他感謝天主聖父。"
+      },
+      {
+        text: "6. 根據聖詠150篇，信友應在哪裡讚美天主？",
+        options: ["A. 在曠野", "B. 在家中", "C. 在上主的聖所", "D. 在市場", "E. 在山頂"],
+        answer: "C",
+        explanation: "聖詠150篇開首即說：「請眾在上主的聖所讚美他」"
+      },
+      {
+        text: "7. 聖詠150篇中，讚美天主的原因包括？",
+        options: ["A. 為了他的懲罰", "B. 為了他的慈悲", "C. 為了他的豐功偉業與無限偉大", "D. 為了他的審判", "E. 為了他的神秘"],
+        answer: "C",
+        explanation: "聖詠150篇指出讚美天主是因他的豐功偉業與無限偉大。"
+      },
+      {
+        text: "8. 哪一種樂器未被提及用來讚美天主？",
+        options: ["A. 號角", "B. 琴瑟", "C. 鐃鈸", "D. 鼓", "E. 喇叭"],
+        answer: "E",
+        explanation: "聖詠150篇提及號角、琴瑟、鼓、鐃鈸等，但未提及喇叭。"
+      },
+      {
+        text: "9. 聖詠150篇中，讚美天主的方式包括？",
+        options: ["A. 靜默", "B. 舞蹈", "C. 爭辯", "D. 哭泣", "E. 沉思"],
+        answer: "B",
+        explanation: "聖詠150篇提到「敲鼓舞蹈讚美他」，舞蹈是讚美的方式之一。"
+      },
+      {
+        text: "10. 根據聖詠150篇，誰應該讚美上主？",
+        options: ["A. 司祭", "B. 先知", "C. 一切有氣息的", "D. 天使", "E. 教宗"],
+        answer: "C",
+        explanation: "聖詠150篇結語：「一切有氣息的，請讚美上主！」。"
+      },
+      {
+        text: "11. 耶穌教導門徒應如何對待仇人？",
+        options: ["A. 報復", "B. 忽視", "C. 愛他們", "D. 控訴他們", "E. 驅逐他們"],
+        answer: "C",
+        explanation: "耶穌明言：「應愛你們的仇人，善待惱恨你們的人」。"
+      },
+      {
+        text: "12. 當有人打你的面頰時，耶穌教導應如何回應？",
+        options: ["A. 還手", "B. 報警", "C. 把另一面轉給他", "D. 逃跑", "E. 責罵他"],
+        answer: "C",
+        explanation: "耶穌教導門徒以非暴力的方式回應攻擊，顯示慈悲與寬恕。"
+      },
+      {
+        text: "13. 耶穌如何形容那些只愛愛自己的人？",
+        options: ["A. 有功德", "B. 是義人", "C. 與罪人無異", "D. 是聖者", "E. 是選民"],
+        answer: "C",
+        explanation: "耶穌指出：「連罪人也愛那愛他們的人」，暗示這樣的愛並不特別。"
+      },
+      {
+        text: "14. 耶穌教導信友應如何施予？",
+        options: ["A. 小心地給", "B. 只給親人", "C. 用好的、連按帶搖、外溢的升斗", "D. 只給教會", "E. 只給窮人"],
+        answer: "C",
+        explanation: "耶穌鼓勵慷慨施予，並應許同樣的度量將回報給施予者。"
+      },
+      {
+        text: "15. 耶穌教導信友應如何對待他人以獲得天主的慈悲？",
+        options: ["A. 判斷他人", "B. 定罪他人", "C. 赦免他人", "D. 忽視他人", "E. 控訴他人"],
+        answer: "C",
+        explanation: "耶穌說：「你們要赦免，也就蒙赦免」，強調寬恕的重要性。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
+
