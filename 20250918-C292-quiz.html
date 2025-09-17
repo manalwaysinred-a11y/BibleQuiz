@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十四周星期三 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十四周星期三 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 根據《弟茂德前書》，天主的家是什麼？",
+        options: ["A. 聖殿", "B. 教堂", "C. 永生天主的教會", "D. 信友的團體", "E. 司祭的住所"],
+        answer: "C",
+        explanation: "聖保祿說：「這家就是永生天主的教會，真理的柱石和基礎。」。"
+      },
+      {
+        text: "2. 保祿宗徒寫信給弟茂德的目的之一是：",
+        options: ["A. 教導他如何祈禱", "B. 解釋聖經的奧義", "C. 指導他在天主的家中如何處", "D. 安排教會的財務", "E. 訓練他成為司祭"],
+        answer: "C",
+        explanation: "保祿說：「你可以知道在天主的家中應當如何處事。」。"
+      },
+      {
+        text: "3. 根據《弟茂德前書》，基督的奧蹟包括以下哪一項？",
+        options: ["A. 他在聖殿講道", "B. 他行奇蹟", "C. 他以肉身出現", "D. 他被門徒背叛", "E. 他建立教會"],
+        answer: "C",
+        explanation: "保祿宗徒稱基督的奧蹟為「以肉身出現，由聖神印證」。"
+      },
+      {
+        text: "4. 基督被接入哪裡？",
+        options: ["A. 天堂", "B. 聖殿", "C. 光榮中", "D. 教會", "E. 群眾中"],
+        answer: "C",
+        explanation: "保祿宗徒說基督「被接入光榮中」。"
+      },
+      {
+        text: "5. 基督的奧蹟不包括以下哪一項？",
+        options: ["A. 顯現給天使", "B. 傳報給異民", "C. 被接入光榮中", "D. 被門徒否認", "E. 獲世人信服"],
+        answer: "D",
+        explanation: "保祿宗徒列出基督的奧蹟，包括顯現、傳報、信服與光榮，未提被否認。"
+      },
+      {
+        text: "6. 根據《聖詠111》，詩人在哪裡讚頌上主？",
+        options: ["A. 在曠野", "B. 在聖殿", "C. 在義人的集會和團聚中", "D. 在家中", "E. 在山上"],
+        answer: "C",
+        explanation: "詩人說：「在義人的集會和團聚中，我必要全心讚頌上主。」。"
+      },
+      {
+        text: "7. 上主的作為具有什麼特質？",
+        options: ["A. 隱密無聲", "B. 暗淡無光", "C. 輝煌光明", "D. 平凡無奇", "E. 難以理解"],
+        answer: "C",
+        explanation: "聖詠中讚美上主的作為「輝煌光明」。"
+      },
+      {
+        text: "8. 上主的正義如何？",
+        options: ["A. 時常改變", "B. 永遠常存", "C. 隨人而異", "D. 只在選民中彰顯", "E.只在舊約中存在"],
+        answer: "B",
+        explanation: "聖詠說：「他的正義永遠常存。」。"
+      },
+      {
+        text: "9. 上主賜給敬畏他的人什麼？",
+        options: ["A. 財富", "B. 聖職", "C. 食物", "D. 聖神", "E. 聖經"],
+        answer: "C",
+        explanation: "聖詠說：「上主賜給敬畏他的人食物。」。"
+      },
+      {
+        text: "10. 上主永遠懷念什麼？",
+        options: ["A. 祂的聖殿", "B. 祂的選民", "C. 自己的盟約", "D. 祂的奇蹟", "E. 祂的司祭"],
+        answer: "C",
+        explanation: "聖詠說：「且永遠懷念自己的盟約。」。"
+      },
+      {
+        text: "11. 上主將他的能力啟示給誰？",
+        options: ["A. 外邦人", "B. 司祭", "C. 選民", "D. 天使", "E. 寡婦"],
+        answer: "C",
+        explanation: "聖詠說：「將他的大能啟示給選民。」。"
+      },
+      {
+        text: "12. 根據《路加福音》，耶穌將這一代人比作什麼？",
+        options: ["A. 羊群", "B. 法利塞人", "C. 坐在街上的兒童", "D. 稅吏", "E. 罪人"],
+        answer: "C",
+        explanation: "耶穌說：「他們相似坐在街上的兒童。」。"
+      },
+      {
+        text: "13. 洗者若翰的生活方式是：",
+        options: ["A. 吃餅喝酒", "B. 不吃餅也不喝酒", "C. 常與罪人來往", "D. 住在城中", "E. 穿華服"],
+        answer: "B",
+        explanation: "耶穌說：「洗者若翰來了，他不吃餅，也不喝酒。」。"
+      },
+      {
+        text: "14. 人子來了之後，人們如何批評他？",
+        options: ["A. 說他是先知", "B. 說他是聖者", "C. 說他是貪吃嗜酒的人", "D. 說他是天主子", "E. 說他是法利塞人"],
+        answer: "C",
+        explanation: "耶穌說：「你們又說：這是個貪吃嗜酒的人，是稅吏和罪人的朋友。」。"
+      },
+      {
+        text: "15. 根據耶穌的話，誰能彰顯智慧的正義？",
+        options: ["A.法利塞人", "B. 稅吏", "C. 智慧之子  ", "D. 群眾", "E. 門徒"],
+        answer: "C",
+        explanation: "耶穌說：「但一切智慧之子，必彰顯智慧的正義。」。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
