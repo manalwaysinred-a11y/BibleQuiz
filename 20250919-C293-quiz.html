@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十四周星期五 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十四周星期五 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 根據《弟茂德前書》，年輕的信徒應在何事上做信徒的模範？",
+        options: ["A. 智慧與勇氣", "B. 言語與行為", "C. 財富與地位", "D. 學識與能力", "E. 外貌與聲望"],
+        answer: "B",
+        explanation: "聖保祿勸勉弟茂德「在言語和行為上，在愛德、信德和潔德上，做信徒的模範」。"
+      },
+      {
+        text: "2. 保祿宗徒要求弟茂德專務哪些事？",
+        options: ["A. 祈禱、禁食、朝聖", "B. 宣讀、勸勉、教導", "C. 管理、募款、建堂", "D. 佈道、治病、驅魔", "E. 默想、靈修、懺悔"],
+        answer: "B",
+        explanation: "保祿說：「你要專務宣讀、勸勉和教導。」。"
+      },
+      {
+        text: "3. 神恩是如何賜予弟茂德的？",
+        options: ["A. 由宗徒親自授予", "B. 由天使顯現而來", "C. 因預言，藉長老團的覆手", "D. 由教會選立", "E. 因個人修行所得"],
+        answer: "C",
+        explanation: "保祿提醒弟茂德「不要疏忽你心內的神恩，即從前因預言，藉長老團的覆手賜予你的神恩」。"
+      },
+      {
+        text: "4. 保祿宗徒勸勉弟茂德應如何對待自己的訓言？",
+        options: ["A. 靈活調整", "B. 保持沉默", "C. 堅持不變", "D. 交由他人審核", "E. 只在主日宣講"],
+        answer: "C",
+        explanation: "保祿說：「應注意你自己和你的訓言，在這些事上要堅持不變。」。"
+      },
+      {
+        text: "5. 根據保祿的教導，弟茂德若堅持所行，將可救誰？",
+        options: ["A. 教會領袖", "B. 自己與聽眾", "C. 外邦人", "D. 長老團", "E. 所有罪人"],
+        answer: "B",
+        explanation: "保祿說：「因為你這樣做，才能救你自己，又能救你的聽眾。」。"
+      },
+      {
+        text: "6. 根據《聖詠111》，上主的作為具有哪些特質？",
+        options: ["A. 神秘莫測", "B. 真誠公平", "C. 暗淡無光", "D. 變化無常", "E. 隱而不顯"],
+        answer: "B",
+        explanation: "聖詠說：「上主的作為真誠公平，他的一切規誡堅定不移。」。"
+      },
+      {
+        text: "7. 上主的規誡如何存在？",
+        options: ["A. 只在聖殿中", "B. 為選民而設", "C. 為萬世萬代永遠立定", "D. 隨時代而改變", "E. 由司祭解釋"],
+        answer: "C",
+        explanation: "聖詠說：「為萬世萬代永遠立定，全是基於真理和公正。」。"
+      },
+      {
+        text: "8. 上主賜予敬畏他的人什麼？",
+        options: ["A. 聖神", "B. 食物", "C. 財富", "D. 聖職", "E.聖經"],
+        answer: "B",
+        explanation: "聖詠說：「上主賜給敬畏他的人食物。」。"
+      },
+      {
+        text: "9. 根據聖詠，敬畏上主是什麼的開始？",
+        options: ["A. 信德", "B. 智慧", "C. 愛德", "D. 潔德", "E. 公義"],
+        answer: "B",
+        explanation: "聖詠說：「敬畏上主，是智慧的開始。」。"
+      },
+      {
+        text: "10. 上主的光榮將如何存在？",
+        options: ["A. 只在天堂中", "B. 由司祭宣講", "C. 必定存留永世", "D. 由信友維持", "E. 由教會守護"],
+        answer: "C",
+        explanation: "聖詠說：「上主的光榮，必定存留永世。」。"
+      },
+      {
+        text: "11. 根據《路加福音》，罪婦用什麼擦乾耶穌的腳？",
+        options: ["A. 手巾", "B. 衣袖", "C. 頭髮", "D. 香液", "E. 水盆"],
+        answer: "C",
+        explanation: "福音記載：「用自己的頭髮擦乾。」。"
+      },
+      {
+        text: "12. 耶穌以什麼比喻罪婦的愛與赦罪？",
+        options: ["A. 一位牧人與羊群", "B. 一位父親與兒子", "C. 一個債主與兩個債戶", "D. 一位司祭與信友", "E. 一位醫者與病人"],
+        answer: "C",
+        explanation: "耶穌說：「一個債主有兩個債戶……債主就開恩，赦免了他們二人。」。"
+      },
+      {
+        text: "13. 根據耶穌的話，誰更愛債主？ ",
+        options: ["A. 欠五十德納者", "B. 欠五百德納者", "C. 兩者皆同", "D. 債主本人", "E. 法利塞人"],
+        answer: "B",
+        explanation: "西滿答說：「我想是那多得恩赦的。」耶穌說：「你判斷的正對。」。"
+      },
+      {
+        text: "14. 耶穌對罪婦說了什麼話？",
+        options: ["A. 「妳的信德救了妳」", "B. 「妳的罪不可赦」", "C. 「妳要悔改」 ", "D. 「妳要離開此地」", "E. 「妳不可再犯」"],
+        answer: "A",
+        explanation: "耶穌對婦人說：「你的信德救了你，平安回去吧！」。"
+      },
+      {
+        text: "15. 根據耶穌的教導，少得赦免的人如何？",
+        options: ["A.更感恩", "B. 更悔改", "C. 是愛的少", "D. 更忠信", "E. 更敬畏"],
+        answer: "C",
+        explanation: "耶穌說：「但那少得赦免的，是愛的少。」。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
+
