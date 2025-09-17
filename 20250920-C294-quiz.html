@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十四周星期六 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十四周星期六 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 根據保祿宗徒的教導，若有人不順從主耶穌基督的健全道理，他是怎樣的人？",
+        options: ["A. 謙卑自省", "B. 智慧充盈", "C. 妄自尊大，一無所知", "D. 仁慈寬厚", "E. 忍辱負重"],
+        answer: "C",
+        explanation: "保祿指出這樣的人是妄自尊大，一無所知，並患有辯論和舌戰之癖。"
+      },
+      {
+        text: "2. 保祿宗徒認為虔敬是什麼？",
+        options: ["A. 一種社會地位", "B. 一種獲利的富源", "C. 一種政治工具", "D. 一種文化傳統", "E. 一種哲學思想"],
+        answer: "B",
+        explanation: "保祿說虔敬是一個獲利的富源，但應有知足的心。"
+      },
+      {
+        text: "3. 根據保祿的教導，我們來到世界時帶了什麼？",
+        options: ["A. 信德", "B. 財富", "C. 智慧", "D. 沒有帶任何東西", "E. 天主的恩寵"],
+        answer: "D",
+        explanation: "保祿指出我們沒有帶什麼到世界上，也不能帶走什麼。"
+      },
+      {
+        text: "4. 保祿警告那些想望致富的人會陷入什麼？",
+        options: ["A. 光榮與尊貴", "B. 天主的祝福", "C. 誘惑與羅網", "D. 社會的讚賞", "E. 教會的接納"],
+        answer: "C",
+        explanation: "保祿說他們會陷於誘惑、墮入羅網和有害的慾望中。"
+      },
+      {
+        text: "5. 保祿宗徒稱貪愛錢財是什麼？",
+        options: ["A. 一種生活方式", "B. 萬惡的根源", "C. 合理的追求", "D. 社會的常態", "E. 信仰的表現"],
+        answer: "B",
+        explanation: "保祿明言貪愛錢財乃萬惡的根源。"
+      },
+      {
+        text: "6. 根據聖詠，神貧的人有什麼福分？",
+        options: ["A. 財富倍增", "B. 長壽安康", "C. 天國是他們的", "D. 名聲遠播", "E. 子孫昌盛"],
+        answer: "C",
+        explanation: "聖詠明言神貧的人是有福的，因為天國是他們的。"
+      },
+      {
+        text: "7. 聖詠中指出金錢不能完成什麼事？",
+        options: ["A. 建造聖殿", "B. 贖回人命", "C. 購買信德", "D. 增加智慧", "E. 改變命運"],
+        answer: "B",
+        explanation: "聖詠指出金錢不能把人的贖價還給天主，因為人命的贖價非常昂貴。"
+      },
+      {
+        text: "8. 聖詠中提到人死時能帶走什麼？",
+        options: ["A. 財產", "B. 名聲", "C. 信德", "D. 沒有任何東西", "E. 子孫的祝福"],
+        answer: "D",
+        explanation: "聖詠指出人死時什麼也不能帶走，財產也不能隨他同去。"
+      },
+      {
+        text: "9. 聖詠中提到富人死後會怎樣？",
+        options: ["A. 被天主接納", "B. 永遠再不能看到光明", "C. 得享永生", "D. 成為聖人", "E. 被人紀念 "],
+        answer: "B",
+        explanation: "聖詠說他終要回去和祖先相逢，永遠再不能看到光明。"
+      },
+      {
+        text: "10. 聖詠中指出人命的贖價如何？",
+        options: ["A. 可由金錢支付", "B. 由教會代付", "C. 非常昂貴", "D. 由善行換取", "E. 可由祈禱贖回"],
+        answer: "C",
+        explanation: "聖詠明言人命的贖價非常昂貴，金錢不足以贖回。"
+      },
+      {
+        text: "11. 耶穌在路加福音第八章初是做什麼事？",
+        options: ["A. 治病驅魔", "B. 建造聖殿", "C. 走遍各城各村講道", "D. 與門徒祈禱", "E. 寫聖經經文"],
+        answer: "C",
+        explanation: "經文指出耶穌走遍各城各村講道，宣傳天主國的喜訊。"
+      },
+      {
+        text: "12. 瑪達肋納的瑪利亞曾被什麼困擾？",
+        options: ["A. 疾病纏身", "B. 七個魔鬼附身", "C. 財產糾紛", "D. 信仰動搖", "E. 家族衝突"],
+        answer: "B",
+        explanation: "經文指出瑪利亞曾被七個魔鬼附身，後被耶穌趕出。"
+      },
+      {
+        text: "13. 約安納是誰的妻子？ ",
+        options: ["A. 伯多祿", "B. 若望", "C. 雇撒", "D. 撒慕爾", "E. 黑落德"],
+        answer: "C",
+        explanation: "經文指出約安納是黑落德的管家雇撒的妻子。"
+      },
+      {
+        text: "14. 這些婦女如何支持耶穌和門徒？",
+        options: ["A. 祈禱守望 ", "B. 傳播福音", "C. 用財產資助他們", "D. 替他們寫經文", "E. 教導信徒"],
+        answer: "C",
+        explanation: "經文明言她們用自己的財產資助耶穌與門徒。"
+      },
+      {
+        text: "15. 除了瑪利亞、約安納和蘇撒納，還有什麼人與耶穌同行？",
+        options: ["A. 其他門徒", "B. 羅馬士兵", "C. 別的許多婦女", "D. 法利塞人", "E. 撒瑪黎雅人"],
+        answer: "C",
+        explanation: "經文指出還有別的許多婦女與耶穌同行並資助他們。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
+
+
