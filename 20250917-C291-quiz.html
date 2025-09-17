@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十四周星期三 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十四周星期三 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 根據《弟茂德前書》，誰若渴望監督的職分，是渴望什麼？",
+        options: ["A. 一件榮耀的事", "B. 一件神聖的事", "C. 一件善事", "D. 一件困難的事", "E. 一件危險的事"],
+        answer: "C",
+        explanation: "聖保祿說：「誰若想望監督的職分，是渴望一件善事。」。"
+      },
+      {
+        text: "2. 監督必須是怎樣的人？",
+        options: ["A. 多妻", "B. 暴戾", "C. 無可指摘", "D. 嗜酒", "E. 貪財"],
+        answer: "C",
+        explanation: "聖保祿強調監督必須是「無可指摘的，只作過一個妻子的丈夫」。"
+      },
+      {
+        text: "3. 根據《弟茂德前書》，監督不可是什麼樣的人？",
+        options: ["A. 慎重", "B. 新奉教的", "C. 好客", "D. 善於教導", "E. 有節制"],
+        answer: "B",
+        explanation: "不可是新奉教的，免得他妄自尊大而陷於魔鬼的判決。"
+      },
+      {
+        text: "4. 執事必須具備哪一項品格？",
+        options: ["A. 一口兩舌", "B. 飲酒過度", "C. 貪贓", "D. 端莊", "E. 暴戾"],
+        answer: "D",
+        explanation: "保祿宗徒鼓勵信友以智慧彼此教導與規勸，使基督的話充份地存在心中。"
+      },
+      {
+        text: "5. 執事應以什麼保持信德的奧蹟？",
+        options: ["A. 外表端莊", "B. 純潔的良心", "C. 多讀聖經", "D. 公開宣講", "E. 祈禱"],
+        answer: "B",
+        explanation: "保聖保祿說執事要「以純潔的良心，保持信德的奧蹟」。"
+      },
+      {
+        text: "6. 根據《弟茂德前書》，女人也必須怎樣？",
+        options: ["A. 多言", "B. 不講是非", "C. 暴戾", "D. 嗜酒", "E. 不忠信"],
+        answer: "B",
+        explanation: "女人也必須「端莊，不講是非，有節制，凡事忠信」。"
+      },
+      {
+        text: "7. 根據《弟茂德前書》，善於服務的人可獲得什麼？",
+        options: ["A. 財富", "B. 聖職", "C. 優越的品位", "D. 教會職權", "E. 天主的恩寵"],
+        answer: "C",
+        explanation: "聖保祿說：「善於服務的，自可獲得優越的品位，也能大膽地宣揚對基督耶穌的信仰。」。"
+      },
+      {
+        text: "8. 根據《聖詠101》，詩人要歌頌什麼？",
+        options: ["A. 智慧與勇氣", "B. 仁愛與公正", "C. 信德與希望", "D. 忍耐與謙卑", "E. 榮耀與能力"],
+        answer: "B",
+        explanation: "詩人說：「我要歌頌仁愛與公正，上主，我還要向你吟詠。」。"
+      },
+      {
+        text: "9. 詩人要在家中如何度日？",
+        options: ["A. 喜樂的心", "B. 公義的心", "C. 純潔的心", "D. 憂傷的心", "E. 堅強的心"],
+        answer: "C",
+        explanation: "詩人說：「我要在我的家中，以純潔的心度日。」。"
+      },
+      {
+        text: "10. 詩人不容忍哪一類人？",
+        options: ["A. 憂傷的人", "B. 心高氣傲的人", "C. 忠誠的人", "D. 喜樂的人", "E. 懷疑的人"],
+        answer: "B",
+        explanation: "聖詠150篇結語：「一切有氣息的，請讚美上主！」。"
+      },
+      {
+        text: "11. 根據《聖詠101》，誰可作詩人的忠僕？",
+        options: ["A. 行走成全道路的人", "B. 多言的人", "C. 暗中毀謗的人", "D. 心高氣傲的人", "E. 不節制的人"],
+        answer: "A",
+        explanation: "詩人說：「在成全的道路上行走的人，才可作我的忠僕。」。"
+      },
+      {
+        text: "12. 根據《路加福音》，耶穌在納因城門口遇見了誰？",
+        options: ["A. 一位病人", "B. 一位瞎子", "C. 一位寡婦與她的獨生子", "D. 一位稅吏", "E. 一位法利塞人"],
+        answer: "C",
+        explanation: "耶穌遇見一位寡婦，她的獨生子剛去世，正被抬出城門。"
+      },
+      {
+        text: "13. 耶穌對寡婦說了什麼？",
+        options: ["A. 「妳的信德救了妳」", "B. 「妳不要害怕」", "C. 「妳的兒子活了」", "D. 「不要哭了」", "E. 「妳的罪得赦了」"],
+        answer: "D",
+        explanation: "耶穌動了憐憫的心，對寡婦說：「不要哭了！」。"
+      },
+      {
+        text: "14. 耶穌如何使死者復活？",
+        options: ["A. 呼喚他的名字", "B. 祈禱", "C. 按手在他身上", "D. 命令他起來", "E. 撒聖水"],
+        answer: "D",
+        explanation: "耶穌說：「青年人，我對你說：起來吧！」死者便坐起來。"
+      },
+      {
+        text: "15. 群眾見死者復活後，如何反應？",
+        options: ["A. 驚恐逃離", "B. 沉默不語", "C. 光榮天主", "D. 責問耶穌", "E. 呼喊救命"],
+        answer: "C",
+        explanation: "眾人都害怕起來，光榮天主說：「在我們中間興起了一位大先知，天主眷顧了他自己的百姓。」。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
