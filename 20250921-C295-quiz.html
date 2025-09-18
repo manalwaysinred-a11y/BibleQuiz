@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十五主日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十五主日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 保祿宗徒在誰面前命令弟茂德保守訓令？",
+        options: ["A. 聖神", "B. 天主及基督耶穌", "C. 伯多祿及若望", "D. 教會及信友", "E. 瑪利亞及天使"],
+        answer: "B",
+        explanation: "保祿宗徒在「使萬有生活的天主」及「曾對般雀比拉多宣發過美好誓言的基督耶穌」面前命令弟茂德保守訓令。"
+      },
+      {
+        text: "2. 保祿要求弟茂德保守訓令直到什麼時候？",
+        options: ["A. 他殉道之日", "B. 教會建立完成", "C. 主耶穌基督的顯現", "D. 天主國降臨", "E. 聖神降臨節"],
+        answer: "C",
+        explanation: "保祿命令弟茂德保守訓令「直到我們的主耶穌基督的顯現」。"
+      },
+      {
+        text: "3. 天主被稱為「萬王之王」與什麼？",
+        options: ["A. 萬主之主", "B. 萬能之主", "C. 萬聖之主", "D. 萬民之主", "E. 萬天之主"],
+        answer: "A",
+        explanation: "保祿稱天主為「萬王之王，萬主之主」，顯示他至高無上的主權。"
+      },
+      {
+        text: "4. 天主住在什麼之中，沒有人能看見？",
+        options: ["A. 聖殿", "B. 天上", "C. 不可接近的光中", "D. 雲彩之中", "E. 火焰之中"],
+        answer: "C",
+        explanation: "保祿說天主「住在不可接近的光中，沒有人看見過，也不能看見」。"
+      },
+      {
+        text: "5. 保祿對天主的讚頌結語是什麼？",
+        options: ["A. 阿肋路亞", "B. 願光榮歸於他", "C. 願他受讚美", "D. 願尊崇和永遠的威權歸於他", "E. 願聖神降臨"],
+        answer: "D",
+        explanation: "保祿以「願尊崇和永遠的威權歸於他！亞孟」作結，讚頌天主的榮耀與主權。"
+      },
+      {
+        text: "6. 普世大地應如何對上主？",
+        options: ["A. 沉默祈禱", "B. 向上主歡呼", "C. 默想聖言", "D. 進入聖殿", "E. 獻上祭品"],
+        answer: "B",
+        explanation: "聖詠呼籲「普世大地，請向上主歡呼」，表達喜樂與讚美。"
+      },
+      {
+        text: "7. 聖詠中提到我們是天主的什麼？",
+        options: ["A. 子女", "B. 工人", "C. 朋友", "D. 羊群", "E. 信徒"],
+        answer: "D",
+        explanation: "聖詠說「我們非他莫屬，是他的人民，是他牧場的羊群」。"
+      },
+      {
+        text: "8. 進入天主的庭院應以什麼態度？",
+        options: ["A. 懼怕", "B. 沉思", "C. 感恩與讚美", "D. 懺悔", "E. 安靜"],
+        answer: "C",
+        explanation: "聖詠說「高唱感恩歌，邁向他的大門；吟詠讚美詩，進入他的庭院」。"
+      },
+      {
+        text: "9. 天主的慈愛持續到什麼時候？",
+        options: ["A. 七十代", "B. 永恆", "C. 末日", "D. 彌撒結束", "E. 祈禱完成"],
+        answer: "B",
+        explanation: "聖詠明言「他的慈愛直到永恆」。"
+      },
+      {
+        text: "10. 天主的忠信如何存在？",
+        options: ["A. 每日更新", "B. 在選民中", "C. 世世常存", "D. 在聖殿中", "E. 在聖經中"],
+        answer: "C",
+        explanation: "聖詠說「他的忠信世世常存」，顯示天主的信實永不改變。"
+      },
+      {
+        text: "11. 撒種者的種子象徵什麼？",
+        options: ["A. 信德", "B. 希望", "C. 天主的話", "D. 教會的教導", "E. 聖神的恩賜"],
+        answer: "C",
+        explanation: "耶穌解釋比喻時說：「種子是天主的話」。"
+      },
+      {
+        text: "12. 落在路旁的種子代表什麼人？",
+        options: ["A. 不願聽的人", "B. 聽了但魔鬼奪去的人", "C. 忘記聖言的人", "D. 不信的人", "E. 迫害者"],
+        answer: "B",
+        explanation: "耶穌說「那些在路旁的，是指那些人聽了，隨後就有魔鬼來到，從他們心中把天主的話奪去」。"
+      },
+      {
+        text: "13. 落在石頭上的種子代表什麼人？ ",
+        options: ["A. 不聽的人", "B. 暫時相信的人", "C. 忠信的人", "D. 教導者", "E. 祈禱者"],
+        answer: "B",
+        explanation: "耶穌說「他們聽的時候，高興地接受天主的話，但這些人沒有根，暫時相信，一到試探的時候，就退避了」。"
+      },
+      {
+        text: "14. 荊棘中的種子代表什麼人？",
+        options: ["A. 被迫害的人", "B. 被俗慮與逸樂蒙蔽的人", "C. 忘記祈禱的人", "D. 不讀聖經的人", "E. 教會外的人"],
+        answer: "B",
+        explanation: "耶穌說「被掛慮、錢財及生活的逸樂所蒙蔽，沒有結出成熟的果實」。"
+      },
+      {
+        text: "15. 好地上的種子代表什麼人？",
+        options: ["A. 教會領袖", "B. 傳教士", "C. 以善良誠實心聽道的人", "D. 受苦者", "E. 天主選民"],
+        answer: "C",
+        explanation: "耶穌說「那在好地裏的，是指那些以善良和誠實的心傾聽的人，他們把天主的話保存起來，以堅忍結出果實」。"
+      },
+      {
+        text: "16. 荊棘中的種子代表什麼人？",
+        options: ["A. 被迫害的人", "B. 被俗慮與逸樂蒙蔽的人", "C. 忘記祈禱的人", "D. 不讀聖經的人", "E. 教會外的人"],
+        answer: "B",
+        explanation: "耶穌說「被掛慮、錢財及生活的逸樂所蒙蔽，沒有結出成熟的果實」。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
