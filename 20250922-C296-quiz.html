@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十五周星期一 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十五周星期一 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 根據亞毛斯先知的話，哪些人是上主譴責的對象？",
+        options: ["A. 崇拜偶像的人", "B. 不守安息日的人", "C. 壓榨窮人、使弱小者無法生存的人", "D. 不獻祭的人", "E. 不守潔淨法的人"],
+        answer: "C",
+        explanation: "上主透過亞毛斯譴責那些壓迫貧弱者的人。"
+      },
+      {
+        text: "2. 文中提及「縮小『厄法』，加重『協刻耳』」是指什麼行為？",
+        options: ["A. 公平交易", "B. 節省資源", "C. 使用假秤欺詐", "D. 慷慨施予", "E. 合法徵稅"],
+        answer: "C",
+        explanation: "這是指商人以不公正的度量衡欺騙顧客。"
+      },
+      {
+        text: "3. 根據經文，商人甚至願意以什麼換取貧民？",
+        options: ["A. 一袋金子", "B. 一雙鞋", "C. 一塊麵餅", "D. 一匹驢", "E. 一件外衣"],
+        answer: "B",
+        explanation: "經文指出他們以一雙鞋換取貧民，顯示其貪婪與不義。"
+      },
+      {
+        text: "4. 上主指著誰的榮耀發誓，不忘惡人的行為？",
+        options: ["A. 撒羅滿", "B. 達味", "C. 雅各伯", "D. 亞巴郎", "E. 若瑟"],
+        answer: "C",
+        explanation: "上主指著雅各伯的榮耀發誓，表示祂的憤怒與記憶。"
+      },
+      {
+        text: "5. 聖詠 113中呼籲誰讚頌上主的聖名？",
+        options: ["A. 君王", "B. 司祭", "C. 上主的僕人", "D. 先知", "E. 天使"],
+        answer: "C",
+        explanation: "聖詠開首即呼籲上主的僕人讚頌祂的聖名。"
+      },
+      {
+        text: "6. 上主的光榮凌駕於何處之上？",
+        options: ["A. 地極", "B. 海洋", "C. 穹蒼", "D. 星辰", "E. 山嶺"],
+        answer: "C",
+        explanation: "聖詠明言上主的光榮凌駕穹蒼。"
+      },
+      {
+        text: "7. 上主如何對待弱小與窮苦的人？",
+        options: ["A. 忽視他們", "B. 懲罰他們", "C. 提拔與舉揚他們", "D. 使他們沉默", "E. 驅逐他們"],
+        answer: "C",
+        explanation: "聖詠說「上主從塵埃與糞土中提拔弱者，使他們與貴族同席」。"
+      },
+      {
+        text: "8. 上主使窮苦者與誰同坐？",
+        options: ["A. 司祭", "B. 天使", "C. 王侯", "D. 先知", "E. 外邦人"],
+        answer: "C",
+        explanation: "聖詠指出窮苦者被舉揚至與王侯同坐。"
+      },
+      {
+        text: "9. 保祿宗徒首先勸導眾人做什麼？",
+        options: ["A. 傳福音", "B. 守安息日", "C. 懇求、祈禱、轉求和謝恩", "D. 禁食", "E. 朝聖"],
+        answer: "C",
+        explanation: "保祿強調為眾人及掌權者祈禱的重要性。"
+      },
+      {
+        text: "10. 保祿希望人們能過怎樣的生活？",
+        options: ["A. 富足安逸", "B. 虔敬、端莊、寧靜和平安", "C. 勇敢冒險", "D. 隱居修道", "E. 自由奔放"],
+        answer: "B",
+        explanation: "保祿期望信徒能安穩地生活，蒙天主悅納。"
+      },
+      {
+        text: "11. 在天主與人之間的唯一中保是誰？",
+        options: ["A. 聖母瑪利亞", "B. 若望宗徒", "C. 基督耶穌", "D. 聖神", "E. 梅瑟"],
+        answer: "C",
+        explanation: "保祿明言基督耶穌是唯一的中保。"
+      },
+      {
+        text: "12. 保祿宗徒希望男人在各地如何祈禱？",
+        options: ["A. 默禱", "B. 發怒中祈禱", "C. 舉起聖潔的手，不發怒、不爭吵", "D. 高聲呼喊", "E. 跪地痛哭"],
+        answer: "C",
+        explanation: "保祿教導信徒以聖潔與和平的心祈禱。"
+      },
+      {
+        text: "13. 管家被撤職的原因是什麼？ ",
+        options: ["A. 偷竊主人的財物", "B. 懶惰不事", "C. 揮霍主人的財物", "D. 不守安息日", "E. 與債戶勾結"],
+        answer: "C",
+        explanation: "主人聽聞管家揮霍財物，故撤其職務。"
+      },
+      {
+        text: "14. 管家如何與債戶交涉以求庇護？",
+        options: ["A. 要求他們幫忙", "B. 減少他們的債務", "C. 威脅他們", "D. 向他們借錢", "E. 與他們立約"],
+        answer: "B",
+        explanation: "管家減債以結交人情，求日後庇護。"
+      },
+      {
+        text: "15. 主耶穌稱讚管家的哪一方面？",
+        options: ["A. 忠信", "B. 誠實", "C. 精明", "D. 慷慨", "E. 公義"],
+        answer: "C",
+        explanation: "主讚其精明，並非道德上的肯定。"
+      },
+      {
+        text: "16. 主耶穌教導我們不能同時事奉誰？",
+        options: ["A. 天主與撒殫", "B. 天主與偶像", "C. 天主與錢財", "D. 天主與人", "E. 天主與法律"],
+        answer: "C",
+        explanation: "主明言「你們不能事奉天主，而又事奉錢財」。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
