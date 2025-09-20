@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十五周星期二 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十五周星期二 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 波斯王居魯士頒布號令的原因是？",
+        options: ["A. 他想擴張領土", "B. 他夢見耶路撒冷的殿宇", "C. 他受上主感動", "D. 他被猶太人請求", "E. 他想建立自己的神殿"],
+        answer: "C",
+        explanation: "居魯士是因上主感動其心而頒布號令【厄上 1:1】。"
+      },
+      {
+        text: "2. 居魯士王認為誰將萬國交給了他？",
+        options: ["A. 巴比倫的神", "B. 上天的神「雅威」", "C. 猶太人的祖先", "D. 他的軍隊", "E. 他的祖先"],
+        answer: "B",
+        explanation: "居魯士明言是「上天的神『雅威』」將萬國交給他【厄上 1:2】。"
+      },
+      {
+        text: "3. 居魯士王命令建殿的地點是：",
+        options: ["A. 撒瑪黎雅", "B. 巴比倫", "C. 耶路撒冷", "D. 大馬士革", "E. 熙雍"],
+        answer: "C",
+        explanation: "他明確指出是在「猶大的耶路撒冷」建殿【厄上 1:2】。"
+      },
+      {
+        text: "4. 哪些人起程上耶路撒冷建殿？",
+        options: ["A. 所有猶太人", "B. 所有波斯人", "C. 猶大和本雅明的族長、司祭、肋未人及受感動者", "D. 只有司祭", "E. 只有肋未人"],
+        answer: "C",
+        explanation: "經文列明這些人受感動而起程【厄上 1:5】。"
+      },
+      {
+        text: "5. 鄰居如何協助建殿的人？",
+        options: ["A. 提供勞力", "B. 捐贈金銀、財物、牲畜和珠寶", "C. 幫助設計殿宇", "D. 給予土地", "E. 提供食物"],
+        answer: "B",
+        explanation: "他們捐贈財物及自願獻儀【厄上 1:6】。"
+      },
+      {
+        text: "6. 聖詠中提到俘虜回到哪裡？",
+        options: ["A. 巴比倫", "B. 耶路撒冷", "C. 熙雍", "D. 客納罕", "E. 撒瑪黎雅"],
+        answer: "C",
+        explanation: "「上主帶領俘虜回到熙雍」【詠 126:1】。"
+      },
+      {
+        text: "7. 俘虜回歸時的心情是：",
+        options: ["A. 懼怕", "B. 憂愁", "C. 喜氣盈盈", "D. 懷疑", "E. 懷舊"],
+        answer: "C",
+        explanation: "「我們覺得彷彿是在夢中；那時，我們喜氣盈盈」【詠 126:1】。"
+      },
+      {
+        text: "8. 外邦人對上主的作為有何反應？",
+        options: ["A. 不屑一顧", "B. 驚訝讚嘆", "C. 憤怒", "D. 模仿", "E. 沉默"],
+        answer: "B",
+        explanation: "「外邦異民都讚嘆不已」【詠 126:2】。"
+      },
+      {
+        text: "9. 聖詠中以哪個地理景象比喻命運的轉變？",
+        options: ["A. 山嶺", "B. 沙漠", "C. 乃革布的流水", "D. 海洋", "E. 雲霧"],
+        answer: "C",
+        explanation: "「就像乃革布有流水的澆淋」【詠 126:4】。"
+      },
+      {
+        text: "10. 含淚播種的人將如何收成？",
+        options: ["A. 無收成", "B. 含笑收成", "C. 被人搶奪", "D. 收成甚微", "E. 收成不定"],
+        answer: "B",
+        explanation: "「那含淚播種的人，必含笑獲享收成」【詠 126:5】。"
+      },
+      {
+        text: "11. 耶穌說燈應放在哪裡？",
+        options: ["A. 床底下", "B. 器皿內", "C. 燈台上", "D. 屋外", "E. 地板上"],
+        answer: "C",
+        explanation: "「而是放在燈台上」【路 8:16】。"
+      },
+      {
+        text: "12. 耶穌用燈的比喻是為了說明什麼？",
+        options: ["A. 光明的力量", "B. 隱藏的事終將顯露", "C. 燈油的重要", "D. 黑暗的危險", "E. 家庭的秩序"],
+        answer: "B",
+        explanation: "「沒有隱藏的事，不被顯露的」【路 8:17】。"
+      },
+      {
+        text: "13. 耶穌教導人應如何聽？",
+        options: ["A. 隨意聽", "B. 不必聽", "C. 留心聽", "D. 只聽熟人", "E. 聽完即忘"],
+        answer: "C",
+        explanation: "「你們應當留心要怎樣聽」【路 8:18】。"
+      },
+      {
+        text: "14. 凡有的，將會如何？",
+        options: ["A. 被奪去", "B. 被忽略", "C. 還要給他", "D. 被懲罰", "E. 被遺忘"],
+        answer: "C",
+        explanation: "「凡有的，還要給他」【路 8:18】。"
+      },
+      {
+        text: "15. 凡沒有的，會發生什麼？",
+        options: ["A. 得到更多", "B. 保持現狀", "C. 連自以為有的也被奪去", "D. 被祝福", "E. 被提升"],
+        answer: "C",
+        explanation: "「凡沒有的，連他自以為有的，也要從他奪去」【路 8:18】。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
+
