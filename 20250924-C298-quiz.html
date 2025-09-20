@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十五周星期三 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十五周星期三 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "0. 測試即將開始︰",
+        options: ["A. ", "B. ", "C. ", "D. ", "E. "],
+        answer: "A",
+        explanation: "A"
+      },
+      {
+        text: "1. 厄斯德拉在獻晚祭時的姿態是什麼？",
+        options: ["A. 坐在聖殿門口", "B. 雙膝跪下，伸手向天主", "C. 站在祭壇前高聲呼喊", "D. 俯伏在地，沉默不語", "E. 舉香向天主祈禱"],
+        answer: "B",
+        explanation: "達理阿王明令「不可干涉天主殿宇的工程」，顯示其尊重猶太人的信仰與建殿行動。"
+      },
+      {
+        text: "2. 厄斯德拉為何感到慚愧，不敢抬頭？",
+        options: ["A. 因為他個人犯了罪", "B. 因為人民拒絕聖約", "C. 因為邪惡積累高過頭頂", "D. 因為聖殿被毀", "E. 因為他未完成使命"],
+        answer: "C",
+        explanation: "他因人民的邪惡積累如山，罪孽上達於天而感到羞愧。"
+      },
+      {
+        text: "3. 根據經文，以色列人因罪孽遭遇了什麼",
+        options: ["A. 被洪水淹沒", "B. 被天主遺棄", "C. 被交在異地君王手中", "D. 被逐出聖殿", "E. 被禁止獻祭"],
+        answer: "C",
+        explanation: "以民因罪被交在異地君王手中，遭受苦難。"
+      },
+      {
+        text: "4. 天主施仁慈的其中一個表現是什麼？",
+        options: ["A. 賜予新君王", "B. 使人民富足", "C. 留下殘存的人", "D. 消除所有罪孽", "E. 建立新約"],
+        answer: "C",
+        explanation: "天主施仁慈，留下殘存的人，給予居所。"
+      },
+      {
+        text: "5. 在奴隸期間，天主如何眷顧以民？",
+        options: ["A. 使他們逃離波斯", "B. 使他們獲得寵遇", "C. 使他們成為司祭", "D. 使他們重獲自由", "E. 使他們建立王國"],
+        answer: "B",
+        explanation: "在奴隸期間，天主使他們在波斯王前獲得寵遇。"
+      },
+      {
+        text: "6. 天主的王權如何描述？",
+        options: ["A. 短暫如晨露", "B. 永遠常存", "C. 隨人心而變", "D. 由人選立", "E. 只在聖殿內彰顯"],
+        answer: "B",
+        explanation: "天主的王權永遠常存，是永生的主宰。"
+      },
+      {
+        text: "7. 天主懲罰人之後會怎樣？",
+        options: ["A. 永遠棄絕", "B. 轉而審判", "C. 再次懲罰", "D. 憐憫並救出", "E. 讓人自我悔改"],
+        answer: "D",
+        explanation: "天主懲罰後仍憐憫人，將人從禍患中救出。"
+      },
+      {
+        text: "8. 以色列子民在外邦人中應有何行動？",
+        options: ["A. 隱藏信仰", "B. 建立聖殿", "C. 頌揚天主", "D. 與外邦人爭戰", "E. 拒絕外邦文化"],
+        answer: "C",
+        explanation: "以民在外邦人中應頌揚天主，彰顯其偉大。"
+      },
+      {
+        text: "9. 天主懲罰以民的原因是什麼？",
+        options: ["A. 他們不獻祭", "B. 他們不守安息日", "C. 他們的不義", "D. 他們不聽先知", "E. 他們拜偶像"],
+        answer: "C",
+        explanation: "懲罰是因為他們的不義，非出於天主的殘酷。"
+      },
+      {
+        text: "10. 多俾亞呼籲罪人應如何回應天主？",
+        options: ["A. 建造聖殿", "B. 行義並悔改", "C. 逃離外邦", "D. 重新獻祭", "E. 成為司祭"],
+        answer: "B",
+        explanation: "多俾亞呼籲罪人悔改並在天主前行義。"
+      },
+      {
+        text: "11. 耶穌召集十二人，賜予他們什麼？",
+        options: ["A. 財富與名聲", "B. 治病與驅魔的能力", "C. 建造聖殿的權柄", "D. 教導法律的智慧", "E. 預言末世的能力"],
+        answer: "B",
+        explanation: "耶穌賜予十二人治病與驅魔的能力與權柄。"
+      },
+      {
+        text: "12. 耶穌吩咐宗徒在路上不可攜帶什麼？",
+        options: ["A. 書卷與香料", "B. 口袋與銀錢", "C. 武器與糧食", "D. 水與酒", "E. 書信與衣袍"],
+        answer: "B",
+        explanation: "耶穌吩咐他們不可帶口袋、銀錢等物，完全信靠天主。"
+      },
+      {
+        text: "13. 宗徒若被拒絕，應如何回應？",
+        options: ["A. 向天主祈禱", "B. 宣告審判", "C. 拂去腳上的塵土", "D. 留下聖言", "E. 轉向其他宗徒"],
+        answer: "C",
+        explanation: "若被拒絕，宗徒要拂去腳上的塵土，作為證據。"
+      },
+      {
+        text: "14. 宗徒的使命包括哪些內容？",
+        options: ["A. 建造聖殿", "B. 宣講天主的國並治病", "C. 教導法律與誡命", "D. 審判罪人", "E. 替人獻祭"],
+        answer: "B",
+        explanation: "宗徒被派遣宣講天主的國並治病。"
+      },
+      {
+        text: "15. 宗徒的行動結果是什麼？",
+        options: ["A. 被人驅逐", "B. 建立教會", "C. 宣傳喜訊，到處治病", "D. 成為君王", "E. 被立為司祭"],
+        answer: "C",
+        explanation: "他們週遊各鄉村，宣傳喜訊，到處治病。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
