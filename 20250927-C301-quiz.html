@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十五周星期六 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十五周星期六 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 匝加利亞看見那人手中拿著什麼？",
+        options: ["A. 火把", "B. 書卷", "C. 繩墨", "D. 權杖", "E. 香爐"],
+        answer: "C",
+        explanation: "繩墨是用來測量的工具，象徵上主對耶路撒冷的關注與計劃。"
+      },
+      {
+        text: "2. 那人說他要做什麼？",
+        options: ["A. 建造聖殿", "B. 測量耶路撒冷", "C. 宣講上主的話", "D. 召集百姓", "E. 獻祭於聖所"],
+        answer: "B",
+        explanation: "他說：「我要去測量耶路撒冷，看她有多寬多長。」。"
+      },
+      {
+        text: "3. 上主說祂要作耶路撒冷的什麼？",
+        options: ["A. 城門", "B. 牧者", "C. 火牆", "D. 審判者", "E. 天使"],
+        answer: "C",
+        explanation: "上主親自說：「我要作她四周的火牆，作她中間的榮耀。」。"
+      },
+      {
+        text: "4. 耶路撒冷將成為怎樣的區域？",
+        options: ["A. 被毀的城", "B. 無人居住之地", "C. 無邊際的區域", "D. 被外邦統治的地方 ", "E. 聖殿的中心"],
+        answer: "C",
+        explanation: "因為其中的人畜太多，耶路撒冷將成為無邊際的區域。"
+      },
+      {
+        text: "5. 上主對熙雍女子說了什麼？",
+        options: ["A. 要悔改", "B. 要逃離", "C. 歡呼喜樂", "D. 要守誡命", "E. 要建聖殿"],
+        answer: "C",
+        explanation: "「熙雍女子，歡呼喜樂吧！因為我要來住在你中間。」。"
+      },
+      {
+        text: "6. 耶肋米亞先知書說︰上主要聚集以色列人，像誰看守羊群？",
+        options: ["A. 司祭", "B. 君王", "C. 牧童", "D. 先知", "E. 天使"],
+        answer: "C",
+        explanation: "「看守他們像牧童看守自己的羊群。」。"
+      },
+      {
+        text: "7. 耶肋米亞先知書說︰上主要從誰的手中贖回雅各伯？",
+        options: ["A. 撒瑪黎雅人", "B. 外邦君王", "C. 比他更強者", "D. 法利塞人", "E. 羅馬人"],
+        answer: "C",
+        explanation: "「從比他更強者的手中將他贖回。」。"
+      },
+      {
+        text: "8. 耶肋米亞先知書說︰百姓將在哪裡歡呼？",
+        options: ["A. 耶路撒冷城門", "B. 熙雍山巔", "C. 聖殿庭院", "D. 約旦河畔", "E. 加里肋亞湖邊"],
+        answer: "B",
+        explanation: "「他們將要前來，在熙雍山巔歡呼。」。"
+      },
+      {
+        text: "9. 耶肋米亞先知書說︰誰將在那時歡欣鼓舞？",
+        options: ["A. 司祭與長老", "B. 外邦人", "C. 處女", "D. 先知", "E. 天使"],
+        answer: "C",
+        explanation: "「那時，處女必歡欣鼓舞。」。"
+      },
+      {
+        text: "10. 耶肋米亞先知書說︰上主將使百姓的悲哀變成什麼？",
+        options: ["A. 平安", "B. 豐收", "C. 喜樂", "D. 審判", "E. 祈禱"],
+        answer: "C",
+        explanation: "「我將使他們的悲哀變成喜樂。」。"
+      },
+      {
+        text: "11. 路加福音 9:43-45提到︰眾人對耶穌所作的一切有何反應？",
+        options: ["A. 懷疑", "B. 驚奇", "C. 憤怒", "D. 沉默", "E. 悔改"],
+        answer: "B",
+        explanation: "「當眾人驚奇耶穌所作的一切時…」。"
+      },
+      {
+        text: "12. 路加福音 9:43-45提到︰耶穌對門徒說要謹記什麼話？",
+        options: ["A. 要愛人如己", "B. 要常祈禱", "C. 人子將要被交於人的手中", "D. 要守安息日", "E. 要宣講福音"],
+        answer: "C",
+        explanation: "「你們應謹記這些話：人子將要被交於人的手中。」。"
+      },
+      {
+        text: "13. 伯多祿如何回答耶穌「你們說我是誰」的問題？",
+        options: ["A. 立即理解", "B. 開始爭論", "C. 不明瞭", "D. 喜樂歡呼", "E. 傳報給群眾"],
+        answer: "C",
+        explanation: "「但他們不明瞭這話…」。"
+      },
+      {
+        text: "14. 路加福音 9:43-45提到︰這話對門徒來說是怎樣的？",
+        options: ["A. 清楚明白", "B. 蒙蔽著", "C. 已實現", "D. 被遺忘", "E. 被拒絕"],
+        answer: "B",
+        explanation: "「這話為他們還是蒙蔽著…」。"
+      },
+      {
+        text: "15. 路加福音 9:43-45提到︰門徒為何不敢問耶穌這話的意思？",
+        options: ["A. 怕被責備", "B. 怕群眾聽見", "C. 怕問他這話的意思", "D. 怕違反法律", "E. 怕失去信心"],
+        answer: "C",
+        explanation: "「他們又怕問他這話的意思。」。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
