@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十五周星期五 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十五周星期五 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 上主藉哈蓋先知向誰傳達訊息？",
+        options: ["A. 達味王與撒羅滿", "B. 則魯巴貝耳與耶叔亞及遺民", "C. 厄斯德拉與乃赫米雅", "D. 瑪加伯兄弟", "E. 匝加利亞與馬拉基亞"],
+        answer: "B",
+        explanation: "上主藉哈蓋向則魯巴貝耳、耶叔亞及遺民說話。"
+      },
+      {
+        text: "2. 上主鼓勵百姓要怎樣面對重建聖殿的挑戰？",
+        options: ["A. 逃避困難", "B. 依靠外邦援助", "C. 努力工作，因為祂與他們同在", "D. 等候天使幫助", "E. 專注於個人修行"],
+        answer: "C",
+        explanation: "上主鼓勵他們努力工作，因祂與他們同在。"
+      },
+      {
+        text: "3. 上主提到祂與以色列人訂立盟約是在何時？",
+        options: ["A. 在巴比倫流亡時", "B. 在耶路撒冷重建時", "C. 在出離埃及時", "D. 在梅瑟領受十誡時", "E. 在達味王登基時"],
+        answer: "C",
+        explanation: "上主提到祂在以色列人出離埃及時與他們訂立盟約。"
+      },
+      {
+        text: "4. 上主說祂將震動哪些事物？",
+        options: ["A. 只有地面", "B. 天地海陸與萬民 ", "C. 只有萬民的心", "D. 只有聖殿 ", "E. 只有猶大地"],
+        answer: "B",
+        explanation: "上主說要震動天地海陸與萬民。"
+      },
+      {
+        text: "5. 關於聖殿的光榮，上主如何形容後起的殿宇？",
+        options: ["A. 不如昔日", "B. 與昔日相同", "C. 比以前更光榮", "D. 將被遺忘", "E. 將成為廢墟"],
+        answer: "C",
+        explanation: "上主說後起的殿宇光榮將超越昔日。"
+      },
+      {
+        text: "6. 聖詠詠唱者向天主祈求什麼？",
+        options: ["A. 財富與權勢", "B. 復仇與懲罰", "C. 伸冤與救援", "D. 榮耀與名聲", "E. 長壽與健康"],
+        answer: "C",
+        explanation: "聖詠詠唱者求天主伸冤並救他脫離邪惡。"
+      },
+      {
+        text: "7. 聖詠詠唱者形容天主是他的什麼？",
+        options: ["A. 教師", "B. 勇力", "C. 審判者", "D. 朋友", "E. 牧者"],
+        answer: "B",
+        explanation: "天主被形容為聖詠詠唱者的勇力。"
+      },
+      {
+        text: "8. 聖詠詠唱者希望天主的光明與真道引領他到那裡？",
+        options: ["A. 耶路撒冷城牆", "B. 聖殿外院", "C. 天主的聖山與居所", "D. 會幕之中", "E. 先知的墓地"],
+        answer: "C",
+        explanation: "聖詠詠唱者希望被引領到天主的聖山與居所。"
+      },
+      {
+        text: "9. 聖詠詠唱者在天主祭壇前要做什麼？",
+        options: ["A. 獻上燔祭", "B. 默禱", "C. 彈琴頌讚", "D. 宣講聖言", "E. 沉默守候"],
+        answer: "C",
+        explanation: "聖詠說「他要在祭壇前彈琴頌讚天主」。"
+      },
+      {
+        text: "10. 聖詠詠唱者在仇敵壓迫下的感受是什麼？",
+        options: ["A. 憤怒", "B. 喜樂", "C. 憂傷", "D. 平靜", "E. 驚訝"],
+        answer: "C",
+        explanation: "聖詠詠唱者在仇敵壓迫下感到憂傷。"
+      },
+      {
+        text: "11. 耶穌在問門徒之前正在做什麼？",
+        options: ["A. 傳道", "B. 醫治病人", "C. 獨自祈禱", "D. 教導群眾", "E. 進食"],
+        answer: "C",
+        explanation: "耶穌在問門徒前獨自祈禱。"
+      },
+      {
+        text: "12. 眾人認為耶穌可能是誰？以下哪一項不是他們的回答？",
+        options: ["A. 洗者若翰", "B. 厄里亞", "C. 古時的一位先知復活", "D. 默西亞", "E. 先知之一"],
+        answer: "D",
+        explanation: "默西亞是伯多祿的回答，非眾人的猜測。"
+      },
+      {
+        text: "13. 伯多祿如何回答耶穌「你們說我是誰」的問題？",
+        options: ["A. 你是洗者若翰", "B. 你是厄里亞", "C. 你是默西亞", "D. 你是天主的受傅者", "E. 你是天主子"],
+        answer: "D",
+        explanation: "伯多祿說：「你是天主的受傅者。」。"
+      },
+      {
+        text: "14. 耶穌囑咐門徒不要把祂是默西亞的事告訴人，原因之一是什麼？",
+        options: ["A. 時候未到", "B. 群眾不會相信", "C. 祂要先受苦與死亡", "D. 門徒尚未明白", "E. 祂尚未顯神蹟"],
+        answer: "C",
+        explanation: "耶穌說人子將受苦與死亡，故囑咐門徒保密。"
+      },
+      {
+        text: "15. 耶穌預告人子將遭遇什麼？",
+        options: ["A. 被擁立為王", "B. 被長老、司祭長和經師們棄絕", "C. 被群眾歡迎", "D. 被天使接走", "E. 被門徒背叛"],
+        answer: "B",
+        explanation: "耶穌預告人子將被宗教領袖棄絕並被殺。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
