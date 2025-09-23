@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 九月二十九日 聖彌額爾、聖加俾額爾及聖辣法耳總領天使慶日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 九月二十九日 聖彌額爾、聖加俾額爾及聖辣法耳總領天使慶日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《達尼爾先知書 7:9-10,13-14》，萬古常存者的衣服被形容為：",
+        options: ["A. 金光閃閃", "B. 紅如火焰", "C. 潔白如雪", "D. 青如碧玉", "E. 紫如皇袍"],
+        answer: "C",
+        explanation: "經文明言萬古常存者衣服潔白如雪。"
+      },
+      {
+        text: "2. 根據《達尼爾先知書 7:9-10,13-14》，審判開始時，案卷的狀況是：",
+        options: ["A. 被焚毀", "B. 被封印", "C. 展開了", "D. 被藏起", "E. 被撕裂"],
+        answer: "C",
+        explanation: "「案卷已展開」象徵審判開始。"
+      },
+      {
+        text: "3. 根據《達尼爾先知書 7:9-10,13-14》，相似人子者乘著什麼而來？",
+        options: ["A. 馬車", "B. 火焰", "C. 天上的雲彩", "D. 天使的翅膀", "E. 光耀的星辰"],
+        answer: "C",
+        explanation: "人子乘雲而來，象徵神聖與榮耀。"
+      },
+      {
+        text: "4. 根據《達尼爾先知書 7:9-10,13-14》，萬古常存者賜給似人子者的王權是：",
+        options: ["A. 暫時的", "B. 地上的", "C. 永遠的", "D. 隱藏的", "E. 分裂的"],
+        answer: "C",
+        explanation: "王權永存不替，國度永不滅亡。"
+      },
+      {
+        text: "5. 根據《答唱詠 聖詠 138:1-5》，詩人稱謝上主的原因之一是：",
+        options: ["A. 上主賜予財富", "B. 上主俯聽了祈禱", "C. 上主懲罰了敵人", "D. 上主顯現於雲中", "E. 上主賜予王位"],
+        answer: "B",
+        explanation: "上主俯聽了祈禱 — 詩人因祈禱被俯允而稱謝。"
+      },
+      {
+        text: "6. 根據《答唱詠 聖詠 138:1-5》，詩人在哪裡伏地致敬？",
+        options: ["A. 城門口", "B. 聖所", "C. 山頂", "D. 祭壇前", "E. 河邊"],
+        answer: "B",
+        explanation: "他在聖所伏地致敬。"
+      },
+      {
+        text: "7. 根據《答唱詠 聖詠 138:1-5》，上主的名號與諾言在何處被彰顯？",
+        options: ["A. 天使之間", "B. 先知之中", "C. 萬物與萬民面前", "D. 聖殿之內", "E. 以色列境內"],
+        answer: "C",
+        explanation: "萬物與萬民面前 — 上主的名號與諾言被彰顯於萬民前。"
+      },
+      {
+        text: "8. 根據《答唱詠 聖詠 138:1-5》，上主增強詩人哪方面的力量？",
+        options: ["A. 肉體", "B. 財富", "C. 靈魂", "D. 智慧", "E. 勇氣"],
+        answer: "C",
+        explanation: "上主增強詩人靈魂的力量。"
+      },
+      {
+        text: "9. 根據《默示錄 12:7-12》，天上戰爭的主將是：",
+        options: ["A. 加俾額爾", "B. 若望", "C. 撒殫", "D. 彌額爾", "E. 若瑟"],
+        answer: "D",
+        explanation: "他是天主的戰將，領軍對抗龍。"
+      },
+      {
+        text: "10. 根據《默示錄 12:7-12》，那龍又被稱為：",
+        options: ["A. 撒殫", "B. 魔鬼", "C. 遠古的蛇", "D. 控告者", "E. 以上皆是"],
+        answer: "E",
+        explanation: "龍有多重稱號：魔鬼、撒殫、遠古的蛇、控告者。"
+      },
+      {
+        text: "11. 根據《默示錄 12:7-12》，控告者被摔下的地方是：",
+        options: ["A. 地獄", "B. 地上", "C. 海中", "D. 黑暗之地", "E. 火湖"],
+        answer: "B",
+        explanation: "龍與使者被摔到地上。"
+      },
+      {
+        text: "12. 根據《默示錄 12:7-12》，弟兄們得勝的原因之一是：",
+        options: ["A. 他們的武器", "B. 他們的智慧", "C. 羔羊的血", "D. 天使的幫助", "E. 聖母的代禱"],
+        answer: "C",
+        explanation: "弟兄們賴羔羊的血與見證得勝。"
+      },
+      {
+        text: "13. 
+13. 根據《若望福音 1:47-51》，耶穌讚賞納塔乃耳的特質是：",
+        options: ["A. 勇敢", "B. 智慧", "C. 毫無詭詐", "D. 富有", "E. 忍耐"],
+        answer: "C",
+        explanation: "耶穌讚賞納塔乃耳心中無詭詐。"
+      },
+      {
+        text: "14. 根據《若望福音 1:47-51》，納塔乃耳在何處被耶穌看見？",
+        options: ["A. 聖殿", "B. 河邊", "C. 無花果樹下", "D. 家中", "E. 山上"],
+        answer: "C",
+        explanation: "耶穌在斐理伯叫他以前已看見他在樹下。"
+      },
+      {
+        text: "15. 根據《若望福音 1:47-51》，納塔乃耳稱耶穌為：",
+        options: ["A. 先知", "B. 天主子", "C. 以色列的君王", "D. 辣彼", "E. 以上皆是"],
+        answer: "E",
+        explanation: "納塔乃耳稱耶穌為辣彼、天主子、以色列的君王。"
+      },
+      {
+        text: "16. 根據《若望福音 1:47-51》，耶穌預言門徒將看見：",
+        options: ["A. 火焰降下", "B. 天主的審判", "C. 天開了，天使在人子身上上下來 ", "D. 聖神如鴿降臨", "E. 祂在水上行走"],
+        answer: "C",
+        explanation: "耶穌預言門徒將見此異象。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
