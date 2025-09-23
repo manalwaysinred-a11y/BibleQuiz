@@ -1,199 +1,1255 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
-  <title>丙年 九月二十九日 聖彌額爾、聖加俾額爾及聖辣法耳總領天使慶日 彌撒讀經小測試</title>
-  <style>
-    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
-    h1 { color: #2c3e50; }
-    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
-    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
-    .options label { display: block; margin: 5px 0; }
-    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
-    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
-  </style>
-</head>
-<body>
-  <h1>📖 丙年 九月二十九日 聖彌額爾、聖加俾額爾及聖辣法耳總領天使慶日 彌撒讀經小測試</h1>
-  <div id="timer">⏱️ 剩餘時間：15 秒</div>
-  <div id="questionBox"></div>
-  <div id="result"></div>
+C302
+C302-YrC,OT,26wk01, 28-September-2025 丙年 常年期第二十六主日 彌撒讀經反省分享日用天糧 一日一章 聖經 C302C
 
-  <!-- 音效 -->
-  <audio id="correctSound" src="correct.mp3"></audio>
-  <audio id="wrongSound" src="wrong.mp3"></audio>
+Sunday of 26th week of  Ordinary Time
+Sunday 28-September-2025   9,28
+==== 
 
-  <script>
-    const questions = [
-      {
-        text: "1. 根據《達尼爾先知書 7:9-10,13-14》，萬古常存者的衣服被形容為：",
-        options: ["A. 金光閃閃", "B. 紅如火焰", "C. 潔白如雪", "D. 青如碧玉", "E. 紫如皇袍"],
-        answer: "C",
-        explanation: "經文明言萬古常存者衣服潔白如雪。"
-      },
-      {
-        text: "2. 根據《達尼爾先知書 7:9-10,13-14》，審判開始時，案卷的狀況是：",
-        options: ["A. 被焚毀", "B. 被封印", "C. 展開了", "D. 被藏起", "E. 被撕裂"],
-        answer: "C",
-        explanation: "「案卷已展開」象徵審判開始。"
-      },
-      {
-        text: "3. 根據《達尼爾先知書 7:9-10,13-14》，相似人子者乘著什麼而來？",
-        options: ["A. 馬車", "B. 火焰", "C. 天上的雲彩", "D. 天使的翅膀", "E. 光耀的星辰"],
-        answer: "C",
-        explanation: "人子乘雲而來，象徵神聖與榮耀。"
-      },
-      {
-        text: "4. 根據《達尼爾先知書 7:9-10,13-14》，萬古常存者賜給似人子者的王權是：",
-        options: ["A. 暫時的", "B. 地上的", "C. 永遠的", "D. 隱藏的", "E. 分裂的"],
-        answer: "C",
-        explanation: "王權永存不替，國度永不滅亡。"
-      },
-      {
-        text: "5. 根據《答唱詠 聖詠 138:1-5》，詩人稱謝上主的原因之一是：",
-        options: ["A. 上主賜予財富", "B. 上主俯聽了祈禱", "C. 上主懲罰了敵人", "D. 上主顯現於雲中", "E. 上主賜予王位"],
-        answer: "B",
-        explanation: "上主俯聽了祈禱 — 詩人因祈禱被俯允而稱謝。"
-      },
-      {
-        text: "6. 根據《答唱詠 聖詠 138:1-5》，詩人在哪裡伏地致敬？",
-        options: ["A. 城門口", "B. 聖所", "C. 山頂", "D. 祭壇前", "E. 河邊"],
-        answer: "B",
-        explanation: "他在聖所伏地致敬。"
-      },
-      {
-        text: "7. 根據《答唱詠 聖詠 138:1-5》，上主的名號與諾言在何處被彰顯？",
-        options: ["A. 天使之間", "B. 先知之中", "C. 萬物與萬民面前", "D. 聖殿之內", "E. 以色列境內"],
-        answer: "C",
-        explanation: "萬物與萬民面前 — 上主的名號與諾言被彰顯於萬民前。"
-      },
-      {
-        text: "8. 根據《答唱詠 聖詠 138:1-5》，上主增強詩人哪方面的力量？",
-        options: ["A. 肉體", "B. 財富", "C. 靈魂", "D. 智慧", "E. 勇氣"],
-        answer: "C",
-        explanation: "上主增強詩人靈魂的力量。"
-      },
-      {
-        text: "9. 根據《默示錄 12:7-12》，天上戰爭的主將是：",
-        options: ["A. 加俾額爾", "B. 若望", "C. 撒殫", "D. 彌額爾", "E. 若瑟"],
-        answer: "D",
-        explanation: "他是天主的戰將，領軍對抗龍。"
-      },
-      {
-        text: "10. 根據《默示錄 12:7-12》，那龍又被稱為：",
-        options: ["A. 撒殫", "B. 魔鬼", "C. 遠古的蛇", "D. 控告者", "E. 以上皆是"],
-        answer: "E",
-        explanation: "龍有多重稱號：魔鬼、撒殫、遠古的蛇、控告者。"
-      },
-      {
-        text: "11. 根據《默示錄 12:7-12》，控告者被摔下的地方是：",
-        options: ["A. 地獄", "B. 地上", "C. 海中", "D. 黑暗之地", "E. 火湖"],
-        answer: "B",
-        explanation: "龍與使者被摔到地上。"
-      },
-      {
-        text: "12. 根據《默示錄 12:7-12》，弟兄們得勝的原因之一是：",
-        options: ["A. 他們的武器", "B. 他們的智慧", "C. 羔羊的血", "D. 天使的幫助", "E. 聖母的代禱"],
-        answer: "C",
-        explanation: "弟兄們賴羔羊的血與見證得勝。"
-      },
-      {
-        text: "13. 
-13. 根據《若望福音 1:47-51》，耶穌讚賞納塔乃耳的特質是：",
-        options: ["A. 勇敢", "B. 智慧", "C. 毫無詭詐", "D. 富有", "E. 忍耐"],
-        answer: "C",
-        explanation: "耶穌讚賞納塔乃耳心中無詭詐。"
-      },
-      {
-        text: "14. 根據《若望福音 1:47-51》，納塔乃耳在何處被耶穌看見？",
-        options: ["A. 聖殿", "B. 河邊", "C. 無花果樹下", "D. 家中", "E. 山上"],
-        answer: "C",
-        explanation: "耶穌在斐理伯叫他以前已看見他在樹下。"
-      },
-      {
-        text: "15. 根據《若望福音 1:47-51》，納塔乃耳稱耶穌為：",
-        options: ["A. 先知", "B. 天主子", "C. 以色列的君王", "D. 辣彼", "E. 以上皆是"],
-        answer: "E",
-        explanation: "納塔乃耳稱耶穌為辣彼、天主子、以色列的君王。"
-      },
-      {
-        text: "16. 根據《若望福音 1:47-51》，耶穌預言門徒將看見：",
-        options: ["A. 火焰降下", "B. 天主的審判", "C. 天開了，天使在人子身上上下來 ", "D. 聖神如鴿降臨", "E. 祂在水上行走"],
-        answer: "C",
-        explanation: "耶穌預言門徒將見此異象。"
-      }
-    ];
+九月二十八日
+日用天糧 C302C,9,28 丙年 常年期第二十六主日 彌撒讀經 粵語版 YrC,OT,26wk01C #一日一章
 
-    let current = 0;
-    let score = 0;
-    let timer;
-    const questionBox = document.getElementById("questionBox");
-    const timerDisplay = document.getElementById("timer");
-    const resultBox = document.getElementById("result");
+https://youtu.be/78e96yRYX_U
 
-    function loadQuestion() {
-      if (current >= questions.length) {
-        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
-        timerDisplay.style.display = "none";
-        return;
-      }
 
-      const q = questions[current];
-      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
-      q.options.forEach((opt, i) => {
-        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
-      });
-      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
-      questionBox.innerHTML = html;
-      startTimer();
-    }
+請你聽完今天視頻的所有經文後按下列捷徑去考考你記得多少有關經文的內容？
 
-    function startTimer() {
-      let time = 15;
-      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
-      clearInterval(timer);
-      timer = setInterval(() => {
-        time--;
-        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
-        if (time <= 0) {
-          clearInterval(timer);
-          submitAnswer(true);
-        }
-      }, 1000);
-    }
+https://manalwaysinred-a11y.github.io/BibleQuiz/20250928-C302-quiz.html
 
-    function submitAnswer(auto = false) {
-      clearInterval(timer);
-      const selected = document.querySelector('input[name="option"]:checked');
-      const correct = questions[current].answer;
-      const explanation = questions[current].explanation;
-      const explainBox = document.getElementById("explain" + current);
 
-      if (!selected && !auto) {
-        alert("請選擇一個答案！");
-        return;
-      }
+=*====丙年常年期第二十六主日==讀經反省分享=======
 
-      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
-      if (userAnswer === correct) {
-        score++;
-        document.getElementById("correctSound").play();
-        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
-      } else {
-        document.getElementById("wrongSound").play();
-        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
-      }
+https://youtube.com/shorts/sZ2X0FllRmA
 
-      setTimeout(() => {
-        current++;
-        loadQuestion();
-      }, 3000);
-    }
+🔥反省🔥《富者與貧者的創造主》🔥聖奧思定的講道詞🔥丙年常年期第二十六主日 #日用天糧🔥C302S🔥9,28🔥
 
-    loadQuestion();
-  </script>
-</body>
-</html>
+=*====丙年常年期第二十六主日==每日向主祈禱========
+
+https://youtube.com/shorts/s6m53YjXuvY
+
+🔥主耶穌，你是我的喜樂與至寶。求你使我在你天國的恩寵中富足，並賜我慷慨的心🔥丙年常年期第二十六主日🔥C302P🔥9,28🔥日用天糧🔥
+
+=*====丙年常年期第二十六主日==福音詩========
+
+https://youtube.com/shorts/6hHfbyEw5sM
+
+🔥福音詩題-《義德之道》《聖召》🔥路加福音　16︰19-31🔥丙年 常年期第二十六主日 #日用天糧🔥P302🔥9,28🔥
+
+******
+
+
+🔥🔥🔥🔥粵語版  彌撒讀經 日用天糧🔥 #日用天糧 #Yeshua_Word_of_Life_for_ALL 🔥🔥🔥🔥
+
+
+亞毛斯先知書　6:1, 4-7　答唱詠　聖詠　146:7-10　保祿宗徒致弟茂德前書　6:11-16　路加福音　16:19-31
+
+
+九月二十八日
+日用天糧 C302C,9,28 丙年 常年期第二十六主日 彌撒讀經 粵語版 YrC,OT,26wk01C #一日一章
+
+https://youtu.be/
+
+
+🔥🔥🔥🔥粵語版  彌撒讀經 日用天糧🔥 #日用天糧 #Yeshua_Word_of_Life_for_ALL 🔥🔥🔥🔥
+
+丙年 常年期第二十六主日
+
+亞毛斯先知書　6:1, 4-7
+
+全能的上主這樣說：「那些安身於熙雍，自恃於撒瑪黎雅山，自命為諸民之首的人，是有禍的。他們躺在象牙床上，橫臥在軟榻上，吃著羊群中的羊羔，及牛欄中的牛犢，伴著琴聲吟詠，自比達味，發明樂器，大碗喝酒，以上等的油抹身，但對若瑟的崩潰，卻漠不關心。為此，這些人，現在就要先被擄去；放蕩不羈者的狂歡，也就完了。」
+
+答唱詠　聖詠　146:7-10
+
+上主為被欺壓的人辯護；上主賜食物給飢餓的人；上主使被囚的人，獲得自由。上主開啟瞎子的眼睛；上主使傴僂的人挺身；上主喜愛正義的人；上主保護旅客。上主扶助孤兒寡婦；上主迷惑惡人的道路。願上主永遠為王！熙雍，你的天主萬壽無疆！
+
+保祿宗徒致弟茂德前書　6:11-16
+
+天主的人哪！你要追求正義、虔敬、信德、愛德、堅忍和良善；要努力打這場有關信仰的好仗；要爭取永生。你正是為此而蒙召，並為此，在許多證人面前，宣示了你那美好的誓言。我在使萬有生活的天主前，及在曾對般雀比拉多宣示過美好誓言的基督耶穌前，命令你：務要保守這訓令，不受玷污，無可指摘，直到天主在預定的時期，使我們的主耶穌基督，顯現出來。天主是那真福、唯一全能者，萬王之王，萬主之主，獨享不死不滅者，住於不可接近的光明中，沒有人看見過，也不能看見的。願尊威和永遠的權能，歸於他！亞孟。
+
+路加福音　16:19-31
+
+那時候，耶穌對法利塞人說：「有一個富翁，身穿紫紅袍及細麻衣，天天奢華宴樂。另有一個乞丐，名叫拉匝祿，滿身瘡痍，躺臥在富翁的大門前。拉匝祿指望得到從富翁桌上掉下的碎屑充飢，但只有狗來舔他的瘡痍。那乞丐死了，天使把他送到亞巴郎的懷抱裡。那個富翁也死了，被人埋葬了。「那富翁在陰間，痛苦地舉目一望，遠遠看見亞巴郎，及在他懷中的拉匝祿，便喊叫說：父親亞巴郎！可憐我吧！請打發拉匝祿，用他的指尖，蘸點水，來涼潤我的舌頭，因為我在這火燄中，非常痛苦。「亞巴郎說：孩子，你應記得，你活著的時候，已享盡了你的福，而拉匝祿同樣也受盡了苦。現在，他在這裡受安慰，而你應受苦了。除此之外，在我們與你們之間，隔著一個巨大的深淵，就算有人願意，從這邊去到你們那邊，也不可能，從那邊來到我們這邊，也不可能。「那富翁說：父親！那麼，就請你打發拉匝祿到我家去，因為我有五個兄弟，叫拉匝祿警告他們，免得他們也來到這痛苦的地方。「亞巴郎說：他們自有梅瑟及先知，讓他們聽從好了。「那富翁說：不，父親亞巴郎！倘若有人從死者中，到他們那裡，他們必會悔改。「亞巴郎給他說：如果他們不聽從梅瑟及先知，縱使有人從死者中復活，他們也不會信服。」
+
+00:00 開始
+00:06 讀經
+06:01 結束
+
+Listening To God's Word (一日一章聖經網): http://listeningtogodsword.worthyofpraise.org/
+Facebook: https://www.facebook.com/Stanley.Law.Listening.to.God.s.Word
+YouTube:  
+Yeshua-Word of Life for ALL
+https://www.youtube.com/channel/UCSBZPf8ukB4wVlRSTYlfC7Q/
+
+***
+Yeshua-Word of Life for ALL,日用天糧,常年期,甲年,乙年,丙年,每日彌撒讀經,每日彌撒,讀經分享,祈禱,一日一章,聖經,福音詩,ACAD,Listening To God's Word,Gospel Reflection
 
 
 
+亞毛斯先知書　6:1, 4-7　答唱詠　聖詠　146:7-10　保祿宗徒致弟茂德前書　6:11-16　路加福音　16:19-31
+
+
+
+
+C302C 
+丙年 常年期第二十六主日
+
+
+亞毛斯先知書　6:1, 4-7
+
+全能的上主這樣說：
+「那些安身於熙雍，
+自恃於撒瑪黎雅山，
+自命為諸民之首的人，
+是有禍的。
+他們躺在象牙床上，
+橫臥在軟榻上，
+吃著羊群中的羊羔，
+及牛欄中的牛犢，
+伴著琴聲吟詠，
+自比達味，
+發明樂器，
+大碗喝酒，
+以上等的油抹身，
+但對若瑟的崩潰，
+卻漠不關心。
+為此，
+這些人，
+現在就要先被擄去；
+放蕩不羈者的狂歡，
+也就完了。」
+
+
+答唱詠　聖詠　146:7-10
+
+上主為被欺壓的人辯護；
+上主賜食物給飢餓的人；
+上主使被囚的人，
+獲得自由。
+上主開啟瞎子的眼睛；
+上主使傴僂的人挺身；
+上主喜愛正義的人；
+上主保護旅客。
+上主扶助孤兒寡婦；
+上主迷惑惡人的道路。
+願上主永遠為王！
+熙雍，
+你的天主萬壽無疆！
+
+
+保祿宗徒致弟茂德前書　6:11-16
+
+天主的人哪！
+你要追求正義、
+虔敬、
+信德、
+愛德、
+堅忍和良善；
+要努力打這場有關信仰的好仗；
+要爭取永生。
+你正是為此而蒙召，
+並為此，
+在許多證人面前，
+宣示了你那美好的誓言。
+我在使萬有生活的天主前，
+及在曾對般雀比拉多宣示過美好誓言的基督耶穌前，
+命令你：
+務要保守這訓令，
+不受玷污，
+無可指摘，
+直到天主在預定的時期，
+使我們的主耶穌基督，
+顯現出來。
+天主是那真福、
+唯一全能者，
+萬王之王，
+萬主之主，
+獨享不死不滅者，
+住於不可接近的光明中，
+沒有人看見過，
+也不能看見的。
+願尊威和永遠的權能，
+歸於他！
+亞孟。
+
+
+路加福音　16:19-31
+
+那時候，
+耶穌對法利塞人說：
+「有一個富翁，
+身穿紫紅袍及細麻衣，
+天天奢華宴樂。
+另有一個乞丐，
+名叫拉匝祿，
+滿身瘡痍，
+躺臥在富翁的大門前。
+拉匝祿指望得到從富翁桌上掉下的碎屑充飢，
+但只有狗來舔他的瘡痍。
+那乞丐死了，
+天使把他送到亞巴郎的懷抱裡。
+那個富翁也死了，
+被人埋葬了。
+「那富翁在陰間，
+痛苦地舉目一望，
+遠遠看見亞巴郎，
+及在他懷中的拉匝祿，
+便喊叫說：
+父親亞巴郎！
+可憐我吧！
+請打發拉匝祿，
+用他的指尖，
+蘸點水，
+來涼潤我的舌頭，
+因為我在這火燄中，
+非常痛苦。
+「亞巴郎說：
+孩子，
+你應記得，
+你活著的時候，
+已享盡了你的福，
+而拉匝祿同樣也受盡了苦。
+現在，
+他在這裡受安慰，
+而你應受苦了。
+除此之外，
+在我們與你們之間，
+隔著一個巨大的深淵，
+就算有人願意，
+從這邊去到你們那邊，
+也不可能，
+從那邊來到我們這邊，
+也不可能。
+「那富翁說：
+父親！
+那麼，
+就請你打發拉匝祿到我家去，
+因為我有五個兄弟，
+叫拉匝祿警告他們，
+免得他們也來到這痛苦的地方。
+「亞巴郎說：
+他們自有梅瑟及先知，
+讓他們聽從好了。
+「那富翁說：
+不，
+父親亞巴郎！
+倘若有人從死者中，
+到他們那裡，
+他們必會悔改。
+「亞巴郎給他說：
+如果他們不聽從梅瑟及先知，
+縱使有人從死者中復活，
+他們也不會信服。」
+
+
+
+
+亞毛斯先知書　6:1, 4-7
+
+全能的上主這樣說：
+「那些安身於熙雍，
+自恃於撒瑪黎雅山，
+自命為諸民之首的人，
+是有禍的。
+他們躺在象牙床上，
+橫臥在軟榻上，
+吃著羊群中的羊羔，
+及牛欄中的牛犢，
+伴著琴聲吟詠，
+自比達味，
+發明樂器，
+大碗喝酒，
+以上等的油抹身，
+但對若瑟的崩潰，
+卻漠不關心。
+為此，
+這些人，
+現在就要先被擄去；
+放蕩不羈者的狂歡，
+也就完了。」
+
+
+答唱詠　聖詠　146:7-10
+
+上主為被欺壓的人辯護；
+上主賜食物給飢餓的人；
+上主使被囚的人，
+獲得自由。
+上主開啟瞎子的眼睛；
+上主使傴僂的人挺身；
+上主喜愛正義的人；
+上主保護旅客。
+上主扶助孤兒寡婦；
+上主迷惑惡人的道路。
+願上主永遠為王！
+熙雍，
+你的天主萬壽無疆！
+
+
+保祿宗徒致弟茂德前書　6:11-16
+
+天主的人哪！
+你要追求正義、
+虔敬、
+信德、
+愛德、
+堅忍和良善；
+要努力打這場有關信仰的好仗；
+要爭取永生。
+你正是為此而蒙召，
+並為此，
+在許多證人面前，
+宣示了你那美好的誓言。
+我在使萬有生活的天主前，
+及在曾對般雀比拉多宣示過美好誓言的基督耶穌前，
+命令你：
+務要保守這訓令，
+不受玷污，
+無可指摘，
+直到天主在預定的時期，
+使我們的主耶穌基督，
+顯現出來。
+天主是那真福、
+唯一全能者，
+萬王之王，
+萬主之主，
+獨享不死不滅者，
+住於不可接近的光明中，
+沒有人看見過，
+也不能看見的。
+願尊威和永遠的權能，
+歸於他！
+亞孟。
+
+
+路加福音　16:19-31
+
+那時候，
+耶穌對法利塞人說：
+「有一個富翁，
+身穿紫紅袍及細麻衣，
+天天奢華宴樂。
+另有一個乞丐，
+名叫拉匝祿，
+滿身瘡痍，
+躺臥在富翁的大門前。
+拉匝祿指望得到從富翁桌上掉下的碎屑充飢，
+但只有狗來舔他的瘡痍。
+那乞丐死了，
+天使把他送到亞巴郎的懷抱裡。
+那個富翁也死了，
+被人埋葬了。
+「那富翁在陰間，
+痛苦地舉目一望，
+遠遠看見亞巴郎，
+及在他懷中的拉匝祿，
+便喊叫說：
+父親亞巴郎！
+可憐我吧！
+請打發拉匝祿，
+用他的指尖，
+蘸點水，
+來涼潤我的舌頭，
+因為我在這火燄中，
+非常痛苦。
+「亞巴郎說：
+孩子，
+你應記得，
+你活著的時候，
+已享盡了你的福，
+而拉匝祿同樣也受盡了苦。
+現在，
+他在這裡受安慰，
+而你應受苦了。
+除此之外，
+在我們與你們之間，
+隔著一個巨大的深淵，
+就算有人願意，
+從這邊去到你們那邊，
+也不可能，
+從那邊來到我們這邊，
+也不可能。
+「那富翁說：
+父親！
+那麼，
+就請你打發拉匝祿到我家去，
+因為我有五個兄弟，
+叫拉匝祿警告他們，
+免得他們也來到這痛苦的地方。
+「亞巴郎說：
+他們自有梅瑟及先知，
+讓他們聽從好了。
+「那富翁說：
+不，
+父親亞巴郎！
+倘若有人從死者中，
+到他們那裡，
+他們必會悔改。
+「亞巴郎給他說：
+如果他們不聽從梅瑟及先知，
+縱使有人從死者中復活，
+他們也不會信服。」
+
+
+=*=
+
+日用天糧 C302C,9,28 丙年 常年期第二十六主日 彌撒讀經 粵語版 YrC,OT,26wk01C #一日一章
+
+
+
+
+****MESSAGE****  Sunday 28-September-2025   9,28
+"Lazarus Was Carried to Abraham's Bosom
+Sunday 28 September 2025 / Don Schwager / Print / Share: FacebookTwitterCopy LinkWhatsAppShare
+GOSPEL READING: Luke 16:19-31
+
+19 ""There was a rich man, who was clothed in purple and fine linen and who feasted sumptuously every day. 20 And at his gate lay a poor man named Lazarus, full of sores, 21 who desired to be fed with what fell from the rich man's table; moreover the dogs came and licked his sores. 22 The poor man died and was carried by the angels to Abraham's bosom. The rich man also died and was buried; 23 and in Hades, being in torment, he lifted up his eyes, and saw Abraham far off and Lazarus in his bosom. 24 And he called out, `Father Abraham, have mercy upon me, and send Lazarus to dip the end of his finger in water and cool my tongue; for I am in anguish in this flame.' 25 But Abraham said, `Son, remember that you in your lifetime received your good things, and Lazarus in like manner evil things; but now he is comforted here, and you are in anguish. 26 And besides all this, between us and you a great chasm has been fixed, in order that those who would pass from here to you may not be able, and none may cross from there to us.' 27 And he said, `Then I beg you, father, to send him to my father's house, 28 for I have five brothers, so that he may warn them, lest they also come into this place of torment.' 29 But Abraham said, `They have Moses and the prophets; let them hear them.' 30 And he said, `No, father Abraham; but if some one goes to them from the dead, they will repent.' 31 He said to him, `If they do not hear Moses and the prophets, neither will they be convinced if some one should rise from the dead.'""
+
+Meditation: What most absorbs your time, your attention, and your heart? In the parable of the rich man who refused to help the beggar named Lazarus Jesus paints a dramatic scene of contrasts - riches and poverty, heaven and hell, compassion and indifference, inclusion and exclusion. We also see an abrupt and dramatic reversal of fortune. Lazarus was not only poor and a beggar, he was also sick and unable to fend for himself. He was ""laid"" at the gates of the rich man's house. The dogs which licked his sores probably also stole the little bread he got for himself. Dogs in the ancient world symbolized contempt. Enduring the torment of these savage dogs only added to the poor man's miseries and sufferings.
+
+The rich man treated the beggar with contempt and indifference, until he found his fortunes reversed at the end of his life! In God's economy, those who hold on possessively to what they have, lose it all in the end, while those who share generously receive back many times more than they gave away.
+
+Hope in God and his merciful help
+The name Lazarus means God is my help. Despite a life of misfortune and suffering, Lazarus did not lose hope in God. His eyes were set on a treasure stored up for him in heaven. The rich man, however, could not see beyond his material wealth and possessions. He not only had every thing he needed, he selfishly spent all he had on himself. He was too absorbed in what he possessed to notice the needs of those around him. He lost sight of God and the treasure of heaven because he was preoccupied with seeking happiness in material things. He served wealth rather than God. In the end the rich man became a beggar!
+
+Do you know the joy and freedom of possessing God as your true and lasting treasure? Those who put their hope and security in the kingdom of heaven will not be disappointed (see Hebrews 6:19).
+
+Lord Jesus, you are my joy and my treasure. Make me rich in the things of your heavenly kingdom and give me a generous heart that I may freely share with others the spiritual and material treasures you have given to me.
+
+Psalm 146:1,6b-10
+
+1 Praise the LORD, O my soul!
+6b LORD who keeps faith for ever;
+7 who executes justice for the oppressed; who gives food to the hungry. The LORD sets the prisoners free;
+8 the LORD opens the eyes of the blind. The LORD lifts up those who are bowed down; the LORD loves the righteous.
+9 The LORD watches over the sojourners, he upholds the widow and the fatherless; but the way of the wicked he brings to ruin.
+10 The LORD will reign for ever, your God, O Zion, to all generations. Praise the LORD!
+
+Daily Quote from the Early Church Fathers: 
+
+Creator of both rich and poor, 
+
+by Augustine of Hippo, 3540-430 A.D.
+
+God made both the rich and the poor. So the rich and the poor are born alike. You meet one another as you walk on the way together. Do not oppress or defraud anyone. One may be needy and another may have plenty. But the Lord is the maker of them both. Through the person who has, He helps the one who needs - and through the person who does not have, He tests the one who has.
+
+Lord Jesus, you are my joy and my treasure. Make me rich in the things of your heavenly kingdom and give me a generous heart that I may freely share with others the spiritual and material treasures you have given to me.
+
+請用天主教詞彙和術語及繁體字來譯，不要用基督教用詞，並將祂改為他，祢改為你，祂改為他︰
+
+早期教父聖奧思定（ St. Augustine of Hippo 主後 354至430 年），以《富者與貧者的創造主》，作為主題的講道詞。聖奧思定說，路加福音第16章第19至31節中的富翁與拉匝祿的比喻，主耶穌指出︰天主創造了富者與貧者，因此富者與貧者同樣由天主而生。所有人在世途上彼此相遇同行，不可欺壓或詐取任何人。有人匱乏，有人富足，但上主是他們共同的造物主。藉著富有者，天主幫助貧困者；藉著貧困者，天主試煉富有者。
+
+主耶穌，你是我的喜樂與至寶。求你使我在你天國的恩寵中富足，並賜我慷慨的心，使我能自由地與他人分享你所賜予我的神恩與物資。上主為被欺壓的人辯護；上主賜食物給飢餓的人；上主使被囚的人，獲得自由。上主開啟瞎子的眼睛；上主使傴僂的人挺身；上主喜愛正義的人；上主保護旅客。上主扶助孤兒寡婦；上主迷惑惡人的道路。願上主永遠為王！萬壽無疆！
+
+上主為被欺壓的人辯護；上主賜食物給飢餓的人；上主使被囚的人，獲得自由。上主開啟瞎子的眼睛；上主使傴僂的人挺身；上主喜愛正義的人；上主保護旅客。上主扶助孤兒寡婦；上主迷惑惡人的道路。願上主永遠為王！熙雍，你的天主萬壽無疆！
+
+
+
+=**=VOICE RECORDING=====C302-YrC,OT,26wk01
+
+C302C 
+
+日用天糧。
+
+丙年。
+ 常年期第二十六主日。
+
+
+亞毛斯先知書。
+　第6章，
+1節，
+ 4至7節。
+
+
+全能的上主這樣說：
+「那些安身於熙雍，
+自恃於撒瑪黎雅山，
+自命為諸民之首的人，
+是有禍的。
+他們躺在象牙床上，
+橫臥在軟榻上，
+吃著羊群中的羊羔，
+及牛欄中的牛犢，
+伴著琴聲吟詠，
+自比達味，
+發明樂器，
+大碗喝酒，
+以上等的油抹身，
+但對若瑟的崩潰，
+卻漠不關心。
+為此，
+這些人，
+現在就要先被擄去；
+放蕩不羈者的狂歡，
+也就完了。」
+
+
+答唱詠。
+。
+　聖詠　第146篇，
+7至10節。
+
+
+上主為被欺壓的人辯護；
+上主賜食物給飢餓的人；
+上主使被囚的人，
+獲得自由。
+上主開啟瞎子的眼睛；
+上主使預紐的人挺身；
+上主喜愛正義的人；
+上主保護旅客。
+上主扶助孤兒寡婦；
+上主迷惑惡人的道路。
+願上主永遠為王！
+熙雍，
+你的天主萬壽無疆！
+
+
+保祿宗徒致弟茂德前書。
+　第6章，
+11至16節。
+
+
+天主的人哪！
+你要追求正義、
+虔敬、
+信德、
+愛德、
+堅忍和良善；
+要努力打這場有關信仰的好仗；
+要爭取永生。
+你正是為此而蒙召，
+並為此，
+在許多證人面前，
+宣示了你那美好的誓言。
+我在使萬有生活的天主前，
+及在曾對般雀比拉多宣示過美好誓言的基督耶穌前，
+命令你：
+務要保守這訓令，
+不受玷污，
+無可指摘，
+直到天主在預定的時期，
+使我們的主耶穌基督，
+顯現出來。
+天主是那真福、
+唯一全能者，
+萬王之王，
+萬主之主，
+獨享不死不滅者，
+住於不可接近的光明中，
+沒有人看見過，
+也不能看見的。
+願尊威和永遠的權能，
+歸於他！
+亞孟。
+
+ 
+路加福音。
+　第16章，
+19至31節。
+
+
+那時候，
+耶穌對法利塞人說：
+「有一個富翁，
+身穿紫紅袍及細麻衣，
+天天奢華宴樂。
+另有一個乞丐，
+名叫拉匝祿，
+滿身瘡痍，
+躺臥在富翁的大門前。
+拉匝祿指望得到從富翁桌上掉下的碎舌充飢，
+但只有狗來舔他的瘡痍。
+那乞丐死了，
+天使把他送到亞巴郎的懷抱裡。
+那個富翁也死了，
+被人埋葬了。
+「那富翁在陰間，
+痛苦地舉目一望，
+遠遠看見亞巴郎，
+及在他懷中的拉匝祿，
+便喊叫說：
+父親亞巴郎！
+可憐我吧！
+請打發拉匝祿，
+用他的指尖，
+蘸點水，
+來涼潤我的舌頭，
+因為我在這火燄中，
+非常痛苦。
+「亞巴郎說：
+孩子，
+你應記得，
+你活著的時候，
+已享盡了你的福，
+而拉匝祿同樣也受盡了苦。
+現在，
+他在這裡受安慰，
+而你應受苦了。
+除此之外，
+在我們與你們之間，
+隔著一個巨大的深淵，
+就算有人願意，
+從這邊去到你們那邊，
+也不可能，
+從那邊來到我們這邊，
+也不可能。
+「那富翁說：
+父親！
+那麼，
+就請你打發拉匝祿到我家去，
+因為我有五個兄弟，
+叫拉匝祿警告他們，
+免得他們也來到這痛苦的地方。
+「亞巴郎說：
+他們自有梅瑟及先知，
+讓他們聽從好了。
+「那富翁說：
+不，
+父親亞巴郎！
+倘若有人從死者中，
+到他們那裡，
+他們必會悔改。
+「亞巴郎給他說：
+如果他們不聽從梅瑟及先知，
+縱使有人從死者中復活，
+他們也不會信服。」
+
+ 
+
+ 
+
+
+
+
+
+
+
+日用天糧。
+
+丙年。
+ 常年期第二十六主日。
+
+
+亞毛斯先知書。
+　第6章，
+1節，
+ 4至7節。
+
+
+全能的上主這樣說：
+「那些安身於熙雍，
+自恃於撒瑪黎雅山，
+自命為諸民之首的人，
+是有禍的。
+他們躺在象牙床上，
+橫臥在軟榻上，
+吃著羊群中的羊羔，
+及牛欄中的牛犢，
+伴著琴聲吟詠，
+自比達味，
+發明樂器，
+大碗喝酒，
+以上等的油抹身，
+但對若瑟的崩潰，
+卻漠不關心。
+為此，
+這些人，
+現在就要先被擄去；
+放蕩不羈者的狂歡，
+也就完了。」
+
+
+答唱詠。
+。
+　聖詠　第146篇，
+7至10節。
+
+
+上主為被欺壓的人辯護；
+上主賜食物給飢餓的人；
+上主使被囚的人，
+獲得自由。
+上主開啟瞎子的眼睛；
+上主使傴僂的人挺身；
+上主喜愛正義的人；
+上主保護旅客。
+上主扶助孤兒寡婦；
+上主迷惑惡人的道路。
+願上主永遠為王！
+熙雍，
+你的天主萬壽無疆！
+
+
+保祿宗徒致弟茂德前書。
+　第6章，
+11至16節。
+
+
+天主的人哪！
+你要追求正義、
+虔敬、
+信德、
+愛德、
+堅忍和良善；
+要努力打這場有關信仰的好仗；
+要爭取永生。
+你正是為此而蒙召，
+並為此，
+在許多證人面前，
+宣示了你那美好的誓言。
+我在使萬有生活的天主前，
+及在曾對般雀比拉多宣示過美好誓言的基督耶穌前，
+命令你：
+務要保守這訓令，
+不受玷污，
+無可指摘，
+直到天主在預定的時期，
+使我們的主耶穌基督，
+顯現出來。
+天主是那真福、
+唯一全能者，
+萬王之王，
+萬主之主，
+獨享不死不滅者，
+住於不可接近的光明中，
+沒有人看見過，
+也不能看見的。
+願尊威和永遠的權能，
+歸於他！
+亞孟。
+
+ 
+路加福音。
+　第16章，
+19至31節。
+
+
+那時候，
+耶穌對法利塞人說：
+「有一個富翁，
+身穿紫紅袍及細麻衣，
+天天奢華宴樂。
+另有一個乞丐，
+名叫拉匝祿，
+滿身瘡痍，
+躺臥在富翁的大門前。
+拉匝祿指望得到從富翁桌上掉下的碎屑充飢，
+但只有狗來舔他的瘡痍。
+那乞丐死了，
+天使把他送到亞巴郎的懷抱裡。
+那個富翁也死了，
+被人埋葬了。
+「那富翁在陰間，
+痛苦地舉目一望，
+遠遠看見亞巴郎，
+及在他懷中的拉匝祿，
+便喊叫說：
+父親亞巴郎！
+可憐我吧！
+請打發拉匝祿，
+用他的指尖，
+蘸點水，
+來涼潤我的舌頭，
+因為我在這火燄中，
+非常痛苦。
+「亞巴郎說：
+孩子，
+你應記得，
+你活著的時候，
+已享盡了你的福，
+而拉匝祿同樣也受盡了苦。
+現在，
+他在這裡受安慰，
+而你應受苦了。
+除此之外，
+在我們與你們之間，
+隔著一個巨大的深淵，
+就算有人願意，
+從這邊去到你們那邊，
+也不可能，
+從那邊來到我們這邊，
+也不可能。
+「那富翁說：
+父親！
+那麼，
+就請你打發拉匝祿到我家去，
+因為我有五個兄弟，
+叫拉匝祿警告他們，
+免得他們也來到這痛苦的地方。
+「亞巴郎說：
+他們自有梅瑟及先知，
+讓他們聽從好了。
+「那富翁說：
+不，
+父親亞巴郎！
+倘若有人從死者中，
+到他們那裡，
+他們必會悔改。
+「亞巴郎給他說：
+如果他們不聽從梅瑟及先知，
+縱使有人從死者中復活，
+他們也不會信服。」
+
+【︻】︼『﹃』﹄（︵）︶「﹁」﹂——｜｜《︽》︾…︙
+
+
+Yeshua-Word of Life for ALL,日用天糧,常年期,乙年,每日彌撒讀經,主的話觸動心靈,每日彌撒,讀經分享,一日一章,聖經,ACAD,Listening To God's Word,Gospel Reflection
+
+
+
+"
+
+***本頻道 Yeshua - Word of Life  for ALL 主耶穌基督就是普世的生活的聖言
+
+🔥 由創世紀至默示錄 每一章一個視頻 供大家一日一章地聆聽聖言
+
+🔥梅瑟五書/The Pentateuch
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMqqUTwInsDhVUvgk8BoYpjN
+🔥史書 The Historical Books
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMpvIoCmVroofB2Ktb5aTK7T&pp
+🔥智慧書_1/Poetical and Didactic Books
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMqgiVPqewHAB5YxHEA8Pe8c
+🔥先知書 Major Prophets
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMrdZqyFK-ain3H6dKE52y8e
+🔥先知書 Minor Prophets
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMrEjTaG7l5boDbDw4jivjY2
+🔥福音 Gospels
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMrjDVY_3ymRYRgrPlJRZvtj
+🔥新約歷史 New Testament Historical Book
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMrqxv3i1W8ctCar0qZHrrZw
+🔥保祿書信 Pauline Epistles
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMqATTjljZMjWaHxeoeQIql3
+🔥公函 General Epistles
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMr02Vj3DwnGqobp4s8TxXrd
+🔥默示錄 Book of Revelation
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMqgE839Ti9rXIgRTNp01TMb
+
+此外還有︰
+
+🔥Meditation Music 默想音樂
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMp4iwIAdcDiWhHpWqrbT8Ah
+
+🔥150 psalms with meditation music 150篇聖詠音樂默想
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMpYkZxDawF4GwOMfmL3eizp
+
+🔥Liturgy of the Hours 日課經
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMrOGtzOrp26uA5HO9F3eiW5
+
+🔥Catholic Hymns 天主教聖歌
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMo0px10gtbQB0lORSSVLGP7
+
+🔥甲年-彌撒讀經分享
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMoklq3exzA7ZXPVN_MWDlVt
+
+🔥乙年彌撒讀經分享
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMoxK-GPlYeAOsp4nN2UfTUK
+
+🔥丙年讀經反省
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMoso-mk1jErKiV9NzIt1H3w
+
+🔥Catholic Mass Gospel Reflection 彌撒讀經反省英文版
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMqYK4jkLUoN0JlK7PAA5l6O
+
+🔥國語版 日用天糧
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMqne_BIZZIvwUaGKHv1BJZM
+
+🔥Yeshua - Word of Life for ALL
+https://www.youtube.com/playlist?list=PLkTYFqhjMhMql_FJESZPCi4m1Y3V-YUdF
+請用天主教術語及繁體字來譯︰
+
+
+
+
+=*=*===丙年常年期第二十六主日==讀經反省分享=======
+
+https://youtube.com/
+
+🔥反省🔥《富者與貧者的創造主》🔥聖奧思定的講道詞🔥丙年常年期第二十六主日 #日用天糧🔥C302S🔥9,28🔥
+
+
+丙年常年期第二十六主日彌撒讀經反省分享。
+
+早期教父聖奧思定（ St. Augustine of Hippo 主後 354至430 年），以《富者與貧者的創造主》，作為主題的講道詞。聖奧思定說，路加福音第16章第19至31節中的富翁與拉匝祿的比喻，主耶穌指出︰天主創造了富者與貧者，因此富者與貧者同樣由天主而生。所有人在世途上彼此相遇同行，不可欺壓或詐取任何人。有人匱乏，有人富足，但上主是他們共同的造物主。藉著富有者，天主幫助貧困者；藉著貧困者，天主試煉富有者。
+
+
+C302C 9,28 
+
+彌撒讀經反省分享。
+
+早期教父聖奧思定（ St. Augustine of Hippo 主後 354至430 年），以《富者與貧者的創造主》，作為主題的講道詞。聖奧思定說，路加福音第16章第19至31節中的富翁與拉匝祿的比喻，主耶穌指出︰天主創造了富者與貧者，因此富者與貧者同樣由天主而生。所有人在世途上彼此相遇同行，不可欺壓或詐取任何人。有人匱乏，有人富足，但上主是他們共同的造物主。藉著富有者，天主幫助貧困者；藉著貧困者，天主試煉富有者。
+
+
+
+Yeshua-Word of Life for ALL,日用天糧,常年期,甲年,乙年,丙年,每日彌撒讀經,每日彌撒,讀經分享,祈禱,一日一章,聖經,福音詩,ACAD,Listening To God's Word,Gospel Reflection
+
+=====丙年常年期第二十六主日==每日向主祈禱========
+
+https://youtube.com/
+
+🔥主耶穌，你是我的喜樂與至寶。求你使我在你天國的恩寵中富足，並賜我慷慨的心🔥丙年常年期第二十六主日🔥C302P🔥9,28🔥日用天糧🔥
+
+丙年常年期第二十六主日
+每日向主祈禱
+
+讓我們祈禱：主耶穌，你是我的喜樂與至寶。求你使我在你天國的恩寵中富足，並賜我慷慨的心，使我能自由地與他人分享你所賜予我的神恩與物資。上主為被欺壓的人辯護；上主賜食物給飢餓的人；上主使被囚的人，獲得自由。上主開啟瞎子的眼睛；上主使傴僂的人挺身；上主喜愛正義的人；上主保護旅客。上主扶助孤兒寡婦；上主迷惑惡人的道路。願上主永遠為王！萬壽無疆！亞孟。
+
+
+C302C 9,28 
+
+C302-YrC,OT,26wk01
+
+
+
+丙年。常年期第二十六主日
+彌撒讀經反省分享。
+
+早期教父聖奧思定
+，以《富者與貧者的創造主》，作為主題的講道詞。聖奧思定說，路加福音
+第16章
+第19至31節中的富翁與拉匝祿的比喻，主耶穌指出︰
+天主創造了富者與貧者，因此富者與貧者同樣由天主而生。所有人在世途上彼此相遇同恆，不可欺壓或詐取任何人。有人匱乏，有人富足，但上主是他們共同的造物主。藉著富有者，天主幫助貧困者；藉著貧困者，天主試煉富有者。
+
+
+
+
+丙年。常年期第二十六主日
+每日向主祈禱
+
+讓我們祈禱：
+主耶穌，你是我的喜樂與至寶。求你使我在你天國的恩寵中富足，並賜我慷慨的心，使我能自由地與他人分享你所賜予我的神恩與物資。上主為被欺壓的人辯護；上主賜食物給飢餓的人；上主使被囚的人，獲得自由。上主開啟瞎子的眼睛；上主使預紐的人挺身；上主喜愛正義的人；上主保護旅客。上主扶助孤兒寡婦；上主迷惑惡人的道路。願上主永遠為王！萬壽無疆！
+亞孟。
+
+
+九月二十八日
+日用天糧 C302C,9,28 丙年 常年期第二十六主日 彌撒讀經 粵語版 YrC,OT,26wk01C #一日一章
+
+
+亞毛斯先知書　6:1, 4-7　答唱詠　聖詠　146:7-10　保祿宗徒致弟茂德前書　6:11-16　路加福音　16:19-31
+
+
+請用天主教詞彙和術語及繁體字來譯，不要用基督教用詞，並將祂改為他，祢改為你，祂改為他︰
+
+請根據《亞毛斯先知書　6:1, 4-7》、《答唱詠　聖詠　146:7-10》和《保祿宗徒致弟茂德前書　6:11-16》及《路加福音　16:19-31》內容，平均分配問題的數目，製作的十五條選擇題，每題有五個選項，將答案和答案解釋按題放在最後的備註中。用天主教詞彙和術語和天主教聖經用字及繁體字寫出來。我要的是文字版，不是網上quiz。
+
+請製成網上問答
+
+"
+
+
+
+九月二十八日
+日用天糧 C302C,9,28 丙年 常年期第二十六主日 彌撒讀經 粵語版 YrC,OT,26wk01C #一日一章
+
+
+亞毛斯先知書　6:1, 4-7　答唱詠　聖詠　146:7-10　保祿宗徒致弟茂德前書　6:11-16　路加福音　16:19-31
+
+
+請用天主教詞彙和術語及繁體字來譯，不要用基督教用詞，並將祂改為他，祢改為你，祂改為他︰
+
+**********************************
+亞毛斯先知書　6:1, 4-7
+
+全能的上主這樣說：「那些安身於熙雍，自恃於撒瑪黎雅山，自命為諸民之首的人，是有禍的。他們躺在象牙床上，橫臥在軟榻上，吃著羊群中的羊羔，及牛欄中的牛犢，伴著琴聲吟詠，自比達味，發明樂器，大碗喝酒，以上等的油抹身，但對若瑟的崩潰，卻漠不關心。為此，這些人，現在就要先被擄去；放蕩不羈者的狂歡，也就完了。」
+
+答唱詠　聖詠　146:7-10
+
+上主為被欺壓的人辯護；上主賜食物給飢餓的人；上主使被囚的人，獲得自由。上主開啟瞎子的眼睛；上主使傴僂的人挺身；上主喜愛正義的人；上主保護旅客。上主扶助孤兒寡婦；上主迷惑惡人的道路。願上主永遠為王！熙雍，你的天主萬壽無疆！
+
+保祿宗徒致弟茂德前書　6:11-16
+
+天主的人哪！你要追求正義、虔敬、信德、愛德、堅忍和良善；要努力打這場有關信仰的好仗；要爭取永生。你正是為此而蒙召，並為此，在許多證人面前，宣示了你那美好的誓言。我在使萬有生活的天主前，及在曾對般雀比拉多宣示過美好誓言的基督耶穌前，命令你：務要保守這訓令，不受玷污，無可指摘，直到天主在預定的時期，使我們的主耶穌基督，顯現出來。天主是那真福、唯一全能者，萬王之王，萬主之主，獨享不死不滅者，住於不可接近的光明中，沒有人看見過，也不能看見的。願尊威和永遠的權能，歸於他！亞孟。
+
+路加福音　16:19-31
+
+那時候，耶穌對法利塞人說：「有一個富翁，身穿紫紅袍及細麻衣，天天奢華宴樂。另有一個乞丐，名叫拉匝祿，滿身瘡痍，躺臥在富翁的大門前。拉匝祿指望得到從富翁桌上掉下的碎屑充飢，但只有狗來舔他的瘡痍。那乞丐死了，天使把他送到亞巴郎的懷抱裡。那個富翁也死了，被人埋葬了。「那富翁在陰間，痛苦地舉目一望，遠遠看見亞巴郎，及在他懷中的拉匝祿，便喊叫說：父親亞巴郎！可憐我吧！請打發拉匝祿，用他的指尖，蘸點水，來涼潤我的舌頭，因為我在這火燄中，非常痛苦。「亞巴郎說：孩子，你應記得，你活著的時候，已享盡了你的福，而拉匝祿同樣也受盡了苦。現在，他在這裡受安慰，而你應受苦了。除此之外，在我們與你們之間，隔著一個巨大的深淵，就算有人願意，從這邊去到你們那邊，也不可能，從那邊來到我們這邊，也不可能。「那富翁說：父親！那麼，就請你打發拉匝祿到我家去，因為我有五個兄弟，叫拉匝祿警告他們，免得他們也來到這痛苦的地方。「亞巴郎說：他們自有梅瑟及先知，讓他們聽從好了。「那富翁說：不，父親亞巴郎！倘若有人從死者中，到他們那裡，他們必會悔改。「亞巴郎給他說：如果他們不聽從梅瑟及先知，縱使有人從死者中復活，他們也不會信服。」
+
+請根據《亞毛斯先知書　6:1, 4-7》、《答唱詠　聖詠　146:7-10》和《保祿宗徒致弟茂德前書　6:11-16》及《路加福音　16:19-31》內容，平均分配問題的數目，製作的十六條選擇題，每題有五個選項，題目寫明經文出處。將答案和答案解釋按題放在最後的備註中。用天主教詞彙和術語和天主教聖經用字及繁體字寫出來。我要的是文字版，不是網上quiz。
+
+請製成網上問答
+
+
+https://manalwaysinred-a11y.github.io/BibleQuiz/20250928-C302-quiz.html
+
+以下是根據《亞毛斯先知書 6:1, 4-7》、《聖詠 146:7-10》、《保祿宗徒致弟茂德前書 6:11-16》及《路加福音 16:19-31》平均分配的十六條選擇題，每題皆附五個選項，並標明經文出處。所有用語皆採用天主教聖經詞彙與繁體字。答案與解釋統一列於最後備註。
+
+---
+
+## 📖選擇題（文字版）
+
+### 一、《亞毛斯先知書 6:1, 4-7》
+
+1. 根據《亞毛斯先知書 6:1, 4-7》，哪些人被稱為「有禍的」？  
+（亞毛斯 6:1）  
+A. 被擄的人民  
+B. 安身熙雍、自恃撒瑪黎雅山的人  
+C.敬畏上主的人  
+D.先知與司祭  
+E.悔改的罪人  
+1. B — 安身熙雍、自恃撒瑪黎雅山的人被指責為驕傲自恃，是有禍的。  
+
+2. 根據《亞毛斯先知書 6:1, 4-7》，富人躺臥在何種床榻上？  
+（亞毛斯 6:4）  
+A. 金床與絲榻  
+B. 木床與草蓆  
+C. 象牙床與軟榻  
+D. 石床與皮墊  
+E. 羊毛床與棉被  
+2. C — 他們躺在象牙床與軟榻上，象徵奢華。  
+
+3. 根據《亞毛斯先知書 6:1, 4-7》，富人吃的是哪兩種牲畜？  
+（亞毛斯 6:4）  
+A. 鴿子與牛  
+B. 羊羔與牛犢  
+C. 魚與雞  
+D. 駱駝與羊  
+E. 牛與鹿  
+3. B — 他們吃的是羊羔與牛犢，代表放縱享樂。  
+
+4. 根據《亞毛斯先知書 6:1, 4-7》，富人自比達味，做了什麼事？  
+（亞毛斯 6:5）  
+A. 建聖殿  
+B. 撰寫聖詠  
+C. 發明樂器  
+D. 領軍作戰  
+E. 撰寫法律  
+4. C — 他們伴琴吟詠，自比達味，發明樂器。  
+
+### 二、《聖詠 146:7-10》
+
+5. 根據《聖詠 146:7-10》，上主為誰辯護？  
+（聖詠 146:7）  
+A. 司祭  
+B. 被欺壓的人  
+C. 富有的人  
+D. 外邦人  
+E. 先知  
+5. B — 上主為被欺壓的人辯護，彰顯公義。  
+
+6. 根據《聖詠 146:7-10》，上主使誰獲得自由？  
+（聖詠 146:7）  
+A. 旅客  
+B. 被囚的人  
+C. 瞎子  
+D. 孤兒  
+E. 傴僂的人  
+6. B — 上主使被囚的人獲得自由，象徵解放。  
+
+7. 根據《聖詠 146:7-10》，上主開啟誰的眼睛？  
+（聖詠 146:8）  
+A. 司祭  
+B. 被囚的人  
+C. 瞎子  
+D. 罪人  
+E. 羊群  
+7. C — 上主開啟瞎子的眼睛，象徵光明與醫治。  
+
+8. 根據《聖詠 146:7-10》，上主喜愛什麼樣的人？  
+（聖詠 146:8）  
+A. 正義的人  
+B. 富人  
+C. 旅客  
+D. 先知  
+E. 公義的司祭  
+8. A — 上主喜愛正義的人，強調德行。  
+
+### 三、《保祿宗徒致弟茂德前書 6:11-16》
+
+9. 根據《保祿宗徒致弟茂德前書 6:11-16》，保祿勸弟茂德追求哪些德行？  
+（弟茂德前書 6:11）  
+A. 智慧、勇氣、謙遜、慈悲、寬恕、忠誠  
+B. 信德、愛德、虔敬、正義、堅忍、良善  
+C. 忍耐、節制、信德、希望、愛德、和平  
+D. 公義、誠信、信德、虔敬、仁慈、謙卑  
+E. 信德、勇氣、正義、愛德、忠誠、和平  
+9. B — 保祿列出六項德行：正義、虔敬、信德、愛德、堅忍、良善。  
+
+10. 根據《保祿宗徒致弟茂德前書 6:11-16》，保祿稱天主是什麼？  
+（弟茂德前書 6:15）  
+A. 萬物之主  
+B. 真福、唯一全能者  
+C. 創造天地者  
+D. 生命之源  
+E. 公義之王  
+10. B — 天主被稱為真福、唯一全能者。  
+
+11. 根據《保祿宗徒致弟茂德前書 6:11-16》，天主住在哪裡？  
+（弟茂德前書 6:16）  
+A. 天上聖殿  
+B. 熙雍山  
+C. 不可接近的光明中  
+D. 天主聖殿  
+E. 天使之間  
+11. C — 天主住於不可接近的光明中，象徵神聖與超越。  
+
+12. 根據《保祿宗徒致弟茂德前書 6:11-16》，誰曾在般雀比拉多前宣示美好誓言？  
+（弟茂德前書 6:13）  
+A. 若望  
+B. 保祿  
+C. 耶穌基督  
+D. 伯多祿  
+E. 弟茂德  
+12. C — 耶穌基督曾在般雀比拉多前宣示誓言。  
+
+### 四、《路加福音 16:19-31》
+
+13. 根據《路加福音 16:19-31》，富翁穿著什麼衣物？  
+（路加福音 16:19）  
+A. 金袍與絲衣  
+B. 紫紅袍與細麻衣  
+C. 白袍與羊毛衣  
+D. 黑袍與皮衣  
+E. 藍袍與棉衣  
+13. B — 富翁穿著紫紅袍與細麻衣，象徵奢華。  
+
+14. 根據《路加福音 16:19-31》，拉匝祿死後被送到哪裡？  
+（路加福音 16:22）  
+A. 地獄  
+B. 天堂  
+C. 亞巴郎的懷抱  
+D. 淨化所  
+E. 墓穴  
+14. C — 拉匝祿死後被天使送到亞巴郎的懷抱。  
+
+15. 根據《路加福音 16:19-31》，富翁在陰間求什麼？  
+（路加福音 16:24）  
+A. 食物  
+B. 饒恕  
+C. 水潤舌頭  
+D. 出來的機會  
+E. 拉匝祿的陪伴  
+15. C — 富翁求拉匝祿用指尖蘸水涼潤舌頭。  
+
+16. 根據《路加福音 16:19-31》，亞巴郎對富翁的兄弟說了什麼？  
+（路加福音 16:29）  
+A. 要悔改  
+B. 要施捨  
+C. 要聽從梅瑟及先知  
+D. 要祈禱  
+E. 要禁食  
+16. C — 亞巴郎說他們自有梅瑟及先知，應聽從。
+
+---
+
+## 📘備註：答案與解釋
+
+1. B — 安身熙雍、自恃撒瑪黎雅山的人被指責為驕傲自恃，是有禍的。  
+2. C — 他們躺在象牙床與軟榻上，象徵奢華。  
+3. B — 他們吃的是羊羔與牛犢，代表放縱享樂。  
+4. C — 他們伴琴吟詠，自比達味，發明樂器。  
+5. B — 上主為被欺壓的人辯護，彰顯公義。  
+6. B — 上主使被囚的人獲得自由，象徵解放。  
+7. C — 上主開啟瞎子的眼睛，象徵光明與醫治。  
+8. A — 上主喜愛正義的人，強調德行。  
+9. B — 保祿列出六項德行：正義、虔敬、信德、愛德、堅忍、良善。  
+10. B — 天主被稱為真福、唯一全能者。  
+11. C — 天主住於不可接近的光明中，象徵神聖與超越。  
+12. C — 耶穌基督曾在般雀比拉多前宣示誓言。  
+13. B — 富翁穿著紫紅袍與細麻衣，象徵奢華。  
+14. C — 拉匝祿死後被天使送到亞巴郎的懷抱。  
+15. C — 富翁求拉匝祿用指尖蘸水涼潤舌頭。  
+16. C — 亞巴郎說他們自有梅瑟及先知，應聽從。
+
+---
+
+如你希望我將這些題目整理成教理講義、主日學教材或靈修反省，我可以進一步編排格式或加入反思問題。你想我怎樣幫你延伸這份內容呢？
+---
+
+若你希望我將這些題目製作成教理講義、主日學教材或靈修反省，我也可以幫你整理成段落或表格。你希望我怎樣呈現這些內容呢？
+**********************************
+路加福音　16:19-31
+
+那時候，耶穌對法利塞人說：「有一個富翁，身穿紫紅袍及細麻衣，天天奢華宴樂。另有一個乞丐，名叫拉匝祿，滿身瘡痍，躺臥在富翁的大門前。拉匝祿指望得到從富翁桌上掉下的碎屑充飢，但只有狗來舔他的瘡痍。那乞丐死了，天使把他送到亞巴郎的懷抱裡。那個富翁也死了，被人埋葬了。「那富翁在陰間，痛苦地舉目一望，遠遠看見亞巴郎，及在他懷中的拉匝祿，便喊叫說：父親亞巴郎！可憐我吧！請打發拉匝祿，用他的指尖，蘸點水，來涼潤我的舌頭，因為我在這火燄中，非常痛苦。「亞巴郎說：孩子，你應記得，你活著的時候，已享盡了你的福，而拉匝祿同樣也受盡了苦。現在，他在這裡受安慰，而你應受苦了。除此之外，在我們與你們之間，隔著一個巨大的深淵，就算有人願意，從這邊去到你們那邊，也不可能，從那邊來到我們這邊，也不可能。「那富翁說：父親！那麼，就請你打發拉匝祿到我家去，因為我有五個兄弟，叫拉匝祿警告他們，免得他們也來到這痛苦的地方。「亞巴郎說：他們自有梅瑟及先知，讓他們聽從好了。「那富翁說：不，父親亞巴郎！倘若有人從死者中，到他們那裡，他們必會悔改。「亞巴郎給他說：如果他們不聽從梅瑟及先知，縱使有人從死者中復活，他們也不會信服。」
+
+
+請以《保祿宗徒致弟茂德前書　6:11-16路加福音　16:19-31》內容作兩首不同內容的七言律詩及兩首不同內容的七言絕詩。請用天主教聖經，詞彙和術語及繁體字寫出來。並給予詩題。
+
+---
+🔥福音詩題-《義德之道》《聖召》🔥路加福音　16︰19-31🔥丙年 常年期第二十六主日 #日用天糧🔥P302🔥9,28🔥
+
+
+
+福音詩
+
+詩題：《義德之道》
+
+持守信德奔義途，
+遠離貪婪與俗污。
+追求正義仁慈愛，
+心懷忍耐望天主。
+
+你蒙召選立聖志，
+在眾人前宣信服。
+基督顯現真光至，
+萬王之王永為主。
+
+詩題：《聖召》
+
+義德仁愛常懷抱，
+信望堅持護我曹。
+主臨顯現時光至，
+忠僕得賞永不遲。
+
+
+
+
+Listening To God's Word (一日一章聖經網): http://listeningtogodsword.worthyofpraise.org/
+Facebook: https://www.facebook.com/Stanley.Law.Listening.to.God.s.Word
+YouTube:  
+Yeshua-Word of Life for ALL
+https://www.youtube.com/channel/UCSBZPf8ukB4wVlRSTYlfC7Q/
+
+***
+Yeshua-Word of Life for ALL,日用天糧,常年期,甲年,乙年,丙年,每日彌撒讀經,每日彌撒,讀經分享,祈禱,一日一章,聖經,福音詩,ACAD,Listening To God's Word,Gospel Reflection
+
+============="
+以下是根據《保祿宗徒致弟茂德前書 6:11-16》與《路加福音 16:19-31》所創作的兩首七言律詩與兩首七言絕詩，皆以天主教聖經的語彙與神學意涵為基礎，並以繁體字呈現：
+
+---
+
+### 🕊️七言律詩一：《義德之道》
+
+持守信德奔義途，
+遠離貪婪與俗污。
+追求正義仁慈愛，
+心懷忍耐望天主。
+
+你蒙召選立聖志，
+在眾人前宣信服。
+基督顯現真光至，
+萬王之王永不負。
+
+> 靈感源自《弟茂德前書 6:11-16》，強調信仰的堅持與基督的再臨。
+
+---
+
+### 🔥七言律詩二：《深淵之隔》
+
+富者宴樂忘憐憫，乞者瘡痍望殘餚。  
+死後分途天與地，亞巴郎懷慰苦勞。  
+陰間火燄哀求水，深淵阻隔願難逃。  
+梅瑟先知聲未聽，復活亦難使信高。
+
+> 靈感源自《路加福音 16:19-31》，描繪富翁與拉匝祿死後的命運對比。
+
+---
+
+### 🌿七言絕詩一：《聖召》
+
+義德仁愛常懷抱，
+信望堅持不動搖。
+主臨顯現時光至，
+忠僕得賞永不老。
+
+> 概括《弟茂德前書》的聖召與忠信之報。
+
+---
+
+### 🔥七言絕詩二：《深淵》
+
+富翁哀號火中苦，拉匝懷中得安撫。  
+不聽先知不悔改，死者復生亦難悟。
+
+> 濃縮《路加福音》富翁的悔恨與警世之意。
+
+---
+
+若你希望我以這些詩作進一步延伸為講道、靈修反省或聖詠歌詞，我也樂意協助。你想繼續深入哪一段經文的靈意呢？
