@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十五主日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十五主日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《亞毛斯先知書 6:1, 4-7》，哪些人被稱為「有禍的」？",
+        options: ["A. 被擄的人民", "B. 安身熙雍、自恃撒瑪黎雅山的人", "C. 敬畏上主的人", "D. 先知與司祭", "E. 悔改的罪人"],
+        answer: "B",
+        explanation: "安身熙雍、自恃撒瑪黎雅山的人被指責為驕傲自恃，是有禍的。"
+      },
+      {
+        text: "2. 根據《亞毛斯先知書 6:1, 4-7》，富人躺臥在何種床榻上？",
+        options: ["A. 金床與絲榻", "B. 木床與草蓆", "C. 象牙床與軟榻", "D. 石床與皮墊", "E. 羊毛床與棉被"],
+        answer: "C",
+        explanation: "他們躺在象牙床與軟榻上，象徵奢華。"
+      },
+      {
+        text: "3. 根據《亞毛斯先知書 6:1, 4-7》，富人吃的是哪兩種牲畜？",
+        options: ["A. 鴿子與牛", "B. 羊羔與牛犢", "C. 魚與雞", "D. 駱駝與羊", "E. 牛與鹿"],
+        answer: "B",
+        explanation: "他們吃的是羊羔與牛犢，代表放縱享樂。"
+      },
+      {
+        text: "4. 根據《亞毛斯先知書 6:1, 4-7》，富人自比達味，做了什麼事？",
+        options: ["A. 建聖殿", "B. 撰寫聖詠", "C. 發明樂器", "D. 領軍作戰", "E. 撰寫法律"],
+        answer: "C",
+        explanation: "他們伴琴吟詠，自比達味，發明樂器。"
+      },
+      {
+        text: "5. 根據《聖詠 146:7-10》，上主為誰辯護？",
+        options: ["A. 司祭", "B. 被欺壓的人", "C. 富有的人", "D. 外邦人", "E. 先知"],
+        answer: "B",
+        explanation: "上主為被欺壓的人辯護，彰顯公義。"
+      },
+      {
+        text: "6. 根據《聖詠 146:7-10》，上主使誰獲得自由？",
+        options: ["A. 旅客", "B. 被囚的人", "C. 瞎子", "D. 孤兒", "E. 傴僂的人"],
+        answer: "B",
+        explanation: "上主使被囚的人獲得自由，象徵解放。"
+      },
+      {
+        text: "7. 根據《聖詠 146:7-10》，上主開啟誰的眼睛？",
+        options: ["A. 司祭", "B. 被囚的人", "C. 瞎子", "D. 罪人", "E. 羊群"],
+        answer: "C",
+        explanation: "上主開啟瞎子的眼睛，象徵光明與醫治。"
+      },
+      {
+        text: "8. 根據《聖詠 146:7-10》，上主喜愛什麼樣的人？",
+        options: ["A. 正義的人", "B. 富人", "C. 旅客", "D. 先知", "E. 公義的司祭"],
+        answer: "A",
+        explanation: "上主喜愛正義的人，強調德行。"
+      },
+      {
+        text: "9. 根據《保祿宗徒致弟茂德前書 6:11-16》，保祿勸弟茂德追求哪些德行？",
+        options: ["A. 智慧、勇氣、謙遜、慈悲、寬恕、忠誠", "B. 信德、愛德、虔敬、正義、堅忍、良善", "C. 忍耐、節制、信德、希望、愛德、和平", "D. 公義、誠信、信德、虔敬、仁慈、謙卑", "E. 信德、勇氣、正義、愛德、忠誠、和平"],
+        answer: "B",
+        explanation: "保祿列出六項德行：正義、虔敬、信德、愛德、堅忍、良善。"
+      },
+      {
+        text: "10. 根據《保祿宗徒致弟茂德前書 6:11-16》，保祿稱天主是什麼？",
+        options: ["A. 萬物之主", "B. 真福、唯一全能者", "C. 創造天地者", "D. 生命之源", "E. 公義之王"],
+        answer: "B",
+        explanation: "天主被稱為真福、唯一全能者。"
+      },
+      {
+        text: "11. 根據《保祿宗徒致弟茂德前書 6:11-16》，天主住在哪裡？",
+        options: ["A. 天上聖殿", "B. 熙雍山", "C. 不可接近的光明中", "D. 天主聖殿", "E. 天使之間"],
+        answer: "C",
+        explanation: "天主住於不可接近的光明中，象徵神聖與超越。"
+      },
+      {
+        text: "12. 根據《保祿宗徒致弟茂德前書 6:11-16》，誰曾在般雀比拉多前宣示美好誓言？",
+        options: ["A. 若望", "B. 保祿", "C. 耶穌基督", "D. 伯多祿", "E. 弟茂德"],
+        answer: "C",
+        explanation: "耶穌基督曾在般雀比拉多前宣示誓言。"
+      },
+      {
+        text: "13. 根據《路加福音 16:19-31》，富翁穿著什麼衣物？ ",
+        options: ["A. 金袍與絲衣", "B. 紫紅袍與細麻衣", "C. 白袍與羊毛衣", "D. 黑袍與皮衣", "E. 藍袍與棉衣"],
+        answer: "B",
+        explanation: "富翁穿著紫紅袍與細麻衣，象徵奢華。"
+      },
+      {
+        text: "14. 根據《路加福音 16:19-31》，拉匝祿死後被送到哪裡？",
+        options: ["A. 地獄", "B. 天堂", "C. 亞巴郎的懷抱", "D. 淨化所", "E. 墓穴"],
+        answer: "C",
+        explanation: "拉匝祿死後被天使送到亞巴郎的懷抱。"
+      },
+      {
+        text: "15. 根據《路加福音 16:19-31》，富翁在陰間求什麼？",
+        options: ["A. 食物", "B. 饒恕", "C. 水潤舌頭", "D. 出來的機會", "E. 拉匝祿的陪伴"],
+        answer: "C",
+        explanation: "富翁求拉匝祿用指尖蘸水涼潤舌頭。"
+      },
+      {
+        text: "16. 根據《路加福音 16:19-31》，亞巴郎對富翁的兄弟說了什麼？",
+        options: ["A. 要悔改", "B. 要施捨", "C. 要聽從梅瑟及先知", "D. 要祈禱", "E. 要禁食"],
+        answer: "C",
+        explanation: "亞巴郎說他們自有梅瑟及先知，應聽從。"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+
+
