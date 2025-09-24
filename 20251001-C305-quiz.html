@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>十月一日  聖德蘭．里修（小德肋撒）貞女、聖師、傳教區主要主保慶日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 十月一日  聖德蘭．里修（小德肋撒）貞女、聖師、傳教區主要主保慶日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《依撒意亞先知書 66:10-14》，上主在耶路撒冷廣賜和平，形容為：  ",
+        options: ["A. 雨水滋潤大地", "B. 河流一般", "C. 晨光照耀", "D. 風中細語", "E. 星辰閃爍"],
+        answer: "B",
+        explanation: "上主賜和平如河流般湧現，象徵持續與豐盛。"
+      },
+      {
+        text: "2. 根據《依撒意亞先知書 66:10-14》，上主要賜給耶路撒冷萬國的財寶，如同：",
+        options: ["A. 金山銀海", "B. 天降瑰寶", "C. 泛濫的江河", "D. 雲端降福", "E. 聖殿珍藏"],
+        answer: "C",
+        explanation: "財寶如泛濫的江河，強調豐盈與無限供應。"
+      },
+      {
+        text: "3. 根據《依撒意亞先知書 66:10-14》，上主如何撫慰祂的子民？",
+        options: ["A. 如父親教導兒子", "B. 如牧者引領羊群", "C. 如君王施恩", "D. 如母親撫慰孩子", "E. 如天使守護人心"],
+        answer: "D",
+        explanation: "上主以母親撫慰孩子的方式安慰祂的子民，表達慈愛與親密。"
+      },
+      {
+        text: "4. 根據《依撒意亞先知書 66:10-14》，在耶路撒冷享受安慰的人，其身體將如什麼一般健壯？",
+        options: ["A. 橄欖樹", "B. 葡萄藤", "C. 青草", "D. 棕櫚樹", "E. 百合花"],
+        answer: "C",
+        explanation: "身體如青草般健壯，象徵生命力與復興。"
+      },
+      {
+        text: "5. 根據《依撒意亞先知書 66:10-14》，依撒意亞書中提到，乳兒將被抱在懷中，並：",
+        options: ["A. 放在床上安睡", "B. 放在膝上搖晃", "C. 放在肩上高舉", "D. 放在懷中祈禱", "E. 放在聖殿中祝福"],
+        answer: "B",
+        explanation: "乳兒被放在膝上搖晃，描繪溫柔的照顧。"
+      },
+      {
+        text: "6. 根據《聖詠 131:1-3》，聖詠作者祈求心靈在上主內得享： ",
+        options: ["A. 榮耀與尊貴", "B. 智慧與啟示", "C. 平安與安寧", "D. 力量與勇氣", "E. 信德與希望"],
+        answer: "C",
+        explanation: "聖詠作者渴望在上主內得享平安與安寧。"
+      },
+      {
+        text: "7. 根據《聖詠 131:1-3》，聖詠中提到，作者的眼目不敢：",
+        options: ["A. 注視邪惡", "B. 自視過高", "C. 凝望天主", "D. 盯視他人", "E. 閉目沉思"],
+        answer: "B",
+        explanation: "眼目不敢自視過高，表達謙卑之心。"
+      },
+      {
+        text: "8. 根據《聖詠 131:1-3》，聖詠作者不想幹的事是： ",
+        options: ["A. 傳福音", "B. 施仁愛", "C. 好大喜功的事", "D. 祈禱守齋", "E. 建造聖殿"],
+        answer: "C",
+        explanation: "拒絕好大喜功之事，顯示謙遜與自知。"
+      },
+      {
+        text: "9. 根據《聖詠 131:1-3》，聖詠中，作者將自己的心靈比喻為：",
+        options: ["A. 斷乳的幼兒", "B. 飛翔的鴿子", "C. 沉睡的羔羊", "D. 燃燒的火焰", "E. 靜默的泉源"],
+        answer: "A",
+        explanation: "心靈如斷乳幼兒，象徵依賴與安穩。"
+      },
+      {
+        text: "10. 根據《聖詠 131:1-3》，聖詠最後呼籲以色列要：",
+        options: ["A. 悔改歸主", "B. 敬畏上主", "C. 仰賴上主", "D. 讚美上主", "E. 侍奉上主"],
+        answer: "C",
+        explanation: "呼籲以色列仰賴上主，表達信賴與忠誠。"
+      },
+      {
+        text: "11. 根據《瑪竇福音 18:1-5》，門徒問耶穌在天國中誰是：",
+        options: ["A. 最聖潔的", "B. 最有智慧的", "C. 最大的", "D. 最有能力的", "E. 最受歡迎的"],
+        answer: "C",
+        explanation: "門徒關心誰是天國中最大的。"
+      },
+      {
+        text: "12. 根據《瑪竇福音 18:1-5》，耶穌叫誰來站在門徒中間？",
+        options: ["A. 一位婦人", "B. 一位長者", "C. 一位小孩", "D. 一位病人", "E. 一位稅吏"],
+        answer: "C",
+        explanation: "耶穌叫一位小孩來作教導的象徵。"
+      },
+      {
+        text: "13. 根據《瑪竇福音 18:1-5》，耶穌說，若不悔改而變成如同小孩，將：",
+        options: ["A. 不能得救", "B. 不能進入天國", "C. 不能領洗", "D. 不能行神蹟", "E. 不能得聖神"],
+        answer: "B",
+        explanation: "若不如小孩般悔改，不能進入天國。"
+      },
+      {
+        text: "14. 根據《瑪竇福音 18:1-5》，耶穌說誰是天國中最大的？",
+        options: ["A. 最虔誠的人", "B. 最富有的人", "C. 最謙卑如小孩的人", "D. 最勇敢的人", "E. 最能講道的人"],
+        answer: "C",
+        explanation: "謙卑如小孩者是天國中最大的。"
+      },
+      {
+        text: "15. 根據《瑪竇福音 18:1-5》，耶穌說，誰因祂的名字收留小孩，就是收留：",
+        options: ["A. 天主", "B. 聖神", "C. 祂自己", "D. 教會", "E. 天使"],
+        answer: "C",
+        explanation: "收留小孩即是收留耶穌本人，顯示主與弱小者的聯繫。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
