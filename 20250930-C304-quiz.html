@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>常年期第二十六周星期二 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 常年期第二十六周星期二 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據匝加利亞先知書 8:20-23，誰要前來尋求萬軍的上主？",
+        options: ["A. 只有猶太人", "B. 撒瑪黎雅人", "C. 許多民族和強盛的國民", "D. 天使和聖人", "E. 只有耶路撒冷的居民"],
+        answer: "C",
+        explanation: "因為經文明言「許多民族和強盛的國民」要前來尋求上主。"
+      },
+      {
+        text: "2. 根據匝加利亞先知書 8:20-23，在那些日子裡，十個說異國方言的人會怎樣？",
+        options: ["A. 向上主獻祭", "B. 攻擊耶路撒冷", "C. 抓住一個猶太人的衣邊", "D. 建造聖殿", "E. 成為先知"],
+        answer: "C",
+        explanation: "他們「抓住一個猶太人的衣邊」，象徵渴望與天主同在。"
+      },
+      {
+        text: "3. 根據匝加利亞先知書 8:20-23，人們為何要前往耶路撒冷？？",
+        options: ["A. 為了朝聖", "B. 為了購物", "C. 為了尋求萬軍的上主並懇求開恩", "D. 為了逃避戰爭", "E. 為了學習法律"],
+        answer: "C",
+        explanation: "他們來是「懇求上主開恩，尋求萬軍的上主」。"
+      },
+      {
+        text: "4. 根據匝加利亞先知書 8:20-23，一城的居民對另一城的居民說什麼？",
+        options: ["A. 我們快去懇求上主開恩", "B. 我們要建造聖殿", "C. 我們要逃離此地", "D. 我們要成為先知", "E. 我們要去打仗"],
+        answer: "A",
+        explanation: "經文直接記載：「我們快去懇求上主開恩」。"
+      },
+      {
+        text: "5. 根據匝加利亞先知書 8:20-23，匝加利亞先知書中提到天主與誰同在？",
+        options: ["A. 撒瑪黎雅人", "B. 外邦人", "C. 猶太人", "D. 先知", "E. 天使"],
+        answer: "C",
+        explanation: "他們說：「我們聽說天主同你們在一起」，指猶太人。"
+      },
+      {
+        text: "6. 根據聖詠 87:1-7，上主喜愛自己的宮殿建築在哪裡？",
+        options: ["A. 曠野", "B. 聖山上", "C. 海邊", "D. 沙漠中", "E. 城牆外"],
+        answer: "B",
+        explanation: "經文說：「上主喜愛自己的宮殿，是建築在聖山上」。"
+      },
+      {
+        text: "7. 根據聖詠 87:1-7，熙雍被人稱為什麼？",
+        options: ["A. 天主的居所", "B. 聖殿的根基", "C. 母親", "D. 先知的城", "E. 天主的帳棚"],
+        answer: "C",
+        explanation: "熙雍被稱為「母親」，象徵信仰的根源。"
+      },
+      {
+        text: "8. 根據聖詠 87:1-7，那些外邦民族被列入認識天主的人群中？",
+        options: ["A. 埃及、米德楊、阿摩黎", "B. 辣哈布、巴比倫、培肋舍特、提洛、雇士人", "C. 羅馬、希臘、敘利亞", "D. 撒瑪黎雅、加里肋亞、猶大 ", "E. 厄東、摩阿布、阿拉伯"],
+        answer: "B",
+        explanation: "經文列出：「辣哈布、巴比倫、培肋舍特、提洛、雇士人」。"
+      },
+      {
+        text: "9. 根據聖詠 87:1-7，上主在萬民戶籍上要留名的是誰？",
+        options: ["A. 先知", "B. 外邦人", "C. 在熙雍出生的人", "D. 司祭", "E. 君王"],
+        answer: "C",
+        explanation: "「這些人也都是在那裏出生」，指熙雍出生者。"
+      },
+      {
+        text: "10. 根據聖詠 87:1-7，人們在舞蹈時要歌唱什麼？",
+        options: ["A. 天主是我們的救主", "B. 熙雍是我們的母親", "C. 我的一切泉源都在你內", "D. 上主是光榮的", "E. 萬軍的上主是偉大的"],
+        answer: "C",
+        explanation: "「我的一切泉源都在你內」是舞蹈時的歌唱內容。"
+      },
+      {
+        text: "11. 根據路加福音 9:51-56，耶穌決意面朝哪裡走去？",
+        options: ["A. 加里肋亞", "B. 撒瑪黎雅", "C. 耶路撒冷", "D. 伯達尼", "E. 耶里哥"],
+        answer: "C",
+        explanation: "耶穌「決意面朝耶路撒冷走去」。"
+      },
+      {
+        text: "12. 根據路加福音 9:51-56，耶穌打發使者前往哪裡準備住宿？",
+        options: ["A. 撒瑪黎雅人的一個村莊", "B. 伯達尼", "C. 加里肋亞的城鎮", "D. 耶路撒冷的聖殿", "E. 猶大的曠野"],
+        answer: "A",
+        explanation: "祂打發使者「進了撒瑪黎雅人的一個村莊」。"
+      },
+      {
+        text: "13. 根據路加福音 9:51-56，撒瑪黎雅人為何不收留耶穌？",
+        options: ["A. 因為祂是猶太人", "B. 因為祂是先知", "C. 因為祂面朝耶路撒冷去", "D. 因為祂沒有門徒", "E. 因為祂沒有錢"],
+        answer: "C",
+        explanation: "他們「不收留他，因為他是面朝耶路撒冷去的」。"
+      },
+      {
+        text: "14. 根據路加福音 9:51-56，雅各伯及若望想對撒瑪黎雅人做什麼？",
+        options: ["A. 傳福音", "B. 求他們悔改", "C. 叫火自天降下焚毀他們", "D. 為他們祈禱", "E. 給他們施洗"],
+        answer: "C",
+        explanation: "門徒問：「主，你願意我們叫火自天降下，焚毀他們嗎？」。"
+      },
+      {
+        text: "15. 根據路加福音 9:51-56，耶穌對門徒的反應是什麼？",
+        options: ["A. 支持他們", "B. 沉默不語", "C. 斥責他們", "D. 為他們祈禱", "E. 要他們離開"],
+        answer: "C",
+        explanation: "耶穌「轉過身來斥責了他們」，顯示祂拒絕暴力。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
