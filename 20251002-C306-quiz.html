@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十六周星期四 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十六周星期四 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《出谷紀 23:20-23》，上主派遣使者的主要目的為何？ ",
+        options: ["A. 教導以色列民法律", "B. 懲罰罪人", "C. 保護並引領到預備之地", "D. 建立聖殿", "E. 統治萬民"],
+        answer: "C",
+        explanation: "上主派遣使者是為保護並引領到祂所準備的地方【出谷紀 23:20】。"
+      },
+      {
+        text: "2. 根據《出谷紀 23:20-23》，上主要求人對祂的使者有何態度？",
+        options: ["A. 可自由選擇是否聽從", "B. 應謹慎聽從，不可違背", "C. 應敬拜使者", "D. 可質疑使者的話語", "E. 應將使者視為同伴"],
+        answer: "B",
+        explanation: "人應謹慎聽從使者的話，不可違背【出谷紀 23:21】。"
+      },
+      {
+        text: "3. 根據《出谷紀 23:20-23》，若違背使者的話，後果為何？",
+        options: ["A. 會被放逐", "B. 會失去財富", "C. 使者不赦免過犯", "D. 會遭天主懲罰", "E. 會被敵人攻擊"],
+        answer: "C",
+        explanation: "若違背使者，他決不赦免過犯【出谷紀 23:21】。"
+      },
+      {
+        text: "4. 根據《出谷紀 23:20-23》，上主如何對待聽從祂使者的人？",
+        options: ["A. 賜予長壽", "B. 使其富有", "C. 以其仇人為仇，敵人為敵", "D. 賜予聖神", "E. 使其成為領袖"],
+        answer: "C",
+        explanation: "聽從使者者，上主以其仇人為仇，以敵人為敵【出谷紀 23:22】。"
+      },
+      {
+        text: "5. 根據《出谷紀 23:20-23》，上主說祂的使者身上有什麼？",
+        options: ["A. 天主的能力", "B. 天主的智慧", "C. 天主的名號", "D. 天主的祝福", "E. 天主的律法"],
+        answer: "C",
+        explanation: "使者身上有上主的名號【出谷紀 23:21】。"
+      },
+      {
+        text: "6. 根據《聖詠 91:1-6,10-11》，居住在至高者護佑下的人應如何稱呼上主？ ",
+        options: ["A. 我的審判者", "B. 我的救主", "C. 我的避難所、碉堡、天主", "D. 我的朋友", "E. 我的牧者"],
+        answer: "C",
+        explanation: "聖詠中稱上主為避難所、碉堡、天主【聖詠 91:2】。"
+      },
+      {
+        text: "7. 根據《聖詠 91:1-6,10-11》，上主會救人脫離哪些災害？",
+        options: ["A. 飢荒與戰爭", "B. 火災與洪水", "C. 獵人的陷阱與瘟疫", "D. 地震與雷擊", "E. 罪惡與誘惑"],
+        answer: "C",
+        explanation: "上主救人脫離獵人的陷阱與瘟疫【聖詠 91:3】。"
+      },
+      {
+        text: "8. 根據《聖詠 91:1-6,10-11》，上主以什麼象徵來掩護人？",
+        options: ["A. 盾牌", "B. 羽毛", "C. 光芒", "D. 雲彩", "E. 聖殿"],
+        answer: "B",
+        explanation: "上主以羽毛掩護人【聖詠 91:4】。"
+      },
+      {
+        text: "9. 根據《聖詠 91:1-6,10-11》，根據聖詠，人不必害怕哪些事物？",
+        options: ["A. 黑夜的顫慄與白天的箭矢", "B. 魔鬼的誘惑與人的背叛", "C. 洪水與火焰", "D. 飢荒與疾病", "E. 戰爭與死亡"],
+        answer: "A",
+        explanation: "人不必怕黑夜的顫慄與白天的箭矢【聖詠 91:5】。"
+      },
+      {
+        text: "10. 根據《聖詠 91:1-6,10-11》，上主為了保護人，委派誰？",
+        options: ["A. 司祭", "B. 先知", "C. 天使", "D. 君王", "E. 長老"],
+        answer: "C",
+        explanation: "上主委派天使保護人【聖詠 91:11】。"
+      },
+      {
+        text: "11. 根據《瑪竇福音 18:1-5,10》，門徒問耶穌關於什麼問題？",
+        options: ["A. 誰能行神蹟", "B. 誰是最虔誠的", "C. 天國中誰是最大的", "D. 誰能得永生", "E. 誰能成為領袖"],
+        answer: "C",
+        explanation: "門徒問誰是天國中最大的【瑪竇福音 18:1】。"
+      },
+      {
+        text: "12. 根據《瑪竇福音 18:1-5,10》，耶穌如何回答門徒的問題？",
+        options: ["A. 指出伯多祿為最大", "B. 說凡行善者為大", "C. 叫一個小孩來作比喻", "D. 引用聖詠", "E. 沉默不語"],
+        answer: "C",
+        explanation: "耶穌叫一個小孩來作比喻【瑪竇福音 18:2】。"
+      },
+      {
+        text: "13. 根據《瑪竇福音 18:1-5,10》，耶穌說若不變成如同小孩，將如何？",
+        options: ["A. 不能成為門徒", "B. 不能得救", "C. 不能進入天國", "D. 不能領受聖神", "E. 不能行奇蹟"],
+        answer: "C",
+        explanation: "若不變成如同小孩，不能進入天國【瑪竇福音 18:3】。"
+      },
+      {
+        text: "14. 根據《瑪竇福音 18:1-5,10》，收留一個小孩等同於什麼？",
+        options: ["A. 收留天使", "B. 收留聖母", "C. 收留耶穌", "D. 收留教會", "E. 收留信仰"],
+        answer: "C",
+        explanation: "收留小孩就是收留耶穌【瑪竇福音 18:5】。"
+      },
+      {
+        text: "15. 根據《瑪竇福音 18:1-5,10》，耶穌說小子的天使常見誰的面？",
+        options: ["A. 聖神", "B. 耶穌", "C. 天主聖父", "D. 瑪利亞", "E. 若瑟"],
+        answer: "C",
+        explanation: "小子的天使常見天主聖父的面【瑪竇福音 18:10】。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
