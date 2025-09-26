@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十六周星期五 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十六周星期五 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《巴路克書 1:15-22》，正義屬於誰？ ",
+        options: ["A. 猶大人", "B. 君王與政要", "C. 上主我們的天主", "D. 先知與司祭", "E. 耶路撒冷的居民"],
+        answer: "C",
+        explanation: "正義屬於上主我們的天主，是巴路克書開首的宣告。"
+      },
+      {
+        text: "2. 根據《巴路克書 1:15-22》，猶太人從何時開始背叛上主？",
+        options: ["A. 建立聖殿之後", "B. 被擄到巴比倫之時", "C. 出離埃及地那一天", "D. 撒羅滿作王之時", "E. 耶穌誕生之後"],
+        answer: "C",
+        explanation: "從出離埃及地那一天起，猶太人便常背叛上主。"
+      },
+      {
+        text: "3. 根據《巴路克書 1:15-22》，上主藉誰預告詛咒將臨？",
+        options: ["A. 亞郎", "B. 撒慕耳", "C. 依撒意亞", "D. 梅瑟", "E. 厄則克耳"],
+        answer: "D",
+        explanation: "梅瑟是上主的僕人，預告詛咒將臨。"
+      },
+      {
+        text: "4. 根據《巴路克書 1:15-22》，猶太人未聽從上主的聲音，反而做了什麼？",
+        options: ["A. 建造聖殿", "B. 供奉外邦神祇", "C. 逃往外地", "D. 禁食祈禱", "E. 擁立新君王"],
+        answer: "B",
+        explanation: "猶太人供奉外邦神祇，行了上主所憎惡的事。"
+      },
+      {
+        text: "5. 根據《巴路克書 1:15-22》，猶太人未依照誰的教訓行事？",
+        options: ["A. 君王的命令", "B. 祖先的傳統", "C. 外邦的法律", "D. 上主派來的先知", "E. 天使的啟示"],
+        answer: "D",
+        explanation: "他們未依照上主派來的先知的教訓行事。"
+      },
+      {
+        text: "6. 根據《聖詠 79:1-5,8-9》，異民侵入了什麼地方？ ",
+        options: ["A. 埃及", "B. 巴比倫", "C. 上主的遺產", "D. 約旦河", "E. 撒瑪黎雅"],
+        answer: "C",
+        explanation: "異民侵入了上主的遺產，即以色列地。"
+      },
+      {
+        text: "7. 根據《聖詠 79:1-5,8-9》，聖殿遭到什麼對待？",
+        options: ["A. 重建", "B. 褻瀆", "C. 封閉", "D. 焚毀", "E. 遺忘"],
+        answer: "B",
+        explanation: "聖殿遭到褻瀆。"
+      },
+      {
+        text: "8. 根據《聖詠 79:1-5,8-9》，耶路撒冷四周流血如水，缺少什麼人？",
+        options: ["A. 司祭", "B. 君王", "C. 埋葬的人", "D. 先知", "E. 士兵"],
+        answer: "C",
+        explanation: "血如水流，卻無人出來埋葬。"
+      },
+      {
+        text: "9. 根據《聖詠 79:1-5,8-9》，詠唱者懇求上主不要追討誰的惡行？",
+        options: ["A. 異民", "B. 司祭", "C. 祖先", "D. 君王", "E. 先知"],
+        answer: "C",
+        explanation: "詠唱者懇求上主不要追討祖先的惡行。"
+      },
+      {
+        text: "10. 根據《聖詠 79:1-5,8-9》，詠唱者懇求上主寬赦罪過，是為了什麼？",
+        options: ["A. 為了耶路撒冷的重建", "B. 為了百姓的安寧", "C. 為了聖名的光榮", "D. 為了梅瑟的誓言", "E. 為了先知的預言"],
+        answer: "C",
+        explanation: "為了上主聖名的光榮，求祂寬赦罪過。"
+      },
+      {
+        text: "11. 根據《路加福音 10:13-16》，耶穌責備哪兩個城邑有禍？",
+        options: ["A. 提洛與漆冬", "B. 耶路撒冷與猶大", "C. 苛辣匝因與貝特賽達", "D. 撒瑪黎雅與納因", "E. 葛法翁與耶利哥"],
+        answer: "C",
+        explanation: "耶穌責備苛辣匝因與貝特賽達。。"
+      },
+      {
+        text: "12. 根據《路加福音 10:13-16》，提洛與漆冬若見異能，會有何反應？",
+        options: ["A. 建造聖殿", "B. 歡呼讚美", "C. 披苦衣坐灰塵中", "D. 引用聖詠", "E. 舉行盛宴"],
+        answer: "C",
+        explanation: "提洛與漆冬若見異能，會披苦衣坐在灰塵中悔改。"
+      },
+      {
+        text: "13. 根據《路加福音 10:13-16》，在審判時，誰的懲罰更容易忍受？",
+        options: ["A. 苛辣匝因", "B. 貝特賽達", "C. 葛法翁", "D. 提洛與漆冬", "E. 耶路撒冷"],
+        answer: "D",
+        explanation: "提洛與漆冬的懲罰比苛辣匝因與貝特賽達更容易忍受。"
+      },
+      {
+        text: "14. 根據《路加福音 10:13-16》，葛法翁將來會如何？",
+        options: ["A. 被高舉到天上", "B. 成為聖城", "C. 被推下陰府", "D. 成為福音中心 ", "E. 被外邦尊崇"],
+        answer: "C",
+        explanation: "葛法翁將來必被推下陰府。"
+      },
+      {
+        text: "15. 根據《路加福音 10:13-16》，拒絕耶穌的人，也是在拒絕誰？",
+        options: ["A. 教會", "B. 門徒", "C. 天使", "D. 那派遣耶穌的", "E. 福音書"],
+        answer: "D",
+        explanation: "拒絕耶穌的，就是拒絕那派遣祂的，即天主。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
