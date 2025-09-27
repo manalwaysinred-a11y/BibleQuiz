@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十七主日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十七主日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《哈巴谷先知書 1:2-3; 2:2-4》，哈巴谷向上主呼喊「殘暴」，上主卻未施救，這反映了先知的哪種心境？",
+        options: ["A. 喜樂與感恩", "B. 懷疑與背叛", "C. 忍耐與信德", "D. 痛苦與困惑", "E. 驕傲與自誇"],
+        answer: "D",
+        explanation: "先知面對邪惡與壓迫，感到痛苦與困惑，質疑上主的沉默。"
+      },
+      {
+        text: "2. 根據《哈巴谷先知書 1:2-3; 2:2-4》，上主吩咐哈巴谷如何處理神視？",
+        options: ["A. 隱藏起來，等待時機", "B. 傳給宗徒", "C. 刻在版上，使人能誦讀", "D. 唱成聖詠", "E. 交給司祭審查"],
+        answer: "C",
+        explanation: "上主命令他清楚地刻在版上，使人能流利誦讀。"
+      },
+      {
+        text: "3. 根據《哈巴谷先知書 1:2-3; 2:2-4》，關於神視的實現，上主的教導是？",
+        options: ["A. 必須立刻發生", "B. 若遲延了，應等待", "C. 可能永不實現", "D. 由人決定時間", "E. 只限選民知曉"],
+        answer: "B",
+        explanation: "神視有一定期限，若遲延了，應耐心等待。"
+      },
+      {
+        text: "4. 根據《哈巴谷先知書 1:2-3; 2:2-4》，根據哈巴谷書，義人將因何而生活？",
+        options: ["A. 智慧", "B. 財富", "C. 信德", "D. 勇氣", "E. 聖職"],
+        answer: "C",
+        explanation: "義人必因他的信德而生活。"
+      },
+      {
+        text: "5. 根據《聖詠 95:1-2, 6-7, 7-9》，聖詠邀請信眾以何種方式向上主表達敬拜？",
+        options: ["A. 靜默祈禱", "B. 高聲辯論", "C. 歌舞與歡呼", "D. 禁食與苦修", "E. 書寫經文"],
+        answer: "C",
+        explanation: "聖詠呼籲大家歌舞、歡呼、吟詠讚美上主。"
+      },
+      {
+        text: "6. 根據《聖詠 95:1-2, 6-7, 7-9》，聖詠中稱上主為「救助我們的磐石」，此象徵意義是？ ",
+        options: ["A. 堅硬與冷漠", "B. 隱藏與沉默", "C. 穩固與可靠", "D. 高遠與神秘", "E. 無形與虛幻"],
+        answer: "C",
+        explanation: "磐石象徵穩固可靠的救助者。"
+      },
+      {
+        text: "7. 根據《聖詠 95:1-2, 6-7, 7-9》，聖詠提醒信眾不要像默黎巴和瑪撒那天的祖先，因為他們？  ",
+        options: ["A. 忘記誡命", "B. 試探並考驗上主", "C. 拒絕朝拜", "D. 不願聽從梅瑟", "E. 背叛盟約"],
+        answer: "B",
+        explanation: "他們雖見上主的工作，仍試探並考驗祂。"
+      },
+      {
+        text: "8. 根據《聖詠 95:1-2, 6-7, 7-9》，根據聖詠，信眾是上主的什麼？",
+        options: ["A. 工人", "B. 戰士", "C. 羊群", "D. 子民", "E. 使者"],
+        answer: "C",
+        explanation: "信眾是祂牧養的人民，是祂親手所引導的羊群。"
+      },
+      {
+        text: "9. 根據《保祿宗徒致弟茂德後書 1:6-8,13-14》，保祿提醒弟茂德要熾燃起什麼？",
+        options: ["A. 信德的火焰", "B. 愛德的泉源", "C. 天主所賦予的恩賜", "D. 教會的使命", "E. 聖神的光輝"],
+        answer: "C",
+        explanation: "保祿提醒他熾燃起天主藉覆手所賦予的恩賜。"
+      },
+      {
+        text: "10. 根據《保祿宗徒致弟茂德後書 1:6-8,13-14》，天主所賜的不是怯懦之神，而是？",
+        options: ["A. 公義與真理", "B. 大能、愛德和慎重", "C. 智慧與勇氣", "D. 聖潔與謙卑", "E. 忍耐與和平"],
+        answer: "B",
+        explanation: "保祿明言天主賜的是大能、愛德和慎重之神。"
+      },
+      {
+        text: "11. 根據《保祿宗徒致弟茂德後書 1:6-8,13-14》，保祿勉勵弟茂德不要以什麼為恥？",
+        options: ["A. 自己的軟弱", "B. 教會的迫害", "C. 為主作證與保祿被囚", "D. 信仰的挑戰", "E. 福音的艱難"],
+        answer: "C",
+        explanation: "他勉勵弟茂德不要以為主作證及保祿被囚為恥。"
+      },
+      {
+        text: "12. 根據《保祿宗徒致弟茂德後書 1:6-8,13-14》，保祿教導弟茂德要依賴誰來保管所受的寄託？",
+        options: ["A. 教會", "B. 宗徒", "C. 聖神", "D. 天使", "E. 信友"],
+        answer: "C",
+        explanation: "保祿說要依賴住在我們內的聖神保管美好寄託。"
+      },
+      {
+        text: "13. 根據《路加福音 17:5-10》，宗徒向主請求什麼？",
+        options: ["A. 增加財富", "B. 增加智慧", "C. 增加信德", "D. 增加門徒", "E. 增加能力"],
+        answer: "C",
+        explanation: "宗徒向主說：「請增加我們的信德吧！。"
+      },
+      {
+        text: "14. 根據《路加福音 17:5-10》，主以芥子比喻信德，表示什麼？",
+        options: ["A. 信德無用", "B. 信德需隱藏", "C. 信德雖小，卻有大能", "D. 信德如種子，需埋藏", "E. 信德如香料，需調味"],
+        answer: "C",
+        explanation: "主說即使信德像芥子那樣小，也能移動桑樹。"
+      },
+      {
+        text: "15. 根據《路加福音 17:5-10》，主教導僕人完成吩咐後應如何自處？",
+        options: ["A. 要求獎賞", "B. 自誇功績", "C. 稱自己為無用的僕人", "D. 向主人辯論", "E. 期望升遷"],
+        answer: "C",
+        explanation: "主教導：「我們是無用的僕人，我們不過做了我們應做的事。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
