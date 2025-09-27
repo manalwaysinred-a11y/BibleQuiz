@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十六周星期六 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十六周星期六 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《巴路克書 4:5-12,27-29》，以色列人被賣給外邦人的原因是： ",
+        options: ["A. 為了滅絕他們", "B. 因為他們太弱小", "C. 因為他們觸怒了天主", "D. 為了試煉他們的信德", "E. 因為外邦人更強盛"],
+        answer: "C",
+        explanation: "以色列人被賣給外邦人，是因為他們觸怒了天主。"
+      },
+      {
+        text: "2. 根據《巴路克書 4:5-12,27-29》，耶路撒冷因子女的罪惡而感到：",
+        options: ["A. 驕傲", "B. 喜樂", "C. 憤怒", "D. 痛苦與悲傷", "E. 安慰"],
+        answer: "D",
+        explanation: "耶路撒冷因子女的罪惡而悲傷與痛苦。"
+      },
+      {
+        text: "3. 根據《巴路克書 4:5-12,27-29》，耶路撒冷自稱為：",
+        options: ["A. 天主的城池", "B. 被祝福的母親", "C. 被眾人遺棄的寡婦", "D. 萬民之母", "E. 熙雍的守望者"],
+        answer: "C",
+        explanation: "她自稱為「被眾人遺棄的寡婦」。"
+      },
+      {
+        text: "4. 根據《巴路克書 4:5-12,27-29》，天主的子民應如何回應災禍？",
+        options: ["A. 逃離外邦", "B. 向天主呼號", "C. 建造聖殿 ", "D. 與敵人和好", "E. 隱藏自己"],
+        answer: "B",
+        explanation: "孩子們應奮勇起來，向天主呼號。"
+      },
+      {
+        text: "5. 根據《巴路克書 4:5-12,27-29》，天主允諾要給悔改的子民：",
+        options: ["A. 地上的財富", "B. 外邦的尊敬", "C. 永遠的喜樂", "D. 政治的權勢", "E. 先知的恩賜"],
+        answer: "C",
+        explanation: "天主允諾要賜給悔改者永遠的喜樂。"
+      },
+      {
+        text: "6. 根據《聖詠 69:33-35,36-37》，卑微的人應當： ",
+        options: ["A. 隱藏自己", "B. 觀看並喜樂", "C. 向君王求助", "D. 建造聖殿", "E. 宣講法律"],
+        answer: "B",
+        explanation: "卑微的人要觀看並喜樂。"
+      },
+      {
+        text: "7. 根據《聖詠 69:33-35,36-37》，尋求天主的人，他們的心將會：",
+        options: ["A. 憂傷", "B. 平靜", "C. 興奮", "D. 疲倦", "E. 懷疑"],
+        answer: "C",
+        explanation: "尋求天主的人心必要興奮。"
+      },
+      {
+        text: "8. 根據《聖詠 69:33-35,36-37》，上主對貧苦的人會如何？",
+        options: ["A. 忽略他們", "B. 懲罰他們", "C. 常予俯聽", "D. 要他們沉默", "E. 驅逐他們"],
+        answer: "C",
+        explanation: "上主常予俯聽貧苦的人。"
+      },
+      {
+        text: "9. 根據《聖詠 69:33-35,36-37》，那些受造物被召喚來讚美天主？",
+        options: ["A. 只有天使", "B. 只有人類", "C. 上天下地、海洋和水族", "D. 只有聖者", "E. 只有熙雍的居民"],
+        answer: "C",
+        explanation: "上天下地、海洋和一切水族都要讚美天主。"
+      },
+      {
+        text: "10. 根據《聖詠 69:33-35,36-37》，天主將要建造那裡的城池？",
+        options: ["A. 耶路撒冷", "B. 撒瑪黎雅", "C. 猶大的城池", "D. 加里肋亞", "E. 伯特肋罕"],
+        answer: "C",
+        explanation: "天主要建造猶大的城池。"
+      },
+      {
+        text: "11. 根據《路加福音 10:17-24》，七十二人因什麼事而歡喜歸來？",
+        options: ["A. 他們治癒了病人", "B. 他們驅逐了惡魔", "C. 他們看見耶穌顯現", "D. 他們完成了旅程", "E. 他們被群眾讚美"],
+        answer: "B",
+        explanation: "他們因奉主名驅逐惡魔而歡喜。"
+      },
+      {
+        text: "12. 根據《路加福音 10:17-24》，耶穌看見撒殫如何跌下？",
+        options: ["A. 如同石頭", "B. 如同火焰", "C. 如同閃電", "D. 如同風暴", "E. 如同星辰"],
+        answer: "C",
+        explanation: "耶穌看見撒殫如閃電一般自天跌下。"
+      },
+      {
+        text: "13. 根據《路加福音 10:17-24》，耶穌提醒門徒真正應該喜樂的是：",
+        options: ["A. 他們的能力", "B. 他們的名聲", "C. 他們的名字登記在天上 ", "D. 他們的智慧", "E. 他們的勇氣"],
+        answer: "C",
+        explanation: "真正的喜樂是名字登記在天上。"
+      },
+      {
+        text: "14. 根據《路加福音 10:17-24》，天主將啟示給誰？",
+        options: ["A. 智慧及明達的人", "B. 小孩子", "C. 司祭與長老", "D. 君王與先知 ", "E. 外邦人"],
+        answer: "B",
+        explanation: "天主將啟示給小孩子。"
+      },
+      {
+        text: "15. 根據《路加福音 10:17-24》，耶穌說誰渴望看見門徒所見之事？",
+        options: ["A. 法利塞人", "B. 羅馬人", "C. 先知及君王", "D. 撒殫與天使", "E. 群眾與門徒"],
+        answer: "C",
+        explanation: "先知及君王渴望看見門徒所見之事。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
