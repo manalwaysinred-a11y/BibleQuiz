@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十七周星期二 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十七周星期二 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《宗徒大事錄 1:12-14》，宗徒從那座山回到耶路撒冷？",
+        options: ["A. 加爾默羅山", "B. 橄欖山", "C. 西乃山", "D. 塔波爾山", "E. 撒瑪黎雅山"],
+        answer: "B",
+        explanation: "宗徒從橄欖山回耶路撒冷【宗徒大事錄 1:12】。"
+      },
+      {
+        text: "2. 根據《宗徒大事錄 1:12-14》，橄欖山離耶路撒冷有多遠？",
+        options: ["A. 一天的路程", "B. 一小時的路程", "C. 一安息日的路程", "D. 三天的路程", "E. 半天的路程"],
+        answer: "C",
+        explanation: "聖經記載橄欖山離耶路撒冷有一安息日的路程【宗徒大事錄 1:12】。"
+      },
+      {
+        text: "3. 根據《宗徒大事錄 1:12-14》，宗徒們在城中居住於那裡？",
+        options: ["A. 聖殿", "B. 若瑟之家", "C. 瑪利亞之家", "D. 一座樓房", "E. 山洞"],
+        answer: "D",
+        explanation: "宗徒們在他們所居住的樓房裡祈禱【宗徒大事錄 1:13】。"
+      },
+      {
+        text: "4. 根據《宗徒大事錄 1:12-14》，下列那位不是宗徒之一？",
+        options: ["A. 伯多祿", "B. 若望", "C. 撒慕爾", "D. 多默", "E. 巴爾多祿茂"],
+        answer: "C",
+        explanation: "撒慕爾不是宗徒，其餘皆為宗徒【宗徒大事錄 1:13】。"
+      },
+      {
+        text: "5. 根據《宗徒大事錄 1:12-14》，除了宗徒外，誰也參與了祈禱？",
+        options: ["A. 法利塞人", "B. 羅馬士兵", "C. 一些婦女及耶穌的母親瑪利亞", "D. 撒瑪黎雅人", "E. 依撒伯爾和若瑟"],
+        answer: "C",
+        explanation: "他們與宗徒一同專務祈禱【宗徒大事錄 1:14】。"
+      },
+      {
+        text: "6. 根據《路加福音 1:46-55》，瑪利亞的靈魂頌揚誰？ ",
+        options: ["A. 若瑟", "B. 天使加俾額爾", "C. 上主", "D. 達味", "E. 依撒伯爾"],
+        answer: "C",
+        explanation: "瑪利亞的靈魂頌揚上主【路加福音 1:46】。"
+      },
+      {
+        text: "7. 根據《路加福音 1:46-55》，瑪利亞稱自己為什麼？  ",
+        options: ["A. 女王", "B. 婢女", "C. 母親", "D. 先知", "E. 教友"],
+        answer: "B",
+        explanation: "瑪利亞稱自己為上主的婢女，顯示謙卑【路加福音 1:48】。"
+      },
+      {
+        text: "8. 根據《路加福音 1:46-55》，上主如何對待卑微的人？",
+        options: ["A. 忽視", "B. 驅逐", "C. 舉揚", "D. 懲罰", "E. 使其沉默"],
+        answer: "C",
+        explanation: "上主舉揚卑微貧困的人【路加福音 1:52】。"
+      },
+      {
+        text: "9. 根據《路加福音 1:46-55》，上主如何對待富有者？",
+        options: ["A. 賜予財富", "B. 使其空手而去", "C. 使其成為宗徒", "D. 賜予王權", "E. 使其成為先知"],
+        answer: "B",
+        explanation: "富有者被空手遣返，象徵天主的公義【路加福音 1:53】。"
+      },
+      {
+        text: "10. 根據《路加福音 1:46-55》，上主的仁慈施與誰？",
+        options: ["A. 所有民族", "B. 富有者", "C. 敬畏他的人", "D. 宗徒", "E. 先知"],
+        answer: "C",
+        explanation: "上主的仁慈施與敬畏他的人【路加福音 1:50】。"
+      },
+      {
+        text: "11. 根據《路加福音 1:26-38》，天使加俾額爾奉誰差遣？",
+        options: ["A. 若瑟", "B. 瑪利亞", "C. 天主", "D. 達味", "E. 撒慕耳"],
+        answer: "C",
+        explanation: "加俾額爾奉天主差遣前往納匝肋【路加福音 1:26】。"
+      },
+      {
+        text: "12. 根據《路加福音 1:26-38》，瑪利亞居住在那座城？",
+        options: ["A. 耶路撒冷", "B. 白冷", "C. 納匝肋", "D. 撒瑪黎雅", "E. 加里肋亞"],
+        answer: "C",
+        explanation: "瑪利亞居住於加里肋亞的納匝肋城【路加福音 1:26】。"
+      },
+      {
+        text: "13. 根據《路加福音 1:26-38》，天使向瑪利亞說的第一句話是？",
+        options: ["A. 願你平安", "B. 上主祝福你", "C. 萬福！充滿恩寵者", "D. 瑪利亞，你蒙恩了", "E. 天主與你同在"],
+        answer: "C",
+        explanation: "萬福！充滿恩寵者** 這是天使向瑪利亞的請安詞【路加福音 1:28】。"
+      },
+      {
+        text: "14. 根據《路加福音 1:26-38》，瑪利亞如何回應天使的預告？",
+        options: ["A. 立刻答應", "B. 表示懷疑", "C. 問：「這事怎能成就？」", "D. 沉默不語", "E. 拒絕接受"],
+        answer: "C",
+        explanation: "瑪利亞因自己未認識男人而提出疑問【路加福音 1:34】。"
+      },
+      {
+        text: "15. 根據《路加福音 1:26-38》，天使如何解釋瑪利亞的懷孕？",
+        options: ["A. 由若瑟而來", "B. 是天主的奇蹟", "C. 聖神要臨於她", "D. 由天使施恩", "E. 是自然懷孕"],
+        answer: "C",
+        explanation: "天使解釋聖神將臨於她，至高者的能力庇蔭她【路加福音 1:35】。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
