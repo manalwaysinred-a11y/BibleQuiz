@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十七周星期一 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十七周星期一 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《約納先知書　1:1-2:1,11》，約納為何要逃往塔爾史士？",
+        options: ["A. 他想去旅遊", "B. 他想尋找工作", "C. 他想躲避上主的面", "D. 他被迫離開尼尼微", "E. 他要去傳福音"],
+        answer: "C",
+        explanation: "約納起身逃往塔爾史士，是為了躲避上主的面（約納 1:3）。"
+      },
+      {
+        text: "2. 根據《約納先知書　1:1-2:1,11》，約納在船上做了什麼事？",
+        options: ["A. 幫助水手搖櫓", "B. 向水手傳講天主", "C. 躲在船艙裡沉睡", "D. 拋貨物入海", "E. 祈求上主平息風暴"],
+        answer: "C",
+        explanation: "約納下到船艙，躺下沉睡了（約納 1:5）。"
+      },
+      {
+        text: "3. 根據《約納先知書　1:1-2:1,11》，水手們如何得知風暴是因約納而起？",
+        options: ["A. 約納自己承認", "B. 天主顯現告知", "C. 他們抽籤抽中了約納", "D. 約納的行李被風吹出", "E. 約納的神蹟顯現"],
+        answer: "C",
+        explanation: "他們抽籤，約納竟抽中了（約納 1:7）。"
+      },
+      {
+        text: "4. 根據《約納先知書　1:1-2:1,11》，約納被拋入海後發生了什麼事？",
+        options: ["A. 海更洶湧", "B. 水手們也跳海", "C. 海遂平靜", "D. 約納立刻死亡", "E. 天主懲罰水手"],
+        answer: "C",
+        explanation: "約納被拋入海後，海遂平靜（約納 1:15）。"
+      },
+      {
+        text: "5. 根據《約納先知書　1:1-2:1,11》，約納在魚腹中停留了多久？",
+        options: ["A. 一天一夜", "B. 兩天兩夜", "C. 三天三夜", "D. 七天七夜", "E. 一週"],
+        answer: "C",
+        explanation: "約納在魚腹裡三天三夜（約納 2:1）。"
+      },
+      {
+        text: "6. 根據《約納先知書　2:3-5, 8》，約納在患難中向誰呼求？ ",
+        options: ["A. 水手", "B. 撒瑪黎雅人", "C. 上主", "D. 司祭", "E. 自己的神"],
+        answer: "C",
+        explanation: "約納在患難中呼求上主（約納 2:3）。"
+      },
+      {
+        text: "7. 根據《約納先知書　2:3-5, 8》，約納形容自己被拋入何處？  ",
+        options: ["A. 沙漠", "B. 陸地", "C. 陰府的深處", "D. 山頂", "E. 城牆"],
+        answer: "C",
+        explanation: "他從陰府的深處呼求（約納 2:3）。"
+      },
+      {
+        text: "8. 根據《約納先知書　2:3-5, 8》，約納被拋入海中後，水如何對他？",
+        options: ["A. 沖走他", "B. 包圍他", "C. 拯救他", "D. 沒有影響", "E. 使他昏迷"],
+        answer: "B",
+        explanation: "大水包圍了我（約納 2:4）。"
+      },
+      {
+        text: "9. 根據《約納先知書　2:3-5, 8》，約納雖被拋棄，仍希望什麼？",
+        options: ["A. 回到船上", "B. 被水手救起", "C. 瞻仰上主的聖殿", "D. 逃往塔爾史士", "E. 成為先知"],
+        answer: "C",
+        explanation: "我雖從你面前被拋棄，但我仍要瞻仰你的聖殿（約納 2:5）。"
+      },
+      {
+        text: "10. 根據《約納先知書　2:3-5, 8》，約納的祈禱達到那裡？",
+        options: ["A. 水手的耳中", "B. 天使的手中", "C. 上主的聖殿中", "D. 撒瑪黎雅人的心中", "E. 尼尼微城中"],
+        answer: "C",
+        explanation: "我的祈禱達於你的聖殿中（約納 2:8）。"
+      },
+      {
+        text: "11. 根據《路加福音　10:25-37》，法學士問耶穌什麼問題？",
+        options: ["A. 如何治病", "B. 如何成為先知", "C. 如何獲得永生", "D. 如何逃避罪惡", "E. 如何成為撒瑪黎雅人"],
+        answer: "C",
+        explanation: "法學士問：「我應當做什麼，才能獲得永生？」（路加 10:25）。"
+      },
+      {
+        text: "12. 根據《路加福音　10:25-37》，耶穌如何回應法學士的問題？",
+        options: ["A. 給他一個比喻", "B. 要他去祈禱", "C. 要他去尼尼微", "D. 問他法律上記載了什麼", "E. 要他去找司祭"],
+        answer: "D",
+        explanation: "耶穌對他說：「法律上記載了什麼？你是怎樣讀的？」（路加 10:26）。"
+      },
+      {
+        text: "13. 根據《路加福音　10:25-37》，法學士的回答包括那兩個誡命？",
+        options: ["A. 愛天主與愛近人", "B. 愛自己與愛家人", "C. 愛司祭與愛肋未人", "D. 愛尼尼微與愛塔爾史士", "E. 愛聖殿與愛祈禱"],
+        answer: "A",
+        explanation: "「你應當全心、全靈、全力、全意愛上主，你的天主；並愛近人如你自己」（路加 10:27）。"
+      },
+      {
+        text: "14. 根據《路加福音　10:25-37》，撒瑪黎雅人如何幫助受傷者？",
+        options: ["A. 給他食物", "B. 為他祈禱", "C. 包紮傷口並照料他", "D. 帶他去聖殿", "E. 給他金錢"],
+        answer: "C",
+        explanation: "撒瑪黎雅人包紮他的傷口，並照料他（路加 10:34）。"
+      },
+      {
+        text: "15. 根據《路加福音　10:25-37》，耶穌最後對法學士說了什麼？",
+        options: ["A. 你也照樣去做吧", "B. 你要悔改", "C. 你要成為撒瑪黎雅人", "D. 你要去尼尼微", "E. 你要愛司祭"],
+        answer: "A",
+        explanation: "耶穌遂對他說：「你也照樣去做吧！」（路加 10:37）。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
