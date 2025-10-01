@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十七周星期三 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十七周星期三 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《約納先知書 4:1-11》，約納為何不高興並發怒？",
+        options: ["A. 因為尼尼微人嘲笑他", "B. 因為天主憐憫尼尼微", "C. 因為他失去了財物", "D. 因為他被逐出城外", "E. 因為他未被選為先知"],
+        answer: "B",
+        explanation: "因為天主憐憫尼尼微** 約納因天主未降罰尼尼微而憤怒【約納 4:1】。"
+      },
+      {
+        text: "2. 根據《約納先知書 4:1-11》，約納原本想逃往那裡？",
+        options: ["A. 耶路撒冷", "B. 撒瑪黎雅", "C. 塔爾史士", "D. 尼尼微", "E. 加里肋亞"],
+        answer: "C",
+        explanation: "約納原欲逃往塔爾史士【約納 4:2】。"
+      },
+      {
+        text: "3. 根據《約納先知書 4:1-11》，天主安排什麼植物為約納遮蔭？",
+        options: ["A. 葡萄樹", "B. 橄欖樹", "C. 棕櫚樹", "D. 篦麻", "E. 無花果樹"],
+        answer: "D",
+        explanation: "天主安排篦麻為約納遮蔭【約納 4:6】。"
+      },
+      {
+        text: "4. 根據《約納先知書 4:1-11》，天主安排什麼使篦麻枯萎？",
+        options: ["A. 火焰", "B. 蟲子", "C. 風暴", "D. 雷電", "E. 洪水"],
+        answer: "B",
+        explanation: "天主安排蟲子咬死篦麻【約納 4:7】。"
+      },
+      {
+        text: "5. 根據《約納先知書 4:1-11》，對尼尼微城，天主提到有多少不能分辨左右手的人？",
+        options: ["A. 五萬", "B. 八萬", "C. 十二萬", "D. 十五萬", "E. 二十萬"],
+        answer: "C",
+        explanation: "尼尼微城有十二萬多不能分辨左右手的人【約納 4:11】。"
+      },
+      {
+        text: "6. 根據《聖詠 86:3-6, 9-10》，聖詠作者如何形容上主？ ",
+        options: ["A. 嚴厲而公正", "B. 良善而慈悲", "C. 沉默而隱藏", "D. 強大而冷酷", "E. 遠離人群"],
+        answer: "B",
+        explanation: "聖詠形容上主為良善慈悲【聖詠 86:5】。"
+      },
+      {
+        text: "7. 根據《聖詠 86:3-6, 9-10》，聖詠中，作者向上主舉起什麼？  ",
+        options: ["A. 雙手", "B. 眼目", "C. 心靈", "D. 聖經", "E. 香火"],
+        answer: "C",
+        explanation: "作者向上主舉起自己的心靈【聖詠 86:4】。"
+      },
+      {
+        text: "8. 根據《聖詠 86:3-6, 9-10》，上主如何對待呼號他的人？",
+        options: ["A. 忽視", "B. 懲罰", "C. 寬仁", "D. 試探", "E. 驅逐"],
+        answer: "C",
+        explanation: "上主對呼號他的人寬仁【聖詠 86:5】。"
+      },
+      {
+        text: "9. 根據《聖詠 86:3-6, 9-10》，萬民將如何回應上主？",
+        options: ["A. 逃避他", "B. 崇拜他並宣揚他的名號", "C. 詆毀他", "D. 忘記他", "E. 建造聖殿"],
+        answer: "B",
+        explanation: "萬民將來到崇拜上主【聖詠 86:9】。"
+      },
+      {
+        text: "10. 根據《聖詠 86:3-6, 9-10》，上主是怎樣的天主？",
+        options: ["A. 多神之一", "B. 可變的神", "C. 獨一無二的天主", "D. 隱藏的神", "E. 被造的神"],
+        answer: "C",
+        explanation: "聖詠宣告只有上主是獨一無二的天主【聖詠 86:10】。"
+      },
+      {
+        text: "11. 根據《路加福音 11:1-4》，門徒請求耶穌教導什麼？",
+        options: ["A. 宣講福音", "B. 醫治病人", "C. 祈禱", "D. 驅魔", "E. 建造聖殿"],
+        answer: "C",
+        explanation: "門徒請求耶穌教導他們祈禱【路加福音 11:1】。"
+      },
+      {
+        text: "12. 根據《路加福音 11:1-4》，耶穌教導祈禱時，第一句是什麼？",
+        options: ["A. 主啊，求你垂憐", "B. 父啊，願你的名被尊為聖", "C. 上主，求你賜我平安", "D. 天主，求你施恩", "E. 主啊，願你的旨意成行 "],
+        answer: "B",
+        explanation: "父啊，願你的名被尊為聖是耶穌教導祈禱的開端【路加福音 11:2】。"
+      },
+      {
+        text: "13. 根據《路加福音 11:1-4》，耶穌教導我們求什麼糧食？",
+        options: ["A. 永生之糧", "B. 逾越節的餅", "C. 日用糧", "D. 天上瑪納", "E. 祭品"],
+        answer: "C",
+        explanation: "耶穌教導我們求日用糧【路加福音 11:3】 。"
+      },
+      {
+        text: "14. 根據《路加福音 11:1-4》，我們應如何對待虧負我們的人？",
+        options: ["A. 報復他們", "B. 忽視他們", "C. 寬免他們", "D. 教訓他們", "E. 驅逐他們"],
+        answer: "C",
+        explanation: "我們應寬免虧負我們的人【路加福音 11:4】。"
+      },
+      {
+        text: "15. 根據《路加福音 11:1-4》，耶穌教導我們祈求什麼保護？",
+        options: ["A. 不受疾病侵害", "B. 不陷入誘惑", "C. 不遭迫害", "D. 不遇災難", "E. 不失信德"],
+        answer: "B",
+        explanation: "耶穌教導我們祈求不陷入誘惑【路加福音 11:4】。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
