@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十七周星期四 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十七周星期四 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《瑪拉基亞先知書　3:13-20》，人們用什麼言語頂撞上主？",
+        options: ["A. 稱讚義人", "B. 認為事奉天主是徒然", "C. 宣揚誡命的價值", "D. 呼籲守齋刻苦", "E. 感謝天主的慈愛"],
+        answer: "B",
+        explanation: "人們質疑事奉天主的價值，認為是徒然，這是頂撞上主的言語。"
+      },
+      {
+        text: "2. 根據《瑪拉基亞先知書　3:13-20》，上主如何對待敬畏祂名號的人？",
+        options: ["A. 忽略他們的祈禱", "B. 將他們記錄在記錄簿上", "C. 懲罰他們的罪過", "D. 要求他們獻祭", "E. 派遣天使保護他們"],
+        answer: "B",
+        explanation: "上主將敬畏祂的人記錄在祂面前的記錄簿上，表示祂的關注與記念。"
+      },
+      {
+        text: "3. 根據《瑪拉基亞先知書　3:13-20》，在上主行事的日子，敬畏祂的人將成為什麼？",
+        options: ["A. 祭司", "B. 特殊產業", "C. 天主的敵人", "D. 先知", "E. 天主的僕人"],
+        answer: "B",
+        explanation: "上主稱敬畏祂的人為「我的特殊產業」，顯示其珍貴與歸屬。"
+      },
+      {
+        text: "4. 根據《瑪拉基亞先知書　3:13-20》，上主如何形容那日子的來臨？",
+        options: ["A. 如清晨的露水", "B. 如雷霆萬鈞", "C. 如冒著火燄的火爐", "D. 如平靜的湖水", "E. 如天使的歌聲"],
+        answer: "C",
+        explanation: "那日子的來臨如火燄的火爐，象徵審判與潔淨。"
+      },
+      {
+        text: "5. 根據《瑪拉基亞先知書　3:13-20》，正義的太陽將為敬畏上主的人帶來什麼？",
+        options: ["A. 財富", "B. 地位", "C. 救恩", "D. 榮耀", "E. 智慧"],
+        answer: "C",
+        explanation: "正義的太陽象徵救恩，為敬畏上主的人帶來光明與治癒。"
+      },
+      {
+        text: "6. 根據《聖詠　1:1-4,6》，誰是有福的人？ ",
+        options: ["A. 隨從惡人的人", "B. 插足罪人道路的人", "C. 默思上主誡命的人", "D. 參與譏諷者席位的人", "E. 追求財富的人"],
+        answer: "C",
+        explanation: "默思上主誡命的人是有福的，顯示其敬畏與忠誠。"
+      },
+      {
+        text: "7. 根據《聖詠　1:1-4,6》，有福的人像什麼？  ",
+        options: ["A. 高山上的松樹", "B. 沙漠中的仙人掌", "C. 種植在溪畔的樹", "D. 天空中的雲朵", "E. 海中的魚群"],
+        answer: "C",
+        explanation: "有福的人像溪畔的樹，象徵生命力與穩定。"
+      },
+      {
+        text: "8. 根據《聖詠　1:1-4,6》，惡人像什麼？",
+        options: ["A. 堅固的磐石", "B. 被風吹散的糠秕", "C. 果實纍纍的樹", "D. 沉穩的河流", "E. 光明的燈塔"],
+        answer: "B",
+        explanation: "惡人像糠秕，被風吹散，象徵無根與滅亡。"
+      },
+      {
+        text: "9. 根據《聖詠　1:1-4,6》，上主如何對待義人的行徑？",
+        options: ["A. 忽視", "B. 懲罰", "C. 賞識", "D. 嘲笑", "E. 試探"],
+        answer: "C",
+        explanation: "上主賞識義人的行徑，表示祂的喜悅與祝福。"
+      },
+      {
+        text: "10. 根據《聖詠　1:1-4,6》，惡人的行徑將導致什麼？",
+        options: ["A. 蒸蒸日上", "B. 得到祝福", "C. 自趨沉淪", "D. 成為領袖", "E. 被尊崇"],
+        answer: "C",
+        explanation: "惡人的行徑必自趨沉淪，象徵其結局的敗壞。"
+      },
+      {
+        text: "11. 根據《路加福音　11:5-13》，在耶穌的比喻中，朋友半夜求什麼？",
+        options: ["A. 水", "B. 魚", "C. 三個餅", "D. 酒", "E. 雞蛋"],
+        answer: "C",
+        explanation: "耶穌比喻中，朋友半夜求三個餅以款待來訪者。"
+      },
+      {
+        text: "12. 根據《路加福音　11:5-13》，那人最終為什麼願意起來給餅？",
+        options: ["A. 因為他是親戚", "B. 因為他是鄰居", "C. 因為他切求不斷", "D. 因為他有錢", "E. 因為他是門徒 "],
+        answer: "C",
+        explanation: "因為朋友切求不斷，那人最終起來給他所需。"
+      },
+      {
+        text: "13. 根據《路加福音　11:5-13》，耶穌教導我們如何向天主祈求？",
+        options: ["A. 默默等待", "B. 只在聖殿祈禱", "C. 求、找、敲", "D. 依靠祭司代求", "E. 只在安息日祈禱"],
+        answer: "C",
+        explanation: "耶穌教導我們要求、找、敲，顯示祈求的積極性。"
+      },
+      {
+        text: "14. 根據《路加福音　11:5-13》，父親會將什麼給求餅的兒子？",
+        options: ["A. 石頭", "B. 好東西", "C. 蛇", "D. 蠍子", "E. 雞蛋"],
+        answer: "B",
+        explanation: "你們縱然不善，尚且知道把好東西給你們的兒女。"
+      },
+      {
+        text: "15. 根據《路加福音　11:5-13》，天主會將什麼賜給求祂的人？",
+        options: ["A. 財富", "B. 聖神", "C. 地位", "D. 長壽", "E. 天使"],
+        answer: "B",
+        explanation: "天主更願意將聖神賜給求祂的人，超越人間的好物。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
