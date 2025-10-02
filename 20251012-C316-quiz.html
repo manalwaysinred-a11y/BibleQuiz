@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十八主日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十八主日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《列王紀下 5:14-17》，納阿曼在約但河中浸了幾次才得潔淨？",
+        options: ["A. 三次", "B. 五次", "C. 七次", "D. 十次", "E. 十二次"],
+        answer: "C",
+        explanation: "納阿曼依照天主的人話語，在約但河中浸了七次才得潔淨。"
+      },
+      {
+        text: "2. 根據《列王紀下 5:14-17》，納阿曼潔淨後，他的肌肉變得如何？",
+        options: ["A. 像老人的肌肉", "B. 像嬰兒的肌肉", "C. 像戰士的肌肉", "D. 像石頭般堅硬", "E. 像水一樣柔軟"],
+        answer: "B",
+        explanation: "聖經形容他潔淨後的肌肉如嬰兒般柔嫩潔淨。"
+      },
+      {
+        text: "3. 根據《列王紀下 5:14-17》，厄里叟對納阿曼的禮物有何反應？",
+        options: ["A. 欣然接受", "B. 接受一部分", "C. 拒絕接受", "D. 轉送給窮人", "E. 留作聖殿之用"],
+        answer: "C",
+        explanation: "厄里叟堅決不接受納阿曼的禮物，表明他只服事永生上主。"
+      },
+      {
+        text: "4. 根據《列王紀下 5:14-17》，納阿曼請求帶回以色列的泥土，是為了什麼目的？",
+        options: ["A. 建造房屋", "B. 醫治病人", "C. 向上主奉獻全燔祭與犧牲", "D. 製作陶器", "E. 作為紀念品"],
+        answer: "C",
+        explanation: "納阿曼請求帶回泥土，是為了只向上主奉獻祭品。"
+      },
+      {
+        text: "5. 根據《聖詠 98:1-4》，上主的右手與聖臂為祂做了什麼？",
+        options: ["A. 建造聖殿", "B. 撫慰百姓", "C. 獲得勝利", "D. 懲罰罪人", "E. 賜予法律"],
+        answer: "C",
+        explanation: "聖詠讚美上主的右手與聖臂為祂獲得勝利。"
+      },
+      {
+        text: "6. 根據《聖詠 98:1-4》，上主將自己的救恩顯示給誰？ ",
+        options: ["A. 以色列人", "B. 撒瑪黎雅人", "C. 司祭們", "D. 萬民", "E. 外邦君王"],
+        answer: "D",
+        explanation: "上主的救恩與正義向萬民顯示，不只限於以色列。"
+      },
+      {
+        text: "7. 根據《聖詠 98:1-4》，全球看見了什麼？  ",
+        options: ["A. 天主的憤怒", "B. 天主的救恩", "C. 天主的審判", "D. 天主的律法", "E. 天主的聖殿"],
+        answer: "B",
+        explanation: "聖詠宣告全球看見了天主的救恩。"
+      },
+      {
+        text: "8. 根據《聖詠 98:1-4》，人們應如何回應上主的救恩？",
+        options: ["A. 默禱", "B. 禁食", "C. 高唱新歌", "D. 朝聖", "E. 施行義行"],
+        answer: "C",
+        explanation: "人們應以歌舞、歡樂、彈琴來讚美上主的奇事。"
+      },
+      {
+        text: "9. 根據《弟茂德後書 1:6-8,13-14》，保祿提醒弟茂德要熾燃什麼？",
+        options: ["A. 信德的火焰", "B. 愛德的泉源", "C. 天主所賦予的恩賜", "D. 教會的使命", "E. 聖神的光照"],
+        answer: "C",
+        explanation: "保祿提醒弟茂德要熾燃天主藉覆手所賦的恩賜。"
+      },
+      {
+        text: "10. 根據《弟茂德後書 1:6-8,13-14》，天主所賜的不是怯懦之神，而是什麼？",
+        options: ["A. 溫柔、和平與喜樂", "B. 大能、愛德與慎重", "C. 智慧、勇氣與信仰", "D. 忍耐、慈悲與真理", "E. 公義、聖潔與忠誠"],
+        answer: "B",
+        explanation: "這是天主所賜的神，不是怯懦之神。"
+      },
+      {
+        text: "11. 根據《弟茂德後書 1:6-8,13-14》，保祿勸弟茂德不要以什麼為恥？",
+        options: ["A. 自己的出身", "B. 教會的迫害", "C. 為主作證與保祿被囚", "D. 信仰的軟弱", "E. 外邦人的歸化"],
+        answer: "C",
+        explanation: "保祿勸弟茂德不要以為主作證與保祿被囚為恥，反要為福音共受勞苦。"
+      },
+      {
+        text: "12. 根據《弟茂德後書 1:6-8,13-14》，保祿要弟茂德依賴誰來保管所受的寄託？",
+        options: ["A. 教會", "B. 天使", "C. 聖母瑪利亞", "D. 聖神", "E. 自己的良心"],
+        answer: "D",
+        explanation: "保祿教導弟茂德要依賴住在我們內的聖神保管寄託。"
+      },
+      {
+        text: "13. 根據《路加福音 17:11-19》，十個痳瘋病人如何向耶穌求助？",
+        options: ["A. 靜默祈禱", "B. 跪地哭泣", "C. 大聲喊叫", "D. 寫信請求", "E. 派人傳話"],
+        answer: "C",
+        explanation: "十人遠遠地站著，大聲呼喊耶穌求憐憫。"
+      },
+      {
+        text: "14. 根據《路加福音 17:11-19》，痊瘉後回來感謝耶穌的人是誰？",
+        options: ["A. 以色列人", "B. 法利塞人", "C. 撒瑪黎雅人", "D. 司祭", "E. 羅馬人"],
+        answer: "C",
+        explanation: "唯一回來感謝耶穌的是一位撒瑪黎雅人。"
+      },
+      {
+        text: "15. 根據《路加福音 17:11-19》，耶穌對那人說：「你的信德救了你」，這句話的意義是什麼？",
+        options: ["A. 他靠自己努力得痊癒", "B. 他遵守法律而得潔淨", "C. 他因信德而得救恩", "D. 他獲得財富與健康", "E. 他成為司祭的助手"],
+        answer: "C",
+        explanation: "耶穌肯定那人的信德，使他不只身體潔淨，也得救恩。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
