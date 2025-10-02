@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十七周星期五 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十七周星期五 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《岳厄爾先知書　1:13-15;2:1-2》，司祭應如何表達哀悼？",
+        options: ["A. 穿上華服", "B. 獻上燔祭", "C. 披上麻衣", "D. 吹號角", "E. 宣講悔改"],
+        answer: "C",
+        explanation: "司祭被召披上麻衣哀悼，象徵悔改與哀傷。"
+      },
+      {
+        text: "2. 根據《岳厄爾先知書　1:13-15;2:1-2》，為何素祭和奠祭在天主殿內中斷？",
+        options: ["A. 因為戰爭", "B. 因為人民犯罪", "C. 因為乾旱", "D. 經文未明言原因", "E. 因為司祭離職"],
+        answer: "D",
+        explanation: "經文未明言原因，只指出素祭與奠祭中斷。"
+      },
+      {
+        text: "3. 根據《岳厄爾先知書　1:13-15;2:1-2》，上主的日子來臨時，大地居民應有何反應？",
+        options: ["A. 歡欣踴躍", "B. 戰慄害怕", "C. 聚集慶祝", "D. 默禱靜思", "E. 歡呼讚美"],
+        answer: "B",
+        explanation: "上主的日子來臨時，大地居民應戰慄害怕。"
+      },
+      {
+        text: "4. 根據《岳厄爾先知書　1:13-15;2:1-2》，上主的日子被形容為怎樣的日子？",
+        options: ["A. 光明燦爛", "B. 平安喜樂", "C. 陰森昏暗", "D. 風和日麗", "E. 慶典之日"],
+        answer: "C",
+        explanation: "那日子被形容為陰森昏暗、濃雲密布。"
+      },
+      {
+        text: "5. 根據《岳厄爾先知書　1:13-15;2:1-2》，那龐大強盛的民族被比喻為什麼？",
+        options: ["A. 雷霆萬鈞", "B. 曙光散布山上", "C. 洪水滔天", "D. 烈火焚燒", "E. 星辰閃耀"],
+        answer: "B",
+        explanation: "強盛民族如曙光散布在各山上。"
+      },
+      {
+        text: "6. 根據《聖詠　9:2-3, 6, 8-9, 16》，聖詠作者如何讚頌上主？ ",
+        options: ["A. 默禱靜思", "B. 獻上祭品", "C. 全心讚頌並宣揚奇妙作為", "D. 施行正義", "E. 進入聖殿"],
+        answer: "C",
+        explanation: "聖詠作者全心讚頌上主，並宣揚祂的奇妙作為。"
+      },
+      {
+        text: "7. 根據《聖詠　9:2-3, 6, 8-9, 16》，上主如何對待惡徒與異民？  ",
+        options: ["A. 寬恕他們", "B. 教導他們", "C. 摧毀並消除其名", "D. 召喚他們悔改", "E. 賜予祝福"],
+        answer: "C",
+        explanation: "上主摧毀異民，殲滅惡徒，並消除其名。"
+      },
+      {
+        text: "8. 根據《聖詠　9:2-3, 6, 8-9, 16》，異民落入何種陷阱？",
+        options: ["A. 天主設下的網羅", "B. 自己挖掘的深坑", "C. 司祭的審判", "D. 天使的懲罰", "E. 魔鬼的誘惑"],
+        answer: "B",
+        explanation: "異民落入自己挖掘的深坑，是自作自受。"
+      },
+      {
+        text: "9. 根據《聖詠　9:2-3, 6, 8-9, 16》，上主設立寶座的目的為何？",
+        options: ["A. 統治萬民", "B. 賜福義人", "C. 秉公審判", "D. 教導誡命", "E. 接納悔改者"],
+        answer: "C",
+        explanation: "上主設立寶座，是為秉公審判。"
+      },
+      {
+        text: "10. 根據《聖詠　9:2-3, 6, 8-9, 16》，上主將以何種方式審判世人？",
+        options: ["A. 仁慈與憐憫", "B. 公理與正義", "C. 威嚴與權能", "D. 寬容與等待", "E. 智慧與啟示"],
+        answer: "B",
+        explanation: "上主以正義與公理審判世人與萬民。"
+      },
+      {
+        text: "11. 根據《路加福音 11:15-26》，人群中有人指控耶穌驅魔是仗賴誰？",
+        options: ["A. 撒殫", "B. 天主", "C. 貝耳則步", "D. 天使", "E. 法利塞人"],
+        answer: "C",
+        explanation: "人群指控耶穌仗賴魔王貝耳則步驅魔。"
+      },
+      {
+        text: "12. 根據《路加福音 11:15-26》，耶穌指出若撒殫自相紛爭，會有何結果？",
+        options: ["A. 他的國將更強盛", "B. 他的國將滅亡", "C. 他將悔改", "D. 他將被放逐", "E. 他將成為僕人 "],
+        answer: "B",
+        explanation: "耶穌指出撒殫若自相紛爭，其國將滅亡。"
+      },
+      {
+        text: "13. 根據《路加福音 11:15-26》，耶穌以什麼象徵天主的國已臨？",
+        options: ["A. 驅魔是靠天主的手", "B. 天使顯現", "C. 群眾悔改", "D. 聖殿重建", "E. 司祭祝福"],
+        answer: "A",
+        explanation: "耶穌說若驅魔是靠天主的手，則天主的國已臨。"
+      },
+      {
+        text: "14. 根據《路加福音 11:15-26》，壯士看守宅舍時，財產如何？",
+        options: ["A. 被偷竊", "B. 失而復得", "C. 安全無虞", "D. 被焚毀", "E. 被瓜分"],
+        answer: "C",
+        explanation: "壯士佩武器看守宅舍時，其財產安全。"
+      },
+      {
+        text: "15. 根據《路加福音 11:15-26》，當邪魔重返人心，帶來何種後果？",
+        options: ["A. 人得潔淨", "B. 人更堅強", "C. 處境更壞", "D. 人得祝福", "E. 人成為先知"],
+        answer: "C",
+        explanation: "邪魔重返並帶七個更惡魔鬼，使人處境更壞。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
