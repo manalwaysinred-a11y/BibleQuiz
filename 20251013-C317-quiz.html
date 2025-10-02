@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十八周星期一 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十八周星期一 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 1:1-7》，保祿自稱是誰的僕人？",
+        options: ["A. 達味", "B. 撒羅滿", "C. 耶穌基督", "D. 若望", "E. 天主聖神"],
+        answer: "C",
+        explanation: "保祿自稱是「基督耶穌的僕人」。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 1:1-7》，天主的福音是藉誰預許的？",
+        options: ["A. 宗徒", "B. 先知", "C. 天使", "D. 教會", "E. 聖母瑪利亞"],
+        answer: "B",
+        explanation: "福音是天主藉「自己的先知」在聖經上所預許的。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 1:1-7》，耶穌基督按肉身是誰的後裔？",
+        options: ["A. 撒羅滿", "B. 若瑟", "C. 達味", "D. 梅瑟", "E. 亞巴郎"],
+        answer: "C",
+        explanation: "耶穌按肉身是「達味的後裔」。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 1:1-7》，耶穌基督如何被立為具有大能的天主之子？",
+        options: ["A. 藉聖神降臨", "B. 藉洗禮", "C. 藉復活", "D. 藉聖言宣講", "E. 藉顯聖容"],
+        answer: "C",
+        explanation: "耶穌因「從死者中復活」被立為具有大能的天主之子。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 1:1-7》，保祿致書給誰？",
+        options: ["A. 耶路撒冷的信徒", "B. 尼尼微人", "C. 羅馬的聖徒", "D. 加里肋亞的群眾", "E. 撒瑪黎雅人"],
+        answer: "C",
+        explanation: "保祿致書給「住在羅馬，蒙召為聖徒的人」。"
+      },
+      {
+        text: "6. 根據《聖詠 98:1-4》，為何請眾向上主歌唱新歌？ ",
+        options: ["A. 因他創造天地", "B. 因他行了奇事", "C. 因他降下聖神", "D. 因他施行審判", "E. 因他賜予律法"],
+        answer: "B",
+        explanation: "「因為他行了奇事」，所以請眾向上主歌唱新歌。"
+      },
+      {
+        text: "7. 根據《聖詠 98:1-4》，上主的右手與聖臂為他做了什麼？  ",
+        options: ["A. 建立聖殿", "B. 撫慰受苦者", "C. 獲得勝利", "D. 懲罰罪人", "E. 賜下恩寵"],
+        answer: "C",
+        explanation: "上主的右手與聖臂「為他獲得了勝利」。"
+      },
+      {
+        text: "8. 根據《聖詠 98:1-4》，上主向萬民啟示了什麼？",
+        options: ["A. 祂的慈悲", "B. 祂的智慧", "C. 祂的正義", "D. 祂的律法", "E. 祂的聖言"],
+        answer: "C",
+        explanation: "上主「將自己的正義啟示給萬民」。"
+      },
+      {
+        text: "9. 根據《聖詠 98:1-4》，上主記起了對以色列家族的什麼？",
+        options: ["A. 懲罰與審判", "B. 良善與忠誠", "C. 盟約與法律", "D. 聖殿與祭祀", "E. 教導與訓誨"],
+        answer: "B",
+        explanation: "上主記起了「自己的良善和忠誠」。"
+      },
+      {
+        text: "10. 根據《聖詠 98:1-4》，普世大地應如何回應天主的救恩？",
+        options: ["A. 默禱", "B. 禁食", "C. 歌舞歡樂", "D. 朝聖", "E. 宣講福音"],
+        answer: "C",
+        explanation: "普世大地應「向上主歌舞，踴躍，歡樂」。"
+      },
+      {
+        text: "11. 根據《路加福音 11:29-32》，耶穌稱這一世代為什麼？",
+        options: ["A. 信德堅強", "B. 仁慈寬厚", "C. 邪惡的世代", "D. 聖潔的子民", "E. 忠信的群眾"],
+        answer: "C",
+        explanation: "耶穌稱這一世代是「邪惡的世代」。"
+      },
+      {
+        text: "12. 根據《路加福音 11:29-32》，除了哪個徵兆外，耶穌不給其他徵兆？",
+        options: ["A. 撒羅滿的徵兆", "B. 若瑟的徵兆", "C. 約納的徵兆", "D. 梅瑟的徵兆", "E. 達味的徵兆"],
+        answer: "C",
+        explanation: "除了「約納的徵兆」外，耶穌不給其他徵兆。"
+      },
+      {
+        text: "13. 根據《路加福音 11:29-32》，約納為哪個城市的人是個徵兆？",
+        options: ["A. 耶路撒冷", "B. 撒瑪黎雅", "C. 尼尼微", "D. 加里肋亞", "E. 羅馬"],
+        answer: "C",
+        explanation: "約納為「尼尼微人」是個徵兆。"
+      },
+      {
+        text: "14. 根據《路加福音 11:29-32》，南方的女王為了聽誰的智慧而來？",
+        options: ["A. 保祿", "B. 若望", "C. 撒羅滿", "D. 達味", "E. 厄則克耳"],
+        answer: "C",
+        explanation: "南方的女王為聽「撒羅滿的智慧」而來。"
+      },
+      {
+        text: "15. 根據《路加福音 11:29-32》，耶穌說自己比誰更大？",
+        options: ["A. 撒羅滿與約納", "B. 梅瑟與亞郎", "C. 若瑟與瑪利亞", "D. 保祿與伯多祿", "E. 若望與厄里亞"],
+        answer: "A",
+        explanation: "耶穌說：「這裏有一位比撒羅滿更大的」、「比約納更大的」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
