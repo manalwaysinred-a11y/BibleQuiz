@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十八周星期四 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十八周星期四 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 3:21-30》，保祿宗徒的教導，人的成義是依靠什麼？",
+        options: ["A. 遵守梅瑟法律", "B. 行善積德", "C. 信德", "D. 祭獻牲畜", "E. 朝聖耶路撒冷"],
+        answer: "C",
+        explanation: "保祿宗徒強調人的成義是藉信德，而非法律上的功行。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 3:21-30》，天主的正義如何顯示出來？",
+        options: ["A. 透過法律的條文", "B. 透過先知的預言", "C. 在法律之外顯示出來", "D. 在聖殿的儀式中", "E. 在猶太人的傳統中"],
+        answer: "C",
+        explanation: "天主的正義在法律之外顯示出來，並由法律與先知作證。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 3:21-30》，為何所有人都需要救贖？",
+        options: ["A. 因為他們未受割禮", "B. 因為他們未遵守安息日", "C. 因為所有人都犯了罪", "D. 因為他們未讀聖經", "E. 因為他們不屬猶太民族"],
+        answer: "C",
+        explanation: "因所有人都犯了罪，失去了天主的光榮。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 3:21-30》，耶穌基督的血在此段經文中被形容為什麼？",
+        options: ["A. 聖潔的泉源", "B. 贖罪祭", "C. 新約的印記", "D. 生命的泉源", "E. 天主的懲罰"],
+        answer: "B",
+        explanation: "耶穌以自己的血作為贖罪祭，為信仰祂的人而獻。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 3:21-30》，根據保祿宗徒，天主是誰的天主？",
+        options: ["A. 只有猶太人的天主", "B. 只有外邦人的天主", "C. 只有信徒的天主", "D. 猶太人和外邦人的天主", "E. 只有先知的天主"],
+        answer: "D",
+        explanation: "保祿指出天主不只是猶太人的天主，也是外邦人的天主。"
+      },
+      {
+        text: "6. 根據《聖詠 130:1-6》，聖詠作者由何處向上主呼號？ ",
+        options: ["A. 聖殿", "B. 曠野", "C. 深淵", "D. 山頂", "E. 城牆"],
+        answer: "C",
+        explanation: "聖詠作者由深淵向上主呼號，表達痛苦與懇求。"
+      },
+      {
+        text: "7. 根據《聖詠 130:1-6》，若上主細察人的罪愆，誰能站立得住？  ",
+        options: ["A. 義人", "B. 司祭", "C. 沒有人", "D. 先知", "E. 法學士"],
+        answer: "C",
+        explanation: "若上主細察罪愆，沒有人能站立得住，顯示人皆需憐憫。"
+      },
+      {
+        text: "8. 根據《聖詠 130:1-6》，上主寬恕的態度引發人對祂的什麼？",
+        options: ["A. 恐懼", "B. 憤怒", "C. 敬畏與愛慕", "D. 疏離", "E. 懷疑"],
+        answer: "C",
+        explanation: "上主的寬恕令人對祂起敬起愛。"
+      },
+      {
+        text: "9. 根據《聖詠 130:1-6》，聖詠作者的靈魂期待什麼？",
+        options: ["A. 天主的懲罰", "B. 上主的聖言", "C. 先知的話語", "D. 法律的解釋", "E. 天使的顯現"],
+        answer: "B",
+        explanation: "聖詠作者的靈魂期待上主的聖言，顯示信賴與盼望。"
+      },
+      {
+        text: "10. 根據《聖詠 130:1-6》，聖詠中以何種比喻形容等候上主？",
+        options: ["A. 羔羊等候牧人", "B. 更夫待旦", "C. 婦人待產", "D. 農夫盼雨", "E. 孩子盼父"],
+        answer: "B",
+        explanation: "以更夫待旦形容等候上主，表達警醒與渴望。"
+      },
+      {
+        text: "11. 根據《路加福音 11:47-54》，耶穌責備法學士修建什麼？",
+        options: ["A. 聖殿", "B. 城牆", "C. 先知的墳墓", "D. 法學士的學院", "E. 司祭的居所"],
+        answer: "C",
+        explanation: "耶穌責備法學士修建先知的墳墓，卻贊成祖先殺害先知。"
+      },
+      {
+        text: "12. 根據《路加福音 11:47-54》，耶穌指出法學士的行為與祖先有何關係？",
+        options: ["A. 完全不同", "B. 更加仁慈", "C. 贊成祖先殺害先知", "D. 拒絕祖先的行為", "E. 不知祖先所行"],
+        answer: "C",
+        explanation: "他們的行為證明並贊成祖先殺害先知的行為。"
+      },
+      {
+        text: "13. 根據《路加福音 11:47-54》，天主的智慧曾說要派遣誰？",
+        options: ["A. 法學士與司祭", "B.  先知與使者", "C. 天使與聖人", "D. 君王與士兵", "E. 外邦人與猶太人"],
+        answer: "B",
+        explanation: "天主的智慧說要派遣先知與使者，有的會被殺害或迫害。"
+      },
+      {
+        text: "14. 根據《路加福音 11:47-54》，耶穌提到哪位先知的血在聖所與祭壇之間被殺？",
+        options: ["A. 亞伯爾", "B. 依撒意亞", "C. 耶肋米亞", "D. 則加黎雅", "E. 厄則克耳"],
+        answer: "D",
+        explanation: "耶穌提到則加黎雅的血在祭壇與聖所之間被殺。」。"
+      },
+      {
+        text: "15. 根據《路加福音 11:47-54》，法學士被責備拿走了什麼？",
+        options: ["A. 聖殿的金銀", "B. 天主的恩寵", "C. 知識的鑰匙", "D. 先知的話語", "E. 法律的權柄"],
+        answer: "C",
+        explanation: "法學士被責備拿走了知識的鑰匙，阻止人進入真理。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
