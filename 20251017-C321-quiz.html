@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十八周星期五 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十八周星期五 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 4:1-8》，亞巴郎成為義人是因為什麼？",
+        options: ["A. 遵守法律", "B. 行善積德", "C. 信了天主", "D. 獻祭牲畜", "E. 出生血統"],
+        answer: "C",
+        explanation: "亞巴郎因信了天主，天主就以此算為他的正義。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 4:1-8》，若亞巴郎因行為成義，他可以怎樣？",
+        options: ["A. 在天主前自誇", "B. 在人前自誇", "C. 在法律前自誇", "D. 在先知前自誇", "E. 在聖殿前自誇"],
+        answer: "B",
+        explanation: "若亞巴郎因行為成義，他可以在人前自誇，但不是在天主前。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 4:1-8》，保祿宗徒如何形容人工資？",
+        options: ["A. 是恩惠", "B. 是祝福", "C. 是還債", "D. 是賞賜", "E. 是救恩"],
+        answer: "C",
+        explanation: "人工資是工作的報酬，不是恩惠，而是還債。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 3:21-30》，耶穌基督的血在此段經文中被形容為什麼？",
+        options: ["A. 藉法律", "B. 藉信德", "C. 藉苦修", "D. 藉割損禮", "E. 藉聖殿祭儀"],
+        answer: "B",
+        explanation: "天主使罪人成義，是藉信德而非功行。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 4:1-8》，達味稱那些人是有福的？",
+        options: ["A. 遵守法律的人", "B. 行善積德的人", "C. 罪惡蒙赦免的人", "D. 常祈禱的人", "E. 朝聖者"],
+        answer: "C",
+        explanation: "達味稱罪惡蒙赦免、過犯得遮掩的人是有福的。"
+      },
+      {
+        text: "6. 根據《聖詠 32:1-2, 5, 11》，上主是聖詠作者的什麼？ ",
+        options: ["A. 聖殿", "B. 曠野", "C. 深淵", "D. 山頂", "E. 城牆"],
+        answer: "B",
+        explanation: "聖詠作者稱上主為他的避難所。"
+      },
+      {
+        text: "7. 根據《聖詠 32:1-2, 5, 11》，那些人被稱為有福？  ",
+        options: ["A. 心中無欺詐的人", "B. 常守安息日的人", "C. 施捨的人", "D. 受苦的人", "E. 祭獻者"],
+        answer: "A",
+        explanation: "心中無欺詐的人是有福的，因上主不歸咎於他。"
+      },
+      {
+        text: "8. 根據《聖詠 32:1-2, 5, 11》，聖詠作者如何面對自己的罪過？",
+        options: ["A. 隱藏不說", "B. 向人傾訴", "C. 向上主承認", "D. 向司祭懺悔", "E. 寫在詠文中"],
+        answer: "C",
+        explanation: "聖詠作者向上主承認自己的罪過，毫無隱瞞。"
+      },
+      {
+        text: "9. 根據《聖詠 32:1-2, 5, 11》，上主如何回應聖詠作者的懺悔？",
+        options: ["A. 給予懲罰", "B. 要求補贖", "C. 即刻寬赦", "D. 延後審判", "E. 派遣先知"],
+        answer: "C",
+        explanation: "上主即刻寬赦了他的罪債。"
+      },
+      {
+        text: "10. 根據《聖詠 32:1-2, 5, 11》，正義與心正的人應如何回應上主？",
+        options: ["A. 默禱", "B. 懺悔", "C. 歡欣喜樂與歡呼踴躍", "D. 禁食", "E. 沉思"],
+        answer: "C",
+        explanation: "正義與心正的人應在上主內歡欣喜樂，歡呼踴躍。"
+      },
+      {
+        text: "11. 根據《路加福音 12:1-7》，耶穌稱法利塞人的酵母是什麼？",
+        options: ["A. 貪婪", "B. 虛偽", "C. 驕傲", "D. 憤怒", "E. 懶惰"],
+        answer: "B",
+        explanation: "耶穌稱法利塞人的酵母是虛偽。"
+      },
+      {
+        text: "12. 根據《路加福音 12:1-7》，暗處所說的話將來會怎樣？",
+        options: ["A. 被遺忘", "B. 被赦免", "C. 在明處被聽見", "D. 被記錄", "E. 被審判"],
+        answer: "C",
+        explanation: "暗處所說的話將來必要在明處被人聽見。"
+      },
+      {
+        text: "13. 根據《路加福音 12:1-7》，耶穌教導門徒不要害怕誰？",
+        options: ["A. 撒殫", "B.  法利塞人", "C. 殺害肉身後不能再做什麼的人", "D. 羅馬兵丁", "E. 世俗君王"],
+        answer: "C",
+        explanation: "耶穌教導門徒不要害怕那些殺害肉身後不能再做什麼的人。"
+      },
+      {
+        text: "14. 根據《路加福音 12:1-7》，耶穌說應當害怕誰？",
+        options: ["A. 能殺身又能投入地獄的那一位", "B. 能審判人的司祭", "C. 能定罪的法學士", "D. 能掌權的君王", "E. 能驅魔的先知"],
+        answer: "A",
+        explanation: "應當害怕那殺害肉身以後，還有權柄把人投入地獄的那一位。"
+      },
+      {
+        text: "15. 根據《路加福音 12:1-7》，麻雀雖微，天主如何看待？",
+        options: ["A. 忽略不計", "B. 只記得其中一隻", "C. 沒有一隻被遺忘", "D. 只眷顧飛翔者", "E. 只眷顧受傷者"],
+        answer: "C",
+        explanation: "五隻麻雀雖微，天主前沒有一隻被遺忘。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
