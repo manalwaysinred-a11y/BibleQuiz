@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十八周星期三 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十八周星期三 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 2:1–11》，保祿宗徒指出，判斷他人者也定了誰的罪？",
+        options: ["A. 天主的罪", "B. 教會的罪", "C. 自己的罪", "D. 社會的罪", "E. 撒殫的罪"],
+        answer: "C",
+        explanation: "保祿說：「你判斷別人，就是定你自己的罪。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 2:1–11》，天主的慈愛是為了引導人做什麼？",
+        options: ["A. 施捨", "B. 悔改", "C. 傳福音", "D. 守法律", "E. 祈禱"],
+        answer: "B",
+        explanation: "保祿指出天主的慈愛是引導人悔改。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 2:1–11》，保祿如何形容那些不悔改的人？",
+        options: ["A. 可憐的人", "B. 無知的人", "C. 固執的人", "D. 迷途的人", "E. 虛偽的人"],
+        answer: "C",
+        explanation: "保祿說：「你固執而不願悔改，只是為自己積蓄天主的忿怒。」。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 2:1–11》，天主在審判之日要照什麼來報應人？",
+        options: ["A. 信德", "B. 言語", "C. 行為", "D. 職位", "E. 出身"],
+        answer: "C",
+        explanation: "保祿明言：「他要照每人的行為予以報應。」。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 2:1–11》，保祿強調天主的審判有何特性？",
+        options: ["A. 公平但嚴厲", "B. 仁慈但有限", "C. 不顧情面", "D. 只審猶太人", "E. 只審外邦人"],
+        answer: "C",
+        explanation: "保祿說：「因為天主決不顧情面。」。"
+      },
+      {
+        text: "6. 根據《聖詠 62:2–3, 6–7, 9》，聖詠中，靈魂安息於誰之內？ ",
+        options: ["A. 教會", "B. 自我", "C. 天主", "D. 天使", "E. 先知"],
+        answer: "C",
+        explanation: "聖詠說：「我的靈魂只安息在天主內。」。"
+      },
+      {
+        text: "7. 根據《聖詠 62:2–3, 6–7, 9》，聖詠中，天主被形容為哪三種象徵？  ",
+        options: ["A. 光、路、真理", "B. 父、子、聖神", "C. 磐石、救星、堡壘", "D. 牧者、君王、審判者", "E. 火、風、水"],
+        answer: "C",
+        explanation: "聖詠稱天主為「磐石、救星、堡壘」。"
+      },
+      {
+        text: "8. 根據《聖詠 62:2–3, 6–7, 9》，聖詠中提到「我決不會動搖」的原因是什麼？",
+        options: ["A. 因為我有信德", "B. 因為我有力量", "C. 因為天主是我的堡壘", "D. 因為我有智慧", "E. 因為我有朋友"],
+        answer: "C",
+        explanation: "聖詠說：「他是我的堡壘，我決不會動搖。」。"
+      },
+      {
+        text: "9. 根據《聖詠 62:2–3, 6–7, 9》，聖詠勸勉百姓應如何對待天主？",
+        options: ["A. 常行祭獻", "B. 常守安息日", "C. 常向他表示依靠", "D. 常誦聖詠", "E. 常行朝聖"],
+        answer: "C",
+        explanation: "聖詠說：「百姓，你們該常向他表示依靠。"
+      },
+      {
+        text: "10. 根據《聖詠 62:2–3, 6–7, 9》，聖詠中，天主被稱為什麼？",
+        options: ["A. 審判者", "B. 避難所", "C. 教導者", "D. 牧者", "E. 光明"],
+        answer: "B",
+        explanation: "聖詠說：「因為天主確是我們的避難所。」。"
+      },
+      {
+        text: "11. 根據《路加福音 11:42–46》，法利塞人捐獻什麼的十分之一？",
+        options: ["A. 金錢與牲畜", "B. 穀物與油", "C. 薄荷、茴香及各種菜蔬", "D. 葡萄酒與麵餅", "E. 香料與乳香"],
+        answer: "C",
+        explanation: "耶穌說：「你們把薄荷、茴香及各種菜蔬捐獻十分之一。"
+      },
+      {
+        text: "12. 根據《路加福音 11:42–46》，耶穌責備法利塞人忽略了什麼？",
+        options: ["A. 守安息日", "B. 公義與愛天主", "C. 誦讀聖經", "D. 施捨窮人", "E. 教導百姓"],
+        answer: "B",
+        explanation: "耶穌指出他們忽略了「公義及愛天主的義務」。"
+      },
+      {
+        text: "13. 根據《路加福音 11:42–46》，耶穌形容法利塞人如同什麼？",
+        options: ["A. 偽君子", "B.  迷途的羊", "C. 不顯露的墳墓", "D. 沒燈的燈臺", "E. 空洞的器皿"],
+        answer: "C",
+        explanation: "耶穌說：「你們就如同不顯露的墳墓。」
+。"
+      },
+      {
+        text: "14. 根據《路加福音 11:42–46》，法學士聽耶穌的話有何反應？",
+        options: ["A. 感動落淚", "B. 沉默不語", "C. 表示被侮辱", "D. 立即悔改", "E. 讚美主言"],
+        answer: "C",
+        explanation: "法學士說：「師傅，你說這些話，連我們也侮辱了。」。"
+      },
+      {
+        text: "15. 根據《路加福音 11:42–46》，耶穌責備法學士加給人什麼？",
+        options: ["A. 重擔", "B. 錯誤教義", "C. 虛偽儀式", "D. 無用法 律", "E. 假先知之言"],
+        answer: "A",
+        explanation: "耶穌說：「你們加給人不堪負荷的重擔。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
