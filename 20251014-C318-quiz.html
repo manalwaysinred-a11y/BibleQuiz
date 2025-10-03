@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十八周星期二 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十八周星期二 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 1:16-25》，保祿宗徒為何「不以福音為恥」？",
+        options: ["A. 因為福音是猶太人的傳統", "B. 因為福音是天主的德能", "C. 因為福音是使徒的教導", "D. 因為福音是法律的延續", "E. 因為福音是哲學的智慧"],
+        answer: "B",
+        explanation: "保祿宗徒指出福音是天主的德能，能使信仰者獲得救恩。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 1:16-25》，福音首先是為誰而啟示的？",
+        options: ["A. 希臘人", "B. 羅馬人", "C. 猶太人", "D. 外邦人", "E. 撒瑪黎雅人"],
+        answer: "C",
+        explanation: "保祿說福音先使猶太人，後使希臘人。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 1:16-25》，「義人因信德而生活」這句話強調了什麼？",
+        options: ["A. 行為的正義", "B. 法律的遵守", "C. 信德的根基", "D. 智慧的追求", "E. 苦修的必要"],
+        answer: "C",
+        explanation: "此句強調信德是義人生活的根本。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 1:16-25》，天主的忿怒顯露在人們的哪種行為上？",
+        options: ["A. 懶惰與無知", "B. 不敬與不義", "C. 驕傲與自私", "D. 虛偽與欺詐", "E. 暴力與貪婪"],
+        answer: "B",
+        explanation: "保祿指出天主的忿怒針對人們的不敬與不義。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 1:16-25》，人們將天主的光榮轉化為什麼？",
+        options: ["A. 自我崇拜", "B. 科學理性", "C. 可朽壞的偶像", "D. 社會制度", "E. 魔法與巫術"],
+        answer: "C",
+        explanation: "他們將不可朽壞的天主光榮歸於可朽壞的偶像形象。"
+      },
+      {
+        text: "6. 根據《聖詠 19:2-5》，高天陳述的是什麼？ ",
+        options: ["A. 人類的智慧", "B. 天主的光榮", "C. 星辰的運行", "D. 天使的歌聲", "E. 世界的秩序"],
+        answer: "B",
+        explanation: "聖詠明言高天陳述天主的光榮。"
+      },
+      {
+        text: "7. 根據《聖詠 19:2-5》，穹蒼宣揚的是什麼？  ",
+        options: ["A. 天主的奇工妙化", "B. 天主的懲罰", "C. 天主的法律", "D. 天主的慈悲", "E. 天主的審判"],
+        answer: "A",
+        explanation: "穹蒼宣揚天主的創造奇工。"
+      },
+      {
+        text: "8. 根據《聖詠 19:2-5》，聖詠中提到日與日、夜與夜如何傳遞？",
+        options: ["A. 以夢境顯示", "B. 以天使傳話", "C. 以語言傳播", "D. 侃侃而談與知識相傳", "E. 以星象指引"],
+        answer: "D",
+        explanation: "聖詠形容日與日侃侃而談，夜與夜知識相傳。"
+      },
+      {
+        text: "9. 根據《聖詠 19:2-5》，聖詠中提到的「聲音」有何特性？",
+        options: ["A. 只有先知能聽見", "B. 是天使的低語", "C. 傳遍普世", "D. 只在聖殿中響起", "E. 由司祭宣告"],
+        answer: "C",
+        explanation: "聖詠說這些聲音傳遍普世，言語達於地極。"
+      },
+      {
+        text: "10. 根據《聖詠 19:2-5》，這段聖詠主要表達什麼神學觀念？",
+        options: ["A. 天主的審判", "B. 天主的隱藏", "C. 天主的啟示透過自然", "D. 天主的法律", "E. 天主的選民"],
+        answer: "C",
+        explanation: "聖詠強調天主透過創造顯示其光榮與智慧。"
+      },
+      {
+        text: "11. 根據《路加福音 11:37-41》，耶穌未洗手入席，法利塞人有何反應？",
+        options: ["A. 欣喜", "B. 憤怒", "C. 驚訝", "D. 沉默", "E. 感動"],
+        answer: "C",
+        explanation: "法利塞人看見耶穌飯前不洗手，覺得奇怪。"
+      },
+      {
+        text: "12. 根據《路加福音 11:37-41》，耶穌責備法利塞人那種行為？",
+        options: ["A. 不守安息日", "B. 不施捨窮人", "C. 外潔內污", "D. 不信先知", "E. 不敬聖殿"],
+        answer: "C",
+        explanation: "耶穌指出他們洗淨杯盤外面，心中卻滿是邪惡。"
+      },
+      {
+        text: "13. 根據《路加福音 11:37-41》，耶穌稱法利塞人為什麼？",
+        options: ["A. 義人", "B. 智者", "C. 糊塗人", "D. 偽君子", "E. 迷途者"],
+        answer: "C",
+        explanation: "耶穌說：「糊塗人哪！那造外面的，不是也造了裡面嗎？」。"
+      },
+      {
+        text: "14. 根據《路加福音 11:37-41》，耶穌教導如何使人潔淨？",
+        options: ["A. 守法律", "B. 不斷禱告", "C. 施捨杯盤裡的", "D. 禁食苦修", "E. 朝聖聖地"],
+        answer: "C",
+        explanation: "耶穌說只要把杯盤裡面的施捨了，一切便都潔淨了。"
+      },
+      {
+        text: "15. 根據《路加福音 11:37-41》，耶穌此段教導的核心是什麼？",
+        options: ["A. 外表儀式的重要性", "B. 內心潔淨勝於外表", "C. 宗教傳統的遵守", "D. 飲食潔淨的規定", "E. 洗手的禮儀"],
+        answer: "B",
+        explanation: "耶穌強調內心的潔淨與施捨遠勝於外表的潔淨。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
