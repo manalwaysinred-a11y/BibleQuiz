@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 傳教節 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 傳教節 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《依撒意亞先知書 60:1-6》，耶路撒冷被呼籲要如何回應上主的光明？",
+        options: ["A. 隱藏自己", "B. 炫耀並起來", "C. 哀悼過去", "D. 逃離黑暗", "E. 尋求避難"],
+        answer: "B",
+        explanation: "耶路撒冷被呼籲「起來炫耀」，因為上主的光明已臨【依60:1】。"
+      },
+      {
+        text: "2. 根據《依撒意亞先知書 60:1-6》，那些動物象徵萬民的財富歸來？",
+        options: ["A. 牛與羊", "B. 鳥與鹿", "C. 駱駝與獨峰駝", "D. 馬與驢", "E. 獅與豹"],
+        answer: "C",
+        explanation: "提到「成群結隊的駱駝，以及米德楊和厄法的獨峰駝」【依60:6】。"
+      },
+      {
+        text: "3. 根據《依撒意亞先知書 60:1-6》，從舍巴而來的禮物包括那些？",
+        options: ["A. 錢囊", "B. 麥與酒", "C. 黃金與乳香", "D. 羊毛與絲綢", "E. 鑽石與玉石"],
+        answer: "C",
+        explanation: "舍巴的禮物是「黃金和乳香」【依60:6】。"
+      },
+      {
+        text: "4. 根據《依撒意亞先知書 60:1-6》，上主的榮耀照耀耶路撒冷時，世界的狀況如何？",
+        options: ["A. 太陽普照", "B. 黑暗籠罩大地", "C. 風雨交加", "D. 星光閃爍", "E. 萬民歡呼"],
+        answer: "B",
+        explanation: "經文說「黑暗籠罩著大地」【依60:2】。"
+      },
+      {
+        text: "5. 根據《聖詠 19:2-5》，高天陳述的是什麼？",
+        options: ["A. 人類的智慧", "B. 天主的光榮", "C. 天使的歌聲", "D. 星辰的運行", "E. 先知的話語"],
+        answer: "B",
+        explanation: "「高天陳述天主的光榮」【詠19:2】。"
+      },
+      {
+        text: "6. 根據《聖詠 19:2-5》，那些自然現象被用來象徵知識的傳遞？ ",
+        options: ["A. 雨與雪", "B. 風與雲", "C. 日與日、夜與夜", "D. 山與海", "E. 雷與電"],
+        answer: "C",
+        explanation: "「日與日侃侃而談，夜與夜知識相傳」【詠19:3】。"
+      },
+      {
+        text: "7. 根據《聖詠 19:2-5》，聖詠中提到的語言特徵是什麼？  ",
+        options: ["A. 無法理解", "B. 只有智者能聽", "C. 是聽不到的語言", "D. 只有夜晚能聽", "E. 需要翻譯"],
+        answer: "C",
+        explanation: "聖詠說「不是語，也不是言，是聽不到的語言」【詠19:4】。"
+      },
+      {
+        text: "8. 根據《聖詠 19:2-5》，聖詠的聲音傳遍那裡？",
+        options: ["A. 天空", "B. 山谷", "C. 普世與地極", "D. 聖殿", "E. 曠野"],
+        answer: "C",
+        explanation: "「它們的聲音傳遍普世，它們的言語達於地極」【詠19:5】。"
+      },
+      {
+        text: "9. 根據《默示錄 1:3-8》，那些誦讀並遵行預言的人有何福分？",
+        options: ["A. 得到財富", "B. 被選為先知", "C. 是有福的", "D. 可免於死亡", "E. 得見天主"],
+        answer: "C",
+        explanation: "「那誦讀和那些聽了這預言，而又遵行書中所記載的，是有福的」【默1:3】。"
+      },
+      {
+        text: "10. 根據《默示錄 1:3-8》，耶穌基督以什麼方式解救我們？",
+        options: ["A. 祂的教導", "B. 祂的奇蹟", "C. 祂的血", "D. 祂的祈禱", "E. 祂的復活"],
+        answer: "C",
+        explanation: "「耶穌基督…以自己的血，解救我們」【默1:5】。"
+      },
+      {
+        text: "11. 根據《默示錄 1:3-8》，默示錄中，耶穌基督被稱為什麼？",
+        options: ["A. 天主之子", "B. 死者中的首生者", "C. 末日審判者", "D. 天上君王", "E. 牧者"],
+        answer: "B",
+        explanation: "「死者中的首生者」是耶穌的稱號之一【默1:5】。"
+      },
+      {
+        text: "12. 根據《默示錄 1:3-8》，「阿耳法」和「敖默加」象徵什麼？",
+        options: ["A. 天主的智慧", "B. 天主的慈悲", "C. 開始與結束", "D. 天使的名字", "E. 教會的根基"],
+        answer: "C",
+        explanation: "「我是阿耳法和敖默加」象徵開始與結束【默1:8】。」。"
+      },
+      {
+        text: "13. 根據《若望福音 17:11, 17-23》，耶穌祈求門徒因什麼而被祝聖？",
+        options: ["A. 愛德", "B.  信德", "C. 真理", "D. 希望", "E. 光榮"],
+        answer: "C",
+        explanation: "「求你以真理祝聖他們」【若17:17】。"
+      },
+      {
+        text: "14. 根據《若望福音 17:11, 17-23》，耶穌希望信徒之間如何？",
+        options: ["A. 各自為政", "B. 合而為一", "C. 彼此競爭", "D. 隱居避世", "E. 追求財富"],
+        answer: "B",
+        explanation: "「使他們合而為一」是耶穌的祈求重點【若17:21】。"
+      },
+      {
+        text: "15. 根據《若望福音 17:11, 17-23》，耶穌將什麼賜給門徒，使他們合而為一？",
+        options: ["A. 聖神", "B. 聖言", "C. 光榮", "D. 聖水", "E. 聖體"],
+        answer: "C",
+        explanation: "「我將你賜給我的光榮，賜給了他們」【若17:22】。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
