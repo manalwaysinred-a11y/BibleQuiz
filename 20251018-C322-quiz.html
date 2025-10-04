@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 十月十八日  聖路加 聖史慶日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 十月十八日  聖路加 聖史慶日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致弟茂德後書 4:10-17》，誰因愛現世而離棄了保祿宗徒？",
+        options: ["A. 路加", "B. 馬爾谷", "C. 德瑪斯", "D. 提希苛", "E. 亞歷山大"],
+        answer: "C",
+        explanation: "德瑪斯因愛現世，離棄保祿而往得撒洛尼去了。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致弟茂德後書 4:10-17》，保祿宗徒認為誰在職務上對他有用？",
+        options: ["A. 克勒斯刻", "B. 馬爾谷", "C. 提希苛", "D. 路加", "E. 弟鐸"],
+        answer: "B",
+        explanation: "保祿吩咐弟茂德帶馬爾谷來，因他在職務上對保祿有用。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致弟茂德後書 4:10-17》，保祿宗徒在特洛阿留下了什麼物品？",
+        options: ["A. 錢囊", "B. 鞋子", "C. 書卷", "D. 外衣", "E. 羊皮"],
+        answer: "D",
+        explanation: "保祿在卡爾頗家中留下了外衣，並請弟茂德帶來。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致弟茂德後書 4:10-17》，銅匠亞歷山大對保祿宗徒造成了什麼？",
+        options: ["A. 財務損失", "B. 身體傷害", "C. 言語侮辱", "D. 許多苦難", "E. 信仰動搖"],
+        answer: "D",
+        explanation: "亞歷山大使保祿受了許多苦，並極力反對福音。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致弟茂德後書 4:10-17》，在保祿初次過堂時，誰在他身旁？",
+        options: ["A. 路加", "B. 馬爾谷", "C. 沒有人", "D. 提希苛", "E. 弟鐸"],
+        answer: "C",
+        explanation: "保祿說眾人都離棄了他，沒有人在他身旁。"
+      },
+      {
+        text: "6. 根據《聖詠 145:10-13, 17-18》，上主的王國是什麼性質的王國？ ",
+        options: ["A. 地上的王國", "B. 暫時的王國", "C. 萬代的王國", "D. 隱藏的王國", "E. 以色列的王國"],
+        answer: "C",
+        explanation: "聖詠中稱上主的王國為「萬代的王國」。"
+      },
+      {
+        text: "7. 根據《聖詠 145:10-13, 17-18》，上主的王權存留於何時？  ",
+        options: ["A. 七十年", "B. 永遠", "C. 一世代", "D. 無窮世", "E. 直到默西亞來臨"],
+        answer: "D",
+        explanation: "聖詠說上主的王權「存留於無窮世」。"
+      },
+      {
+        text: "8. 根據《聖詠 145:10-13, 17-18》，上主接近那些人？",
+        options: ["A. 呼號他的人", "B. 行善的人", "C. 施捨的人", "D. 傳道的人", "E. 受苦的人"],
+        answer: "A",
+        explanation: "聖詠指出上主接近一切呼號他的人，尤其誠心呼號者。"
+      },
+      {
+        text: "9. 根據《聖詠 145:10-13, 17-18》，上主的一切作為如何？",
+        options: ["A. 神秘莫測", "B. 聖善無比", "C. 公義嚴厲", "D. 充滿慈悲", "E. 隱藏不顯"],
+        answer: "B",
+        explanation: "聖詠讚美上主的作為「聖善無比」。"
+      },
+      {
+        text: "10. 根據《聖詠 32:1-2, 5, 11》，正義與心正的人應如何回應上主？",
+        options: ["A. 默禱", "B. 讚美", "C. 祭獻", "D. 懺悔", "E. 傳教"],
+        answer: "B",
+        explanation: "聖詠說「願你的一切聖徒讚美你」。"
+      },
+      {
+        text: "11. 根據《路加福音 10:1-9》，耶穌派遣多少人去各城各地？",
+        options: ["A. 十二人", "B. 七十人", "C. 七十二人", "D. 八十人", "E. 六十人"],
+        answer: "C",
+        explanation: "耶穌選定七十二人，兩個兩個地派遣出去。"
+      },
+      {
+        text: "12. 根據《路加福音 10:1-9》，耶穌形容門徒如同什麼被派往狼群中？",
+        options: ["A. 鴿子", "B. 羔羊", "C. 獅子", "D. 魚", "E. 雀鳥"],
+        answer: "B",
+        explanation: "耶穌說：「我派遣你們猶如羔羊往狼群中。」。"
+      },
+      {
+        text: "13. 根據《路加福音 10:1-9》，門徒進入一家時，應先說什麼？",
+        options: ["A. 願你蒙福", "B.  願主與你同在", "C. 願這一家平安", "D. 願你得救", "E. 願你喜樂"],
+        answer: "C",
+        explanation: "耶穌教導門徒進家時先說：「願這一家平安！」。"
+      },
+      {
+        text: "14. 根據《路加福音 10:1-9》，若一家有和平之子，門徒的和平會如何？",
+        options: ["A. 消失", "B. 傳開", "C. 停留在他身上", "D. 回到門徒", "E. 被拒絕"],
+        answer: "C",
+        explanation: "耶穌說和平會停留在和平之子身上。"
+      },
+      {
+        text: "15. 根據《路加福音 10:1-9》，門徒應向城中的病人說什麼？",
+        options: ["A. 天主憐憫你", "B. 你已得痊癒", "C. 天主的國已經臨近你們了", "D. 願主醫治你", "E. 信而得救"],
+        answer: "C",
+        explanation: "耶穌吩咐門徒醫治病人並宣告：「天主的國已經臨近你們了。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
