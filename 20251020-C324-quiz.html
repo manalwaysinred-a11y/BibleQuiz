@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十九周星期一 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十九周星期一 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 4:20-25》，亞巴郎對天主的恩許持何態度？",
+        options: ["A. 猶疑不定", "B. 完全否定", "C. 信心堅固", "D. 依靠律法", "E. 求證奇蹟"],
+        answer: "C",
+        explanation: "信心堅固 — 亞巴郎沒有猶疑，反而信心堅固，歸光榮於天主。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 4:20-25》，天主以亞巴郎的信心算為什麼？",
+        options: ["A. 恩寵", "B. 正義", "C. 聖善", "D. 成義", "E. 聖召"],
+        answer: "B",
+        explanation: "正義 — 天主以亞巴郎的信心算為他的正義。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 4:20-25》，「算為他的正義」這句話是為誰而寫？",
+        options: ["A. 只有亞巴郎", "B. 只有猶太人", "C. 所有先知", "D. 所有信主者", "E.耶穌的門徒"],
+        answer: "D",
+        explanation: "所有信主者 — 經文明言「也是為了我們這些將來得算為正義的人」。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 4:20-25》，耶穌為了我們的過犯被交付，目的是？",
+        options: ["A. 為了受苦", "B. 為了顯神能", "C. 為了成義  ", "D. 為了審判", "E. 為了顯現"],
+        answer: "C",
+        explanation: "為了成義 — 耶穌為我們的過犯被交付，又為使我們成義而復活。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 4:20-25》，我們得算為正義的條件是？",
+        options: ["A. 行善積德", "B. 守安息日", "C. 信耶穌復活", "D. 施捨財物", "E. 參與聖殿禮儀"],
+        answer: "C",
+        explanation: "信耶穌復活 — 得算為正義的條件是相信天主使耶穌由死者中復活。"
+      },
+      {
+        text: "6. 根據《路加福音 1:69-75》，上主在誰的家中興起救主？ ",
+        options: ["A. 撒慕爾家", "B. 默西亞家", "C. 達味家", "D. 若瑟家", "E. 亞巴郎家"],
+        answer: "C",
+        explanation: "達味家 — 上主在自己的僕人達味家中興起救主。"
+      },
+      {
+        text: "7. 根據《路加福音 1:69-75》，上主藉誰的口預言救主？  ",
+        options: ["A. 天使", "B. 司祭", "C. 先知", "D. 門徒", "E. 法利塞人"],
+        answer: "C",
+        explanation: "先知 — 正如他藉歷代諸聖先知的口所說過的。"
+      },
+      {
+        text: "8. 根據《路加福音 1:69-75》，上主拯救我們脫離誰的手？",
+        options: ["A. 撒殫", "B. 敵人與仇恨者", "C. 羅馬人", "D. 法利塞人", "E. 自己的罪"],
+        answer: "B",
+        explanation: "敵人與仇恨者 — 他拯救我們脫離敵人和仇恨我們者的手。"
+      },
+      {
+        text: "9. 根據《路加福音 1:69-75》，上主記起了什麼盟約？",
+        options: ["A. 舊約盟約", "B. 摩西盟約", "C. 神聖盟約", "D. 新約盟約", "E. 祭獻盟約"],
+        answer: "C",
+        explanation: "神聖盟約 — 記起他自己的神聖盟約。"
+      },
+      {
+        text: "10. 根據《路加福音 1:69-75》，上主向亞巴郎立誓的恩賜是？",
+        options: ["A. 得地為業", "B. 子孫繁多", "C. 無恐無懼事奉主", "D. 成為君王", "E. 得勝仇敵"],
+        answer: "C",
+        explanation: "無恐無懼事奉主 — 恩賜我們無恐無懼，一生一世在他的面前事奉他。"
+      },
+      {
+        text: "11. 根據《路加福音 12:13-21》，人向耶穌求什麼事？",
+        options: ["A. 醫治病痛", "B. 分家產", "C. 驅魔", "D. 求祝福", "E. 求門徒職位"],
+        answer: "B",
+        explanation: "分家產 — 人群中有人求耶穌吩咐兄弟與他分家。"
+      },
+      {
+        text: "12. 根據《路加福音 12:13-21》，耶穌對貪婪的教導是？",
+        options: ["A. 可適度擁有", "B. 財富是祝福", "C. 要謹慎躲避", "D. 可用於施捨", "E. 可換取生命"],
+        answer: "C",
+        explanation: "要謹慎躲避 — 耶穌教導要謹慎，躲避一切貪婪。"
+      },
+      {
+        text: "13. 根據《路加福音 12:13-21》，富翁的田地如何？",
+        options: ["A. 荒蕪不生", "B.  出產豐富", "C. 被火焚毀", "D. 被敵人奪取", "E. 只收少量"],
+        answer: "B",
+        explanation: "出產豐富 — 富翁的田地出產豐富。"
+      },
+      {
+        text: "14. 根據《路加福音 12:13-21》，富翁打算如何處理財物？",
+        options: ["A. 捐給窮人", "B. 分給兄弟", "C. 建更大倉房", "D. 賣給商人", "E. 留給子孫"],
+        answer: "C",
+        explanation: "建更大倉房 — 他打算拆毀倉房，另建更大的收藏財物。"
+      },
+      {
+        text: "15. 根據《路加福音 12:13-21》，天主對富翁說了什麼？",
+        options: ["A. 智慧人哪", "B. 忠僕哪", "C. 糊塗人哪", "D. 富有者哪", "E. 可憐人哪"],
+        answer: "C",
+        explanation: "糊塗人哪 — 天主對他說：「糊塗人哪！今夜就要索回你的靈魂。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
