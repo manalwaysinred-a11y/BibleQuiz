@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十九周星期二 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十九周星期二 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 5:12,15,17-19,20-21》，保祿宗徒的教導，罪惡是如何進入世界的？",
+        options: ["A. 藉著魔鬼的誘惑", "B. 藉著人的自由意志", "C. 藉著一人的過犯", "D. 藉著法律的制定", "E. 藉著群眾的叛逆"],
+        answer: "C",
+        explanation: "罪惡藉著一人進入世界（指亞當）【羅5:12】。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 5:12,15,17-19,20-21》，保祿宗徒指出，因耶穌基督一人的恩寵所施與的恩惠如何臨於眾人？",
+        options: ["A. 僅限信徒", "B. 豐富地洋溢到眾人身上", "C. 只臨於選民", "D. 透過聖神的降臨", "E. 經由教會的施行"],
+        answer: "B",
+        explanation: "恩寵洋溢到眾人身上，顯示基督救恩的普遍性【羅5:15】。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 5:12,15,17-19,20-21》，在保祿宗徒的論述中，死亡因誰作了王？",
+        options: ["A. 撒殫", "B. 梅瑟", "C. 一人的過犯", "D. 群眾的罪惡", "E.天主的審判"],
+        answer: "C",
+        explanation: "死亡因一人的過犯作了王【羅5:17】。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 5:12,15,17-19,20-21》，保祿宗徒如何形容耶穌基督的服從所帶來的果效？",
+        options: ["A. 使人得赦免", "B. 使人得平安", "C. 大眾都成了義人", "D. 使教會得建立", "E. 使律法得完成"],
+        answer: "C",
+        explanation: "因耶穌的服從，大眾成了義人【羅5:19】。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 5:12,15,17-19,20-21》，保祿宗徒的教導，罪惡越多時，恩寵如何表現？",
+        options: ["A. 被隱藏", "B. 被削弱", "C. 越格外豐富", "D. 被審判所取代", "E. 被律法所限制"],
+        answer: "C",
+        explanation: "罪惡越多，恩寵越格外豐富【羅5:20】。"
+      },
+      {
+        text: "6. 根據《聖詠 40:7-8,8-9,10,17》，根據聖詠作者的話，上主不喜歡哪一種祭獻？ ",
+        options: ["A. 感恩祭", "B. 全燔之祭", "C. 平安祭", "D. 初熟祭", "E. 贖罪之祭 "],
+        answer: "B",
+        explanation: "全燔之祭與贖罪之祭已非上主所要【詠40:7】。"
+      },
+      {
+        text: "7. 根據《聖詠 40:7-8,8-9,10,17》，聖詠中提到，作者如何回應上主的旨意？  ",
+        options: ["A. 逃避責任", "B. 祈求寬恕", "C. 說：「你看，我已來到！」", "D. 宣告審判", "E. 獻上祭品"],
+        answer: "C",
+        explanation: "作者回應說：「你看，我已來到！」【詠40:8】。"
+      },
+      {
+        text: "8. 根據《聖詠 40:7-8,8-9,10,17》，作者在集會中如何對待上主的正義？",
+        options: ["A. 默默守候", "B. 閉口不言", "C. 宣揚並不隱瞞", "D. 以聖詠讚美", "E. 以祭獻表達"],
+        answer: "C",
+        explanation: "在集會中宣揚正義，並未閉口不言【詠40:10】。"
+      },
+      {
+        text: "9. 根據《聖詠 40:7-8,8-9,10,17》，作者如何形容自己對上主法律的態度？",
+        options: ["A. 畏懼", "B. 疏離", "C. 常存於心懷", "D. 依賴祭司解釋", "E. 只在聖殿遵守"],
+        answer: "C",
+        explanation: "上主的法律常存於心懷【詠40:9】。"
+      },
+      {
+        text: "10. 根據《聖詠 40:7-8,8-9,10,17》，最後祝願尋求上主的人如何回應？",
+        options: ["A. 常說：「偉大的上主！」", "B. 獻上祭品", "C. 進入聖殿", "D. 默禱不語", "E. 宣告審判"],
+        answer: "A",
+        explanation: "願尋求者常說：「偉大的上主！」【詠40:17】。"
+      },
+      {
+        text: "11. 根據《路加福音 12:35-38》，耶穌教導門徒要如何準備迎接主人？",
+        options: ["A. 穿上白衣", "B. 點燈束腰", "C. 閉門靜候", "D. 獻上祭品", "E. 唱詠讚美"],
+        answer: "B",
+        explanation: "束腰點燈，象徵警醒與準備【路12:35】。"
+      },
+      {
+        text: "12. 根據《路加福音 12:35-38》，主人回來時，僕人若醒寤著，將會如何？",
+        options: ["A. 被責罵", "B. 被賜予財富", "C. 是有福的", "D. 被派遣遠行", "E. 被提升為管家"],
+        answer: "C",
+        explanation: "醒寤的僕人是有福的【路12:37】。"
+      },
+      {
+        text: "13. 根據《路加福音 12:35-38》，耶穌說主人會如何對待醒寤的僕人？",
+        options: ["A. 賜予賞金", "B.  親自伺候他們", "C. 給予懲罰", "D. 派遣他們工作", "E. 給予律法"],
+        answer: "B",
+        explanation: "主人親自伺候他們，象徵天主的慈愛【路12:37】。"
+      },
+      {
+        text: "14. 根據《路加福音 12:35-38》，主人可能在何時回來？",
+        options: ["A. 日出時", "B. 二更或三更", "C. 正午時分", "D. 安息日", "E. 逾越節"],
+        answer: " B",
+        explanation: "二更或三更，表示主來的時間不可預測【路12:38】。"
+      },
+      {
+        text: "15. 根據《路加福音 12:35-38》，耶穌的比喻中，僕人應如何回應主人的敲門？",
+        options: ["A. 立刻開門", "B. 詢問身份", "C. 唱聖詠迎接", "D. 獻上祭品", "E. 默禱等候"],
+        answer: "A",
+        explanation: "一敲門就立刻開門，象徵信德與準備【路12:36】。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
