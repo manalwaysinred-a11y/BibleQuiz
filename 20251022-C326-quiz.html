@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十九周星期三 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十九周星期三 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書　6:12-18》，罪惡不應在我們身上作甚麼？",
+        options: ["A. 教師", "B. 主人", "C. 朋友", "D. 律師", "E. 君王"],
+        answer: "E",
+        explanation: "保祿宗徒教導信友不要讓罪惡在我們必死的身體上「為王」，即不讓罪惡掌控我們的行為。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書　6:12-18》，保祿宗徒稱信友的肢體應當成為甚麼？",
+        options: ["A. 恩寵的工具", "B. 愛德的象徵", "C. 正義的武器", "D. 信德的標記", "E. 忍耐的器皿"],
+        answer: "C",
+        explanation: "保祿宗徒說我們應將肢體獻於天主，作「正義的武器」，對抗罪惡。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書　6:12-18》，保祿宗徒的教導，信友不再受那一種權下？",
+        options: ["A. 恩寵權下", "B. 法律權下", "C. 教會權下", "D. 聖神權下", "E.自由權下"],
+        answer: "B",
+        explanation: "保祿宗徒指出信友不再在「法律權下」，而是在「恩寵權下」。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書　6:12-18》，保祿宗徒以甚麼比喻信友對罪惡或正義的服從？",
+        options: ["A. 祭品", "B. 工匠", "C. 奴隸", "D. 牧人", "E. 旅人"],
+        answer: "C",
+        explanation: "他說人若服從罪惡或正義，就成了其「奴隸」，分別導致死亡或正義。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書　6:12-18》，保祿宗徒感謝天主，因為信友從心裏聽從了甚麼？",
+        options: ["A. 福音的喜訊", "B. 教會的訓導", "C. 教理規範", "D. 聖神的感動", "E. 主人的命令"],
+        answer: "C",
+        explanation: "保祿宗徒讚美信友從心裏聽從「教理規範」，脫離罪惡，獲得自由。"
+      },
+      {
+        text: "6. 根據《聖詠　124:1-8》，若不是上主保佑，以色列子民會怎樣？ ",
+        options: ["A. 迷失方向", "B. 被洪水淹沒", "C. 成為奴隸", "D. 被火焚燒", "E. 被野獸吞噬 "],
+        answer: "B",
+        explanation: "聖詠形容敵人的攻擊如洪水般洶湧，若非上主保佑，子民將被淹沒。"
+      },
+      {
+        text: "7. 根據《聖詠　124:1-8》，聖詠中提到敵人如同甚麼向我們發洩怒火？  ",
+        options: ["A. 火山", "B. 獅子", "C. 洪水", "D. 獵人", "E. 狂浪"],
+        answer: "E",
+        explanation: "經文形容敵人的怒火如「洶湧澎湃的狂浪」，足以吞噬我們。"
+      },
+      {
+        text: "8. 根據《聖詠　124:1-8》，聖詠讚美上主，因為他沒有讓我們成為甚麼？",
+        options: ["A. 罪惡的奴隸", "B. 羔羊的犧牲", "C. 他們爪牙的獵物", "D. 群眾的笑柄", "E. 羅網中的囚徒"],
+        answer: "C",
+        explanation: "上主保護我們，使我們不成為敵人的「爪牙的獵物」。"
+      },
+      {
+        text: "9. 根據《聖詠　124:1-8》，聖詠中，我們像甚麼掙脫了獵人的羅網？",
+        options: ["A. 小羊", "B. 鴿子", "C. 小鳥", "D. 魚兒", "E. 鹿群"],
+        answer: "C",
+        explanation: "經文比喻我們如「小鳥」掙脫羅網，象徵上主的救援。"
+      },
+      {
+        text: "10. 根據《聖詠 40:7-8,8-9,10,17》，最後祝願尋求上主的人如何回應？",
+        options: ["A. 上主", "B. 默西亞", "C. 天主之母", "D. 聖神", "E. 亞巴郎"],
+        answer: "A",
+        explanation: "聖詠明言：「我們的救助是仰賴上主的名」，他創造天地。"
+      },
+      {
+        text: "11. 根據《路加福音　12:39-48》，耶穌教導門徒要束腰、點燈，是為了甚麼？",
+        options: ["A. 迎接新生命", "B. 等候主人回來", "C. 準備祈禱", "D. 迎接婚筵", "E. 驅散黑暗"],
+        answer: "B",
+        explanation: "耶穌比喻信友如僕人，束腰點燈，等候主人由婚筵回來。"
+      },
+      {
+        text: "12. 根據《路加福音　12:39-48》，耶穌的比喻，主人若遇見醒寤的僕人，會怎樣？",
+        options: ["A. 給予獎賞", "B. 責罰他們", "C. 親自伺候他們", "D. 派遣他們工作", "E. 賜予財富"],
+        answer: "C",
+        explanation: "主人見僕人警醒，會「束上腰，請他們坐席，親自伺候」。"
+      },
+      {
+        text: "13. 根據《路加福音　12:39-48》，耶穌說僕人若在幾更時仍醒寤，是有福的？",
+        options: ["A. 一更", "B.  二更或三更", "C. 四更", "D. 晨更", "E. 午更"],
+        answer: "B",
+        explanation: "經文指出主人「二更來也罷，三更來也罷」，僕人若醒寤便是有福。"
+      },
+      {
+        text: "14. 根據《路加福音　12:39-48》，耶穌的比喻中，僕人應如何回應主人敲門？",
+        options: ["A. 立刻開門", "B. 先詢問身份", "C. 等候命令", "D. 唱詠迎接", "E. 祈禱後開門"],
+        answer: "A",
+        explanation: "耶穌教導僕人要「一敲門，立刻就給他開門」，表示警醒與準備。"
+      },
+      {
+        text: "15. 根據《路加福音　12:39-48》，耶穌的教導，那些僕人才是有福的？",
+        options: ["A. 忍耐的僕人", "B. 勤勞的僕人", "C. 醒寤的僕人", "D. 聽命的僕人", "E. 傳道的僕人"],
+        answer: "C",
+        explanation: "耶穌明言「遇見醒寤著的那些僕人，是有福的」，強調靈性警醒。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
