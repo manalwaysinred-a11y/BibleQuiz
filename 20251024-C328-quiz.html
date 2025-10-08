@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十九周星期五 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十九周星期五 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 7:18-25》，保祿宗徒說善不在他內，是指哪一部分？",
+        options: ["A. 靈魂", "B. 理智", "C. 肉性", "D. 信仰", "E. 心志"],
+        answer: "C",
+        explanation: "保祿宗徒說：「善不在我內，即不在我的肉性內」，指出人性軟弱。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 7:18-25》，保祿宗徒描述自己有心行善卻不能行善，這反映了什麼？",
+        options: ["A. 信仰的缺乏", "B. 教會的責任", "C. 肉性的掙扎", "D. 外在的誘惑", "E. 法律的限制"],
+        answer: "C",
+        explanation: "他指出「我有心行善，但實際上卻不能行善」，說明肉性與罪惡的掙扎。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 7:18-25》，保祿宗徒說：「我所不願意的，我若去作」，這表示什麼？",
+        options: ["A. 他故意犯罪", "B. 他無法控制自己", "C. 他不認識法律", "D. 他拒絕悔改", "E. 他受外人影響"],
+        answer: "B",
+        explanation: "保祿指出罪惡在他內作主，使他行出自己不願意的事。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 7:18-25》，保祿宗徒在肢體內發現的法律是什麼？",
+        options: ["A. 天主的誡命", "B. 教會的規條", "C. 罪惡的法律", "D. 義人的法則", "E. 仁慈的法律"],
+        answer: "C",
+        explanation: "保祿宗徒說：「在我的肢體內，另有一條法律…叫我隸屬於那在我肢體內的罪惡的法律」。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 7:18-25》，保祿宗徒感謝誰救他脫離該死的肉身？",
+        options: ["A. 聖神", "B. 天主", "C. 教會", "D. 瑪利亞", "E. 司祭"],
+        answer: "B",
+        explanation: "保祿宗徒說：「感謝天主，藉著我們的主耶穌基督」，表達救恩的來源。"
+      },
+      {
+        text: "6. 根據《聖詠 119:66, 68, 76-77, 93-94》，聖詠作者求上主教導他什麼？ ",
+        options: ["A. 信德與勇氣", "B. 智慧與慈悲", "C. 知識與智慧", "D. 忍耐與謙遜", "E. 公義與真理"],
+        answer: "C",
+        explanation: "聖詠說：「上主，求你教給我知識和智慧」，表達信賴誡命的心。"
+      },
+      {
+        text: "7. 根據《聖詠 119:66, 68, 76-77, 93-94》，上主是怎樣的天主？  ",
+        options: ["A. 公義的", "B. 慈善的", "C. 威嚴的", "D. 忍耐的", "E. 全能的"],
+        answer: "B",
+        explanation: "聖詠說：「你是慈善的，好施仁惠」，讚美上主的仁慈。"
+      },
+      {
+        text: "8. 根據《聖詠 119:66, 68, 76-77, 93-94》，聖詠作者稱上主的法律為何？",
+        options: ["A. 負擔", "B. 喜樂", "C. 試煉", "D. 教訓", "E. 懲罰"],
+        answer: "B",
+        explanation: "聖詠說：「你的法律就是我的喜樂」，顯示誡命是生命的泉源。。"
+      },
+      {
+        text: "9. 根據《聖詠 119:66, 68, 76-77, 93-94》，聖詠作者永遠不忘記什麼？",
+        options: ["A. 上主的慈悲", "B. 上主的名字", "C. 上主的法令", "D. 上主的創造", "E. 上主的聖殿"],
+        answer: "C",
+        explanation: "聖詠說：「我永遠不會忘記你的法令，因為你藉此賜我生命」。"
+      },
+      {
+        text: "10. 根據《聖詠 119:66, 68, 76-77, 93-94》，聖詠作者說自己全屬於誰？",
+        options: ["A. 教會", "B. 天主", "C. 司祭", "D. 先知", "E. 信友"],
+        answer: "B",
+        explanation: "聖詠說：「我全屬於你，求你救拔我」，表達完全的奉獻與信賴。"
+      },
+      {
+        text: "11. 根據《路加福音 12:54-59》，耶穌責問群眾能觀察氣象卻不能觀察什麼？",
+        options: ["A. 天主的旨意", "B. 時機", "C. 人心", "D. 法律", "E. 天使的行動"],
+        answer: "B",
+        explanation: "耶穌說：「怎麼不能觀察這個時機呢？」責問他們靈性遲鈍。"
+      },
+      {
+        text: "12. 根據《路加福音 12:54-59》，耶穌稱那些只觀察氣象的人為什麼？",
+        options: ["A. 愚人", "B. 不信者", "C. 假善人", "D. 法利塞人", "E. 外邦人"],
+        answer: "C",
+        explanation: "耶穌說：「假善人哪！」指出他們只重外表，不察屬靈的時刻。"
+      },
+      {
+        text: "13. 根據《路加福音 12:54-59》，耶穌勸人與對頭在何時和解？",
+        options: ["A. 在官前", "B.  在審判後", "C. 尚在路上", "D. 在家中", "E. 在聖殿"],
+        answer: "C",
+        explanation: "耶穌說：「尚在路上，你得設法與他了結」，強調及早和解。"
+      },
+      {
+        text: "14. 根據《路加福音 12:54-59》，若不與對頭和解，可能會被交給誰？",
+        options: ["A. 司祭", "B. 法官", "C. 判官", "D. 義人", "E. 教師"],
+        answer: "C",
+        explanation: "耶穌說：「怕他拉你到法官前，判官把你交給刑役」，警告後果。"
+      },
+      {
+        text: "15. 根據《路加福音 12:54-59》，耶穌說若未還清最後一分錢，會怎樣？",
+        options: ["A. 被驅逐", "B. 受咒罵", "C. 不得出獄", "D. 被棄絕", "E. 被審判"],
+        answer: "C",
+        explanation: "耶穌說：「非等你還清最後的一分錢，斷不能從那裏出來」，強調責任與償還。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
