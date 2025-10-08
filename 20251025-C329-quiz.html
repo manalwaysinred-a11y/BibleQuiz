@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十九周星期六 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十九周星期六 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 8:1-11》，根據羅馬人書 8:1，那些人在基督耶穌內已無罪可定？",
+        options: ["A. 遵守梅瑟法律的人", "B. 在聖殿獻祭的人", "C. 在基督耶穌內的人", "D. 遠離罪惡的人", "E. 受洗的人"],
+        answer: "C",
+        explanation: "聖保祿明言「在基督耶穌內的人，已無罪可定」，強調信仰的救贖。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 8:1-11》，天主如何克服法律因肉性軟弱所不能行的事？",
+        options: ["A. 賜予梅瑟新的誡命", "B. 派遣天使懲罰罪人", "C. 派遣自己的兒子作贖罪祭", "D. 建立新的聖殿", "E. 賜予新的法律"],
+        answer: "C",
+        explanation: "天主派遣自己的兒子，帶著罪惡肉身的形狀，作為贖罪祭。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 8:1-11》，隨從肉性的人切望的是什麼？",
+        options: ["A. 聖神的事", "B. 天主的法律", "C. 肉性的事", "D. 永生的賞報", "E. 正義與和平"],
+        answer: "C",
+        explanation: "聖保祿指出，隨從肉性的人切望肉性的事，導入死亡。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 8:1-11》，若基督在我們內，身體因罪惡而死亡，神魂卻如何？",
+        options: ["A. 也死亡", "B. 賴正義而生活", "C. 被聖神充滿", "D. 得永生", "E. 受審判"],
+        answer: "B",
+        explanation: "聖保祿說明，神魂賴正義而生活，顯示信仰的轉化。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 8:1-11》，那使耶穌從死者中復活的聖神若住在我們內，將會如何？",
+        options: ["A. 賜我們智慧", "B. 使我們身體復活", "C. 引導我們行善", "D. 赦免我們的罪", "E. 賜我們平安"],
+        answer: "B",
+        explanation: "聖神住在我們內，將使我們會死的身體復活。"
+      },
+      {
+        text: "6. 根據《聖詠　24:1-6》，大地和其中的萬物屬於誰？ ",
+        options: ["A. 雅威", "B. 天使", "C. 上主", "D. 聖神", "E. 基督"],
+        answer: "C",
+        explanation: "聖詠24開首即言「大地和其中的萬物，屬於上主」。"
+      },
+      {
+        text: "7. 根據《聖詠　24:1-6》，上主在何處奠定了大地？  ",
+        options: ["A. 山嶺上", "B. 沙漠中", "C. 海洋上", "D. 天空中", "E. 樹林間"],
+        answer: "C",
+        explanation: "聖詠24指出「是他在海洋上奠定了大地」。"
+      },
+      {
+        text: "8. 根據《聖詠　24:1-6》，誰能登上上主的聖山？",
+        options: ["A. 祭司", "B. 手潔心清的人", "C. 遵守法律的人", "D. 先知", "E. 朝聖者"],
+        answer: "B",
+        explanation: "聖詠24明言「是那手潔心清，不慕虛幻的人」。"
+      },
+      {
+        text: "9. 根據《聖詠　24:1-6》，這樣的人將獲得什麼？",
+        options: ["A. 天主的憐憫", "B. 聖殿的居所", "C. 上主的祝福與報酬", "D. 永生的許諾", "E. 天使的保護"],
+        answer: "C",
+        explanation: "聖詠24說「這樣的人必獲得上主的祝福，和拯救者天主的報酬」。"
+      },
+      {
+        text: "10. 根據《聖詠　24:1-6》，這樣的人是誰的苗裔？",
+        options: ["A. 亞巴郎", "B. 達味", "C. 雅各伯", "D. 撒羅滿", "E. 若瑟"],
+        answer: "C",
+        explanation: "聖詠24稱「這樣的人是尋求上主的苗裔，追求雅各伯天主儀容的子孫」。"
+      },
+      {
+        text: "11. 根據《路加福音 13:1-9》，比拉多對加里肋亞人做了什麼？",
+        options: ["A. 放逐他們", "B. 把他們的血與祭品攙和", "C. 賜予他們恩典", "D. 建立聖殿給他們", "E. 赦免他們的罪"],
+        answer: "B",
+        explanation: "路加福音記載比拉多把加里肋亞人的血與祭品攙和。"
+      },
+      {
+        text: "12. 根據《路加福音 13:1-9》，耶穌對加里肋亞人遭禍害的看法是什麼？",
+        options: ["A. 他們罪大惡極", "B. 他們受天主懲罰", "C. 他們比其他人更有罪", "D. 若不悔改，人人都要喪亡", "E. 他們是義人"],
+        answer: "D",
+        explanation: "耶穌強調「如果你們不悔改，你們都要同樣喪亡」。"
+      },
+      {
+        text: "13. 根據《路加福音 13:1-9》，史羅亞塔倒下壓死了多少人？",
+        options: ["A. 七人", "B.  十人", "C. 十二人", "D. 十八人", "E. 二十人"],
+        answer: "D",
+        explanation: "耶穌提及「史羅亞塔倒下，而壓死的那十八個人」。"
+      },
+      {
+        text: "14. 根據《路加福音 13:1-9》，耶穌用無花果樹的比喻來說明什麼？",
+        options: ["A. 信德的成長", "B. 天主的審判", "C. 悔改的寬限", "D. 聖神的果實", "E. 永生的賞報"],
+        answer: "C",
+        explanation: "園主願再寬容一年，象徵悔改的機會。"
+      },
+      {
+        text: "15. 根據《路加福音 13:1-9》，園主為何想砍掉無花果樹？",
+        options: ["A. 它枯萎了", "B. 它生病了", "C. 它三年不結果", "D. 它太高大", "E. 它擋住陽光"],
+        answer: "C",
+        explanation: "耶穌說園主三年尋果不見，欲伐之，象徵無悔改者的命運。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
