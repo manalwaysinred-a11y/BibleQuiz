@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第二十九周星期四 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第二十九周星期四 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 6:19-23》，保祿宗徒以何種方式說明教導，以配合信友的本性？",
+        options: ["A. 按天主的智慧", "B. 按聖神的啟示", "C. 按常情來說", "D. 按教會的傳統", "E. 按法律的條文"],
+        answer: "C",
+        explanation: "保祿宗徒說「我且按常情來說」，是為了配合信友本性的軟弱，使教導更易理解。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 6:19-23》，保祿宗徒勸勉信友將肢體獻於何者？",
+        options: ["A. 欲望", "B. 正義", "C. 自由", "D. 智慧", "E. 聖神"],
+        answer: "B",
+        explanation: "保祿宗徒指出，信友應將肢體當作奴隸，獻於正義，行聖善的事。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 6:19-23》，罪惡的薪俸是什麼？",
+        options: ["A. 地獄", "B. 痛苦", "C. 死亡", "D. 懲罰", "E.滅亡"],
+        answer: "C",
+        explanation: "保祿宗徒明言：「罪惡的薪俸是死亡」，對比天主的恩賜是永生。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 6:19-23》，信友脫離罪惡後，成為誰的奴隸？",
+        options: ["A. 正義", "B. 聖神", "C. 基督", "D. 天主", "E. 教會"],
+        answer: "D",
+        explanation: "保祿宗徒說：「你們脫離了罪惡，獲得了自由，作了天主的奴隸。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 6:19-23》，信友成為天主的奴隸後，所得的效果是什麼？",
+        options: ["A. 平安", "B. 成聖", "C. 喜樂", "D. 智慧", "E. 恩寵"],
+        answer: "B",
+        explanation: "保祿宗徒指出，成為天主的奴隸的效果是「使你們成聖」，結局是永生。"
+      },
+      {
+        text: "6. 根據《聖詠 1:1-6》，有福的人不會參與哪一種人的席位？ ",
+        options: ["A. 義人", "B. 智者", "C. 譏諷者", "D. 教師", "E. 先知"],
+        answer: "C",
+        explanation: "聖詠說：「不參與譏諷者的席位」，是有福的人的特徵之一。"
+      },
+      {
+        text: "7. 根據《聖詠 1:1-6》，有福的人晝夜默思什麼？  ",
+        options: ["A. 上主的慈悲", "B. 上主的誡命", "C. 上主的創造", "D. 上主的救恩", "E. 上主的聖名"],
+        answer: "B",
+        explanation: "聖詠明言：「晝夜默思上主誡命的人，是有福的！」。"
+      },
+      {
+        text: "8. 根據《聖詠 1:1-6》，義人像什麼樹？",
+        options: ["A. 橄欖樹", "B. 葡萄樹", "C. 棕櫚樹", "D. 種植在溪畔的樹", "E. 無花果樹"],
+        answer: "D",
+        explanation: "聖詠形容義人「像種植在溪畔的樹，準時結果，枝葉不枯」。"
+      },
+      {
+        text: "9. 根據《聖詠 1:1-6》，惡人像什麼被風吹散？",
+        options: ["A. 灰燼", "B. 塵土", "C. 糠粃", "D. 枯葉", "E. 沙粒"],
+        answer: "C",
+        explanation: "聖詠說：「他們像被風吹散的糠粃」，象徵惡人無根無果。"
+      },
+      {
+        text: "10. 根據《聖詠 1:1-6》，上主賞識誰的行徑？",
+        options: ["A. 智者", "B. 義人", "C. 先知", "D. 教師", "E. 司祭"],
+        answer: "B",
+        explanation: "聖詠結語：「因上主賞識義人的行徑」，而惡人則趨向沉淪。"
+      },
+      {
+        text: "11. 根據《路加福音 12:49-53》，耶穌說祂來是為把什麼投在地上？",
+        options: ["A. 劍", "B. 火", "C. 水", "D. 光", "E. 真理"],
+        answer: "B",
+        explanation: "耶穌說：「我來是為把火投在地上」，象徵祂使命的急切與煉淨。"
+      },
+      {
+        text: "12. 根據《路加福音 12:49-53》，耶穌提到祂有一種應受的什麼？",
+        options: ["A. 試探", "B. 苦難", "C. 洗禮", "D. 審判", "E. 榮耀"],
+        answer: "C",
+        explanation: "耶穌說：「我有一種應受的洗禮」，指祂將面對的苦難與使命。"
+      },
+      {
+        text: "13. 根據《路加福音 12:49-53》，耶穌是否來是為送和平？",
+        options: ["A. 是", "B.  否", "C. 不確定", "D. 有時是", "E. 視情況而定"],
+        answer: "B",
+        explanation: "耶穌明言：「你們以為我來是給地上送和平嗎？不，我告訴你們：而是來送分裂。」。"
+      },
+      {
+        text: "14. 根據《路加福音 12:49-53》，耶穌提到一家五口將如何分裂？",
+        options: ["A. 四對一", "B. 三對二", "C. 三對三", "D. 一對四", "E. 三對一"],
+        answer: "B",
+        explanation: "耶穌說：「一家五口的，將要分裂：三個反對兩個，兩個反對三個。」。"
+      },
+      {
+        text: "15. 根據《路加福音 12:49-53》，耶穌提到那一對關係也會因祂而分裂？",
+        options: ["A. 兄弟與姊妹", "B. 朋友與鄰人", "C. 婆母與兒媳", "D. 主人與僕人", "E. 教師與學生"],
+        answer: "C",
+        explanation: "耶穌指出：「婆母反對兒媳，兒媳反對婆母」，顯示祂的道將引發家庭內部的張力。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
