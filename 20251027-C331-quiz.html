@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十周星期一 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十周星期一 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 8:12-17》，保祿宗徒說，我們並不欠誰的債？",
+        options: ["A. 天主", "B. 基督", "C. 肉性", "D. 撒殫", "E. 世界"],
+        answer: "C",
+        explanation: "保祿宗徒指出「我們並不欠肉性的債」，意指不該隨從肉性生活。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 8:12-17》，若隨從肉性生活，保祿宗徒說將會如何？",
+        options: ["A. 得救", "B. 成聖", "C. 死亡", "D. 成為義子", "E. 被祝福"],
+        answer: "C",
+        explanation: "經文明言「如果你們隨從肉性生活，必要死亡」。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 8:12-17》，聖神使我們成為什麼身份？",
+        options: ["A. 奴隸", "B. 義子", "C. 祭司", "D. 使徒", "E. 傳道者"],
+        answer: "B",
+        explanation: "保祿宗徒說聖神使我們作義子，而非奴隸。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 8:12-17》，我們呼號「阿爸，父呀！」是因為什麼？",
+        options: ["A. 恐懼", "B. 傳統", "C. 聖神的引導", "D. 教會的教導", "E. 耶穌的命令"],
+        answer: "C",
+        explanation: "聖神使我們作義子，因此我們呼號「阿爸，父呀！」。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 8:12-17》，我們既是天主的子女，也與誰同為承繼者？",
+        options: ["A. 撒殫", "B. 若望", "C. 瑪竇", "D. 基督", "E. 聖神"],
+        answer: "D",
+        explanation: "保祿宗徒說「是與基督同為承繼者」。"
+      },
+      {
+        text: "6. 根據《聖詠 68:2, 4, 6-7, 20-21》，聖詠中，天主的仇敵將如何？ ",
+        options: ["A. 得赦免", "B. 歸順", "C. 四散", "D. 受祝福", "E. 成為子女"],
+        answer: "C",
+        explanation: "「願天主興起，使他的仇敵四散」。"
+      },
+      {
+        text: "7. 根據《聖詠 68:2, 4, 6-7, 20-21》，義人在天主面前的反應是什麼？  ",
+        options: ["A. 沉默", "B. 懼怕", "C. 踴躍歡樂", "D. 懷疑", "E. 懊悔"],
+        answer: "C",
+        explanation: "「但義人要在天主面前踴躍歡樂」。"
+      },
+      {
+        text: "8. 根據《聖詠 68:2, 4, 6-7, 20-21》，天主在聖所中是誰的慈父？",
+        options: ["A. 義人", "B. 罪人", "C. 孤兒", "D. 祭司", "E. 先知"],
+        answer: "C",
+        explanation: "「天主常在自己的聖所內居住，是孤兒的慈父」。"
+      },
+      {
+        text: "9. 根據《聖詠 68:2, 4, 6-7, 20-21》，天主使被擄的人如何？",
+        options: ["A. 受審判", "B. 得醫治", "C. 重獲自由", "D. 成為使徒", "E. 得財富"],
+        answer: "C",
+        explanation: "「引被擄的人重獲自由」。"
+      },
+      {
+        text: "10. 根據《聖詠 68:2, 4, 6-7, 20-21》，上主天主使我們擺脫什麼？",
+        options: ["A. 疾病", "B. 恐懼", "C. 死亡的關口", "D. 撒殫的誘惑", "E. 肉性的惡行"],
+        answer: "C",
+        explanation: "「上主天主使我們擺脫死亡的關口」。"
+      },
+      {
+        text: "11. 根據《路加福音 13:10-17》，耶穌在安息日在哪裡施教？",
+        options: ["A. 山上", "B. 海邊", "C. 會堂", "D. 家中", "E. 田野"],
+        answer: "C",
+        explanation: "「安息日，耶穌在一會堂裏施教」。"
+      },
+      {
+        text: "12. 根據《路加福音 13:10-17》，病婦被病魔纏身多少年？",
+        options: ["A. 七年", "B. 十年", "C. 十二年", "D. 十八年", "E. 二十年"],
+        answer: "D",
+        explanation: "「病魔纏身已十八年了」。"
+      },
+      {
+        text: "13. 根據《路加福音 13:10-17》，耶穌如何治癒病婦？",
+        options: ["A. 說話", "B.  祈禱", "C. 按手", "D. 給藥", "E. 洗腳"],
+        answer: "C",
+        explanation: "「遂給她按手，她即刻就挺直起來」。"
+      },
+      {
+        text: "14. 根據《路加福音 13:10-17》，會堂長對耶穌在安息日治病的反應是什麼？",
+        options: ["A. 歡喜", "B. 感謝", "C. 氣惱", "D. 沉默", "E. 讚美"],
+        answer: "C",
+        explanation: "「會堂長因氣惱耶穌在安息日治病」。"
+      },
+      {
+        text: "15. 根據《路加福音 13:10-17》，耶穌稱病婦為誰的女兒？",
+        options: ["A. 達味", "B. 撒羅滿", "C. 若瑟", "D. 亞巴郎", "E. 撒殫"],
+        answer: "D",
+        explanation: "「這個女人原是亞巴郎的女兒」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
