@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十主日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十主日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《德訓篇 35:15-17, 20-22》，上主對窮人有何態度？",
+        options: ["A. 加害他們", "B. 忽視他們", "C. 偏袒富人", "D. 樂於俯聽他們的祈禱", "E. 要他們自力更生"],
+        answer: "D",
+        explanation: "經文明言「他倒樂於俯聽受壓迫者的祈禱」，顯示上主憐憫窮人。"
+      },
+      {
+        text: "2. 根據《德訓篇 35:15-17, 20-22》，那一種人的祈禱「穿雲而上」？",
+        options: ["A. 自誇的人", "B. 法利塞人", "C. 謙卑人", "D. 富有者", "E. 教師"],
+        answer: "C",
+        explanation: "德訓篇指出「謙卑人的祈禱，穿雲而上」，強調謙卑的重要。"
+      },
+      {
+        text: "3. 根據《德訓篇 35:15-17, 20-22》，上主何時會為義人伸冤？",
+        options: ["A. 在審判日", "B. 當他們獻祭時", "C. 當他們呼號時", "D. 當至高者見了", "E. 當他們禁食時"],
+        answer: "D",
+        explanation: "經文說「不等至高者見了，為義人伸冤」，顯示上主的正義行動。"
+      },
+      {
+        text: "4. 根據《德訓篇 35:15-17, 20-22》，上主的審判有何特點？",
+        options: ["A. 看情面", "B. 偏袒強者", "C. 決不遲延", "D. 依照人情", "E. 依靠祭司"],
+        answer: "C",
+        explanation: "德訓篇明言「上主決不遲延」，強調祂的公義與迅速。"
+      },
+      {
+        text: "5. 根據《聖詠 34:2-3, 17-19, 23》，義人一呼號，上主如何回應？",
+        options: ["A. 沉默不語", "B. 立即俯允", "C. 要求悔改", "D. 派遣天使", "E. 延後回應"],
+        answer: "B",
+        explanation: "聖詠明確指出「義人一呼號，上主立即俯允」。"
+      },
+      {
+        text: "6. 根據《聖詠 34:2-3, 17-19, 23》，上主親近那一類人？ ",
+        options: ["A. 富有者", "B. 教師", "C. 心靈破碎的人", "D. 法利塞人", "E. 領袖"],
+        answer: "C",
+        explanation: "聖詠說「上主親近心靈破碎的人」，顯示祂的慈悲。"
+      },
+      {
+        text: "7. 根據《聖詠 34:2-3, 17-19, 23》，那些人聽到讚美上主的話會歡喜雀躍？  ",
+        options: ["A. 外邦人", "B. 祭司", "C. 謙卑的人", "D. 稅吏", "E. 寡婦"],
+        answer: "C",
+        explanation: "「願謙卑的人聽到，也都歡喜雀躍」出自聖詠 34:3。"
+      },
+      {
+        text: "8. 根據《聖詠 34:2-3, 17-19, 23》，上主如何對待作惡的人民？",
+        options: ["A. 給予機會", "B. 教導他們", "C. 抹去他們的紀念", "D. 讓他們悔改", "E. 賞賜他們"],
+        answer: "C",
+        explanation: "聖詠說「把他們的紀念，從人間抹去」，顯示上主的公義。"
+      },
+      {
+        text: "9. 根據《保祿宗徒致弟茂德後書 4:6-8,16-18》，保祿如何形容自己離世的狀態？",
+        options: ["A. 被放逐", "B. 被祝福", "C. 被奠祭", "D. 被審判", "E. 被遺忘"],
+        answer: "C",
+        explanation: "「我已被奠祭」象徵保祿的奉獻與殉道精神。"
+      },
+      {
+        text: "10. 根據《保祿宗徒致弟茂德後書 4:6-8,16-18》，保祿提到那三件事他已完成？",
+        options: ["A. 傳道、祈禱、禁食", "B. 好仗、賽跑、信仰", "C. 建堂、教導、寫信", "D. 宣講、治病、驅魔", "E. 旅行、講道、寫書"],
+        answer: "B",
+        explanation: "「這場好仗，我已打完；這場賽跑，我已跑到終點；這信仰，我已保持了」。"
+      },
+      {
+        text: "11. 根據《保祿宗徒致弟茂德後書 4:6-8,16-18》，保祿初次過堂時，誰在他身旁？",
+        options: ["A. 伯多祿", "B. 沒有人", "C. 主教", "D. 天使", "E. 羅馬士兵"],
+        answer: "B",
+        explanation: "「在我初次過堂時，沒有人在我身旁；眾人都離棄了我」。"
+      },
+      {
+        text: "12. 根據《保祿宗徒致弟茂德後書 4:6-8,16-18》，保祿相信主會如何對待他？",
+        options: ["A. 賞賜財富", "B. 使他復活", "C. 救他脫離凶惡", "D. 派遣門徒", "E. 讓他成為教宗"],
+        answer: "C",
+        explanation: "「主要救我脫離各種凶惡的事，也要使我安全地進入他天上的國」。"
+      },
+      {
+        text: "13. 根據《路加福音 18:9-14》，法利塞人如何祈禱？",
+        options: ["A. 求憐憫", "B.  感謝天主並自誇", "C. 為他人代禱", "D. 求財富", "E. 求醫治"],
+        answer: "B",
+        explanation: "「天主，我感謝你，因為我不像其他人…」，顯示他的自誇。"
+      },
+      {
+        text: "14. 根據《路加福音 18:9-14》，稅吏的祈禱內容是什麼？",
+        options: ["A. 求財富", "B. 求地位", "C. 求憐憫", "D. 求復仇", "E. 求健康"],
+        answer: "C",
+        explanation: "「天主，可憐我這個罪人吧！」是稅吏的謙卑祈禱。"
+      },
+      {
+        text: "15. 根據《路加福音 18:9-14》，耶穌如何評價稅吏與法利塞人？",
+        options: ["A. 法利塞人更正義", "B. 稅吏得不到賞賜", "C. 稅吏成了正義的人", "D. 二人皆被貶抑", "E. 法利塞人被高舉"],
+        answer: "C",
+        explanation: "「這稅吏回到他家裡，成了正義的人，而那法利塞人卻不然」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
