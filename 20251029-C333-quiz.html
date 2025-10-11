@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十周星期三 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十周星期三 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《聖保祿宗徒致羅馬人書 8:26-30》，聖神如何幫助我們？",
+        options: ["A. 教導我們如何祈禱", "B. 以言語清楚地代我們祈求", "C. 使我們成義", "D. 以無可言喻的嘆息代我們轉求", "E. 引導我們進入天主的國"],
+        answer: "D",
+        explanation: "聖神以無可言喻的嘆息代我們向天主轉求，幫助我們的軟弱。"
+      },
+      {
+        text: "2. 根據《聖保祿宗徒致羅馬人書 8:26-30》，天主如何知道聖神的意願？",
+        options: ["A. 因為聖神是天主的使者", "B. 因為聖神是按照天主的旨意代聖徒轉求", "C. 因為聖神住在我們心中", "D. 因為聖神與耶穌同在", "E. 因為聖神是光榮的靈"],
+        answer: "B",
+        explanation: "經文指出天主洞悉心靈，知道聖神的意願，因聖神是按照天主的旨意代聖徒轉求。"
+      },
+      {
+        text: "3. 根據《聖保祿宗徒致羅馬人書 8:26-30》，天主使一切都協助誰獲得益處？",
+        options: ["A. 所有信徒", "B. 所有成義的人", "C. 所有祈禱的人", "D. 那些愛他的人", "E. 所有受苦的人"],
+        answer: "D",
+        explanation: "經文明確指出，天主使一切都協助那些愛他的人獲得益處。"
+      },
+      {
+        text: "4. 根據《聖保祿宗徒致羅馬人書 8:26-30》，天主預定人與誰的肖像相同？",
+        options: ["A. 聖神", "B. 天主自己", "C. 耶穌基督", "D. 亞巴郎", "E. 依撒格"],
+        answer: "C",
+        explanation: "天主預定人與自己兒子（即耶穌基督）的肖像相同，使他在眾多弟兄中作長子。"
+      },
+      {
+        text: "5. 根據《聖保祿宗徒致羅馬人書 8:26-30》，天主對所預定的人做了什麼？",
+        options: ["A. 召叫他們、使他們成義、分享光榮", "B. 賜予他們聖神", "C. 引導他們進入天主的國", "D. 使他們成為先知", "E. 賜予他們智慧"],
+        answer: "A",
+        explanation: "經文清楚指出，天主召叫所預定的人，使他們成義，並使成義的人分享他的光榮。"
+      },
+      {
+        text: "6. 根據《聖詠　13:4-6》，詠13中，聖詠作者懇求上主賜予什麼？ ",
+        options: ["A. 平安", "B. 明亮的眼目", "C. 豐盛的食糧", "D. 堅固的信德", "E. 智慧的言語"],
+        answer: "B",
+        explanation: "聖詠作者求上主賜予眼目明亮，免得沉睡喪亡。"
+      },
+      {
+        text: "7. 根據《聖詠　13:4-6》，聖詠作者懼怕仇人說什麼？  ",
+        options: ["A. 他已失敗", "B. 上主不與他同在", "C. 我已戰勝了他", "D. 他已跌倒", "E. 無法得救"],
+        answer: "C",
+        explanation: "經文中仇人可能說：「我已戰勝了他！」。"
+      },
+      {
+        text: "8. 根據《聖詠　13:4-6》，聖詠作者信賴上主的什麼？",
+        options: ["A. 公義", "B. 智慧", "C. 能力", "D. 愛憐", "E. 審判"],
+        answer: "D",
+        explanation: "聖詠作者說：「我今信賴你的愛憐。」。"
+      },
+      {
+        text: "9. 根據《聖詠　13:4-6》，聖詠作者因上主的救援有何反應？",
+        options: ["A. 默想", "B. 歡愉", "C. 哀號", "D. 祈求", "E. 沉靜"],
+        answer: "B",
+        explanation: "經文寫道：「我的心靈因你的救援而歡愉。」。"
+      },
+      {
+        text: "10. 根據《聖詠　13:4-6》，聖詠作者決定如何回應上主的恩惠？",
+        options: ["A. 向眾人宣講", "B. 建造聖殿", "C. 向上主謳歌", "D. 書寫聖詠", "E. 施行仁愛"],
+        answer: "C",
+        explanation: "聖詠作者說：「我要向我恩主謳歌。」。"
+      },
+      {
+        text: "11. 根據《路加福音 13:22-30》，耶穌在路加福音中朝哪個城市走去？",
+        options: ["A. 伯達尼", "B. 耶里哥", "C. 耶路撒冷", "D. 加里肋亞", "E. 撒瑪黎雅"],
+        answer: "C",
+        explanation: "經文明確指出耶穌朝著耶路撒冷走去。"
+      },
+      {
+        text: "12. 根據《路加福音 13:22-30》，耶穌勸眾人如何進入天主的國？",
+        options: ["A. 多行善事", "B. 由寬門而入", "C. 竭力由窄門而入", "D. 常常祈禱", "E. 跟隨先知"],
+        answer: "C",
+        explanation: "耶穌說：「你們竭力由窄門而入吧！」。"
+      },
+      {
+        text: "13. 根據《路加福音 13:22-30》，當家主關門後，門外的人如何反應？",
+        options: ["A. 默默離去", "B.  哀號切齒", "C. 敲門求開", "D. 向眾人呼喊", "E. 求先知代求"],
+        answer: "C",
+        explanation: "經文描述他們在外面敲門說：「主！請給我們開門吧！」。"
+      },
+      {
+        text: "14. 根據《路加福音 13:22-30》，耶穌提到哪些人物在天主的國裏坐席？",
+        options: ["A. 若望、伯多祿、瑪竇", "B. 亞巴郎、依撒格、雅各伯及眾先知", "C. 撒慕爾、達味、厄里亞", "D. 耶肋米亞、以色列十二支派", "E. 瑪利亞、若瑟、耶穌"],
+        answer: "B",
+        explanation: "經文明確提到亞巴郎、依撒格、雅各伯及眾先知在天主的國裏坐席。"
+      },
+      {
+        text: "15. 根據《路加福音 13:22-30》，耶穌說最後將成為什麼？",
+        options: ["A. 被拋棄者", "B. 最後的仍是最後", "C. 最先的", "D. 受祝福者", "E. 成義者"],
+        answer: "C",
+        explanation: "「因為有一種能力從他身上出來，治好眾人」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
