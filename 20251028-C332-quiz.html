@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 十月二十八日  聖西滿及聖猶達宗徒慶日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 十月二十八日  聖西滿及聖猶達宗徒慶日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致厄弗所人書 2:19–22》，信徒不再是什麼人？",
+        options: ["A. 天主的家人", "B. 聖徒", "C. 外方人", "D. 宗徒", "E. 先知"],
+        answer: "C",
+        explanation: "經文指出信徒「不再是外方人或旅客」，而是「聖徒的同胞，是天主的家人」。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致厄弗所人書 2:19–22》，信徒被建築在誰的基礎上？",
+        options: ["A. 伯多祿和若望", "B. 教會和信仰", "C. 宗徒和先知", "D. 聖神和聖殿", "E. 耶穌和瑪利亞"],
+        answer: "C",
+        explanation: "保祿宗徒說信徒「已被建築在宗徒和先知的基礎上」。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致厄弗所人書 2:19–22》，基督耶穌在建築物中被比喻為什麼？",
+        options: ["A. 根基", "B. 牧者", "C. 聖殿", "D. 角石", "E. 教會"],
+        answer: "D",
+        explanation: "基督耶穌「自己卻是這建築物的角石」。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致厄弗所人書 2:19–22》，整個建築物在主內成為什麼？",
+        options: ["A. 教堂", "B. 聖殿", "C. 聖城", "D. 家園", "E. 聖體"],
+        answer: "B",
+        explanation: "經文說「整個建築物結構緊湊，逐漸擴大，在主內成為一座聖殿」。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致厄弗所人書 2:19–22》，信徒因聖神成為什麼？",
+        options: ["A. 天主的住所", "B. 教會的根基", "C. 聖母的子民", "D. 宗徒的繼承者", "E. 聖殿的柱石"],
+        answer: "A",
+        explanation: "「因著聖神，成為天主的住所」。"
+      },
+      {
+        text: "6. 根據《聖詠 19:2–5》，高天陳述的是什麼？ ",
+        options: ["A. 星辰的運行", "B. 天主的光榮", "C. 人的智慧", "D. 天使的話語", "E. 先知的預言"],
+        answer: "B",
+        explanation: "「高天陳述天主的光榮，穹蒼宣揚他的奇工妙化」。"
+      },
+      {
+        text: "7. 根據《聖詠 19:2–5》，日與日、夜與夜之間傳遞的是什麼？  ",
+        options: ["A. 福音", "B. 語言", "C. 知識", "D. 聖言", "E. 祈禱"],
+        answer: "C",
+        explanation: "「日與日侃侃而談，夜與夜知識相傳」。"
+      },
+      {
+        text: "8. 根據《聖詠 19:2–5》，經文如何形容這些聲音？",
+        options: ["A. 清晰可聽", "B. 聽不到的語言", "C. 天使的話語", "D. 宗徒的教導", "E. 無法理解"],
+        answer: "B",
+        explanation: "「不是語，也不是言，是聽不到的語言」。"
+      },
+      {
+        text: "9. 根據《聖詠 19:2–5》，這些聲音傳遍那裡？",
+        options: ["A. 教會", "B. 地極", "C. 聖殿", "D. 耶路撒冷", "E. 猶太全地"],
+        answer: "B",
+        explanation: "「它們的聲音傳遍普世，它們的言語達於地極」。"
+      },
+      {
+        text: "10. 根據《聖詠 19:2–5》，經文強調的是那一種見證方式？",
+        options: ["A. 默觀祈禱", "B. 自然界的無聲見證", "C. 宗徒的宣講", "D. 先知的預言", "E. 教會的禮儀"],
+        answer: "B",
+        explanation: "整段詩篇強調自然界以無聲方式見證天主的光榮。"
+      },
+      {
+        text: "11. 根據《路加福音 6:12–19》，耶穌在山上做了什麼？",
+        options: ["A. 傳福音", "B. 治病", "C. 選宗徒", "D. 講道", "E. 祈禱"],
+        answer: "E",
+        explanation: "「耶穌出去，上山祈禱；他徹夜向天主祈禱」。"
+      },
+      {
+        text: "12. 根據《路加福音 6:12–19》，耶穌揀選了多少位宗徒？",
+        options: ["A. 十位", "B. 十二位", "C. 七位", "D. 十四位", "E. 二十位"],
+        answer: "B",
+        explanation: "「由他們中揀選了十二人，並稱他們為宗徒」。"
+      },
+      {
+        text: "13. 根據《路加福音 6:12–19》，那位宗徒被耶穌改名為伯多祿？",
+        options: ["A. 安德肋", "B.  若望", "C. 西滿", "D. 多默", "E. 斐理伯"],
+        answer: "C",
+        explanation: "「即西滿，耶穌又給他起名叫伯多祿」。"
+      },
+      {
+        text: "14. 根據《路加福音 6:12–19》，群眾來自那些地區？",
+        options: ["A. 加里肋亞、耶路撒冷、漆冬", "B. 猶太、耶路撒冷、提洛和漆冬", "C. 撒瑪黎雅、耶京、約但河", "D. 猶太、葛法翁、漆冬", "E. 提洛、耶京、納匝肋"],
+        answer: "B",
+        explanation: "「很多從猶太、耶路撒冷及提洛和漆冬海邊來的群眾」。"
+      },
+      {
+        text: "15. 根據《路加福音 6:12–19》，群眾設法觸摸耶穌的原因是什麼？",
+        options: ["A. 為領受聖體", "B. 為接受洗禮", "C. 因有能力從他身上出來", "D. 為聽他講道", "E. 為求祝福"],
+        answer: "C",
+        explanation: "「因為有一種能力從他身上出來，治好眾人」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
