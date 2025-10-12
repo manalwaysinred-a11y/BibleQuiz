@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十周星期五 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十周星期五 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《聖保祿宗徒致羅馬人書 9:1-5》，強調他說話的誠實是基於那一位的見證？",
+        options: ["A. 天主", "B. 耶穌基督", "C. 聖神", "D. 聖母瑪利亞", "E. 他的弟兄"],
+        answer: "C",
+        explanation: "聖保祿說：「有我的良心在聖神內與我一同作證」，顯示他在聖神內說實話。"
+      },
+      {
+        text: "2. 根據《聖保祿宗徒致羅馬人書 9:1-5》，聖保祿為了救自己的同胞，願意承受什麼？",
+        options: ["A. 被放逐", "B. 被詛咒，與基督隔絕", "C. 被囚禁", "D. 被石頭打死", "E. 被逐出會堂"],
+        answer: "B",
+        explanation: "聖保祿表達極大的愛與犧牲精神，願意「被詛咒，與基督隔絕」以換取同胞的得救。"
+      },
+      {
+        text: "3. 根據《聖保祿宗徒致羅馬人書 9:1-5》，以下那一項不是聖保祿列舉以色列人所擁有的恩典？",
+        options: ["A. 義子的名分", "B. 光榮", "C. 聖洗", "D. 禮儀", "E. 法律"],
+        answer: "C",
+        explanation: "聖保祿提到的是義子的名分、光榮、盟約、法律、禮儀及恩許，並未提及聖洗。"
+      },
+      {
+        text: "4. 根據《聖保祿宗徒致羅馬人書 9:1-5》，按血統說，基督是從那一民族來的？",
+        options: ["A. 羅馬人", "B. 希臘人", "C. 埃及人", "D. 以色列人", "E.  撒瑪黎雅人"],
+        answer: "D*",
+        explanation: "聖保祿明言：「基督按血統說，也是從他們（以色列人）來的。」
+。"
+      },
+      {
+        text: "5. 根據《聖保祿宗徒致羅馬人書 9:1-5》，聖保祿如何稱頌基督？",
+        options: ["A. 是萬民的導師", "B. 是萬有之上，世世代代應受讚美的天主", "C. 是和平之君", "D. 是法律的完成者", "E. 是聖祖的後裔"],
+        answer: "B",
+        explanation: "聖保祿在結尾稱頌基督：「基督是在萬有之上，世世代代應受讚美的天主！亞孟。"
+      },
+      {
+        text: "6. 根據《聖詠 109:21-22, 26-27, 30-31》，詩人求上主善待他，是為了什麼？ ",
+        options: ["A. 建造城牆", "B. 讚頌上主", "C. 守法律", "D. 傳揚福音", "E. 祭獻羔羊"],
+        answer: "B",
+        explanation: "經文開頭即說：「耶路撒冷，請你讚頌上主！」。"
+      },
+      {
+        text: "7. 根據《聖詠 147:12-15,19-20》，上主用什麼使耶路撒冷的子女飽餐？  ",
+        options: ["A. 甘露", "B. 羊奶", "C. 最好的麥麵", "D. 葡萄酒", "E. 魚與餅"],
+        answer: "C",
+        explanation: "經文說：「用最好的麥麵使你飽餐。」。"
+      },
+      {
+        text: "8. 根據《聖詠 147:12-15,19-20》，上主向那兩位族長啟示祂的誡律與言語？",
+        options: ["A. 亞巴郎與依撒格", "B. 雅各伯與以色列", "C. 默西亞與達味", "D. 撒羅滿與厄里亞", "E. 若瑟與瑪加伯"],
+        answer: "B",
+        explanation: "經文說：「他向雅各伯曉示了自己的言語，他向以色列啟示了自己的誡律。」。"
+      },
+      {
+        text: "9. 根據《聖詠 147:12-15,19-20》，上主對其他民族的態度如何？",
+        options: ["A. 同樣宣示法律", "B. 給予相同恩許", "C. 從未如此恩待", "D. 派遣先知教導", "E. 賜下聖神"],
+        answer: "C",
+        explanation: "經文明言：「他從未如此恩待過其他任何民族。」。"
+      },
+      {
+        text: "10. 根據《聖詠 147:12-15,19-20》，上主的聖旨傳達速度如何？",
+        options: ["A. 慢慢實現", "B. 需經審判", "C. 立即迅速奔傳 ", "D. 由天使傳遞", "E. 需經默西亞批准"],
+        answer: "C",
+        explanation: "經文說：「他的聖旨便立即迅速奔傳。」。"
+      },
+      {
+        text: "11. 根據《路加福音 14:1-6》，耶穌在安息日進入誰的家中吃飯？",
+        options: ["A. 撒杜塞人", "B. 法利塞人首領", "C. 稅吏長", "D. 司祭長", "E. 羅馬百夫長"],
+        answer: "B",
+        explanation: "經文開頭說：「耶穌進了一個法利塞人首領的家中吃飯。」。"
+      },
+      {
+        text: "12. 根據《路加福音 14:1-6》，在耶穌面前站著一位患有什麼病的人？",
+        options: ["A. 癱瘓症", "B. 癩病", "C. 水臌症", "D. 失明", "E. 血漏症"],
+        answer: "C",
+        explanation: "經文明言：「在他面前有一個患水臌症的人。」。"
+      },
+      {
+        text: "13. 根據《路加福音 14:1-6》，耶穌向法學士及法利塞人提出什麼問題？",
+        options: ["A. 是否可以吃不潔之物", "B.  是否可以納稅給凱撒", "C. 安息日許不許治病", "D. 是否可以行神蹟", "E. 是否可以赦罪"],
+        answer: "C",
+        explanation: "耶穌問：「安息日許不許治病？」。"
+      },
+      {
+        text: "14. 根據《路加福音 14:1-6》，耶穌治好病人後，對眾人說了什麼比喻？",
+        options: ["A. 撒種的比喻", "B. 井中之牛或兒子", "C. 失落的錢幣", "D. 葡萄園工人", "E.  十個童女"],
+        answer: "B",
+        explanation: "耶穌說：「你們中間，誰的兒子或牛掉在井裏，在安息日這一天，不立刻拉他上來呢？」。"
+      },
+      {
+        text: "15. 根據《路加福音 14:1-6》，法利塞人與法學士對耶穌的話有何反應？",
+        options: ["A. 大聲反駁", "B. 讚美天主", "C. 默然不語", "D. 群起攻擊", "E. 求他醫治更多人"],
+        answer: "C",
+        explanation: "經文說：「他們對這話無法答辯。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
