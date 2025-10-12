@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十周星期四 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十周星期四 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 8:31-39》，若天主偕同我們，誰能反對我們？",
+        options: ["A. 撒殫", "B. 黑落德", "C. 沒有人", "D. 法利塞人", "E. 羅馬兵丁"],
+        answer: "C",
+        explanation: "保祿宗徒強調，若天主與我們同在，則無人能反對我們（羅 8:31）。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 8:31-39》，天主為我們交出誰？",
+        options: ["A. 若翰", "B. 聖神", "C. 祂的兒子", "D. 保祿", "E. 默西亞"],
+        answer: "C",
+        explanation: "天主沒有憐惜自己的兒子，反而為我們眾人把祂交出（羅 8:32）。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 8:31-39》，誰在天主右邊代我們轉求？",
+        options: ["A. 聖母瑪利亞", "B. 若瑟", "C. 基督耶穌", "D. 天使", "E. 若望宗徒"],
+        answer: "C",
+        explanation: "基督耶穌已死且復活，現今在天主右邊代我們轉求（羅 8:34）。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 8:31-39》，那些事物不能使我們與基督的愛隔絕？",
+        options: ["A. 聖神", "B. 天主自己", "C. 耶穌基督", "D. 亞巴郎", "E. 依撒格"],
+        answer: "E*",
+        explanation: "保祿列舉多種事物，強調都不能使我們與基督的愛隔絕（羅 8:38-39）。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 8:31-39》，經上記載：「我們整日被置於死地」，人將我們視為什麼？",
+        options: ["A. 犧牲品", "B. 罪人", "C. 待宰的群羊", "D. 迷失的羊", "E. 叛徒"],
+        answer: "C",
+        explanation: "保祿引用聖經：「人將我們視作待宰的群羊」（羅 8:36）。"
+      },
+      {
+        text: "6. 根據《聖詠 109:21-22, 26-27, 30-31》，詩人求上主善待他，是為了什麼？ ",
+        options: ["A. 為了自己的名聲", "B. 為了子民的平安", "C. 為了上主的名", "D. 為了聖殿的榮耀", "E. 為了復仇"],
+        answer: "C",
+        explanation: "聖詠作者說：「上主，為了你的名，求你善待我」（詠 109:21）。"
+      },
+      {
+        text: "7. 根據《聖詠 109:21-22, 26-27, 30-31》，聖詠作者形容自己是怎樣的人？  ",
+        options: ["A. 富有仁慈", "B. 剛強勇敢", "C. 貧窮可憐", "D. 聰明智慧", "E. 公義無私"],
+        answer: "C",
+        explanation: "聖詠作者說：「我原來貧窮可憐，我的心哀傷悲痛」（詠 109:22）。"
+      },
+      {
+        text: "8. 根據《聖詠 109:21-22, 26-27, 30-31》，聖詠作者祈求上主拯救他，是根據什麼？",
+        options: ["A. 上主的正義", "B. 上主的慈愛", "C. 上主的能力", "D. 上主的審判", "E. 上主的法律"],
+        answer: "B",
+        explanation: "聖詠作者說：「求你按照你的慈愛拯救我」（詠 109:26）。"
+      },
+      {
+        text: "9. 根據《聖詠 109:21-22, 26-27, 30-31》，聖詠作者希望人們知道他的拯救是誰的作為",
+        options: ["A. 天使的作為", "B. 司祭的作為", "C. 上主的手的工程", "D. 先知的預言", "E. 自己的努力"],
+        answer: "C",
+        explanation: "「讓人知道這是你手的工程」（詠 109:27）。"
+      },
+      {
+        text: "10. 根據《聖詠 109:21-22, 26-27, 30-31》，聖詠作者要在何處讚美上主？",
+        options: ["A. 聖殿中", "B. 山頂上", "C. 億萬人中", "D. 曠野裡", "E. 天使之間"],
+        answer: "C",
+        explanation: "「我要親口歌頌上主，要在億萬人中讚美他」（詠 109:30）。"
+      },
+      {
+        text: "11. 根據《路加福音 13:31-35》，法利塞人警告耶穌要避開誰的殺害？",
+        options: ["A. 撒殫", "B. 黑落德", "C. 司祭長", "D. 羅馬兵丁", "E. 羅馬總督"],
+        answer: "B",
+        explanation: "法利塞人說：「黑落德要殺你」（路 13:31）。"
+      },
+      {
+        text: "12. 根據《路加福音 13:31-35》，耶穌稱黑落德為什麼？",
+        options: ["A. 狼", "B. 魔鬼", "C. 狐狸", "D. 獅子", "E. 蛇"],
+        answer: "C",
+        explanation: "耶穌說：「你們去告訴這個狐狸吧」（路 13:32）。"
+      },
+      {
+        text: "13. 根據《路加福音 13:31-35》，耶穌說先知不宜死在何處之外？",
+        options: ["A. 伯達尼", "B.  加里肋亞", "C. 耶路撒冷", "D. 撒瑪黎雅", "E. 耶里哥"],
+        answer: "C",
+        explanation: "「因為先知不宜死在耶路撒冷之外」（路 13:33）。"
+      },
+      {
+        text: "14. 根據《路加福音 13:31-35》，耶穌以什麼比喻形容祂願意聚集耶路撒冷的子女？",
+        options: ["A. 母羊與小羊", "B. 母雞與小雞", "C. 母鹿與幼鹿", "D. 母鴿與雛鴿", "E.  母牛與小牛"],
+        answer: "B",
+        explanation: "「如母雞聚集自己的小雞在牠翅翼下」（路 13:34）。"
+      },
+      {
+        text: "15. 根據《路加福音 13:31-35》，耶穌說人斷不能再看見祂，直到何時？",
+        options: ["A. 直到復活", "B. 直到審判日", "C. 直到說：「因主名而來的，當受讚頌」", "D. 直到聖神降臨", "E. 直到聖殿重建"],
+        answer: "C",
+        explanation: "「直到你們說：因主名而來的，當受讚頌的時刻來到」（路 13:35）。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
