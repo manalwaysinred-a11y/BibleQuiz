@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 十一月一日  諸聖節 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 十一月一日  諸聖節 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《默示錄 7:2-4, 9-14》，那位天使拿著永生天主的印？",
+        options: ["A. 若望", "B. 四位活物之一", "C. 從太陽東升之處上來的天使", "D. 坐在寶座上的天主", "E. 羔羊"],
+        answer: "C",
+        explanation: "經文記載「我，若望，看見了另一位天使，從太陽東升之處上來，拿著永生天主的印」。"
+      },
+      {
+        text: "2. 根據《默示錄 7:2-4, 9-14》，蓋了印的以色列子孫共有多少人？",
+        options: ["A. 七萬七千", "B. 十四萬四千", "C. 十二萬", "D. 十萬", "E. 十八萬八千"],
+        answer: "B",
+        explanation: "默示錄明確指出「蓋了印的，共有十四萬四千」。"
+      },
+      {
+        text: "3. 根據《默示錄 7:2-4, 9-14》，穿白衣、手持棕櫚枝的人來自那裡？",
+        options: ["A. 以色列十二支派", "B. 若望的異象", "C. 各邦國、各支派、各民族、各異語", "D. 天上的萬軍", "E. 四位天使的選民"],
+        answer: "C",
+        explanation: "經文說「是來自各邦國、各支派、各民族、各異語的」。"
+      },
+      {
+        text: "4. 根據《默示錄 7:2-4, 9-14》，穿白衣的人為何衣裳雪白？",
+        options: ["A. 因為他們是義人", "B. 因為他們受了洗", "C. 因為他們在羔羊的血中洗淨了衣裳", "D. 因為他們是天主的子女", "E.  因為他們未曾犯罪"],
+        answer: "C",
+        explanation: "長老說「他們曾在羔羊的血中，洗淨了自己的衣裳，使衣裳雪白」。」
+。"
+      },
+      {
+        text: "5. 根據《聖詠 24:1-6》，大地和其中的萬物屬於誰？",
+        options: ["A. 人類", "B. 天使", "C. 上主", "D. 雅各伯", "E. 世界的君王"],
+        answer: "C",
+        explanation: "聖詠開頭即說「大地和其中的萬物，屬於上主」。"
+      },
+      {
+        text: "6. 根據《聖詠 24:1-6》，誰能登上上主的聖山？ ",
+        options: ["A. 心懷善意的人", "B. 手潔心清、不慕虛幻的人", "C. 受迫害的人", "D. 穿白衣的人", "E. 以色列子孫"],
+        answer: "B",
+        explanation: "聖詠明言「是那手潔心清、不慕虛幻的人」。"
+      },
+      {
+        text: "7. 根據《聖詠 24:1-6》，這樣的人是誰的苗裔？  ",
+        options: ["A. 若望", "B. 撒羅滿", "C. 雅各伯天主儀容的子息", "D. 大衛的後裔", "E. 亞巴郎的子孫"],
+        answer: "C",
+        explanation: "聖詠說「這樣的人，是尋求上主的苗裔，是追求雅各伯天主儀容的子息」。"
+      },
+      {
+        text: "8. 根據《聖詠 24:1-6》，上主在何處奠定了大地？",
+        options: ["A. 山嶺之上", "B. 天空之下", "C. 海洋上", "D. 沙漠中", "E. 樹林間"],
+        answer: "C",
+        explanation: "聖詠說「是他在海洋上奠定了大地」。"
+      },
+      {
+        text: "9. 根據《聖詠 147:12-15,19-20》，上主對其他民族的態度如何？",
+        options: ["A. 因為我們是罪人", "B. 因為我們是天主的子女", "C. 因為世界不認識父", "D. 因為我們不屬於世界", "E. 因為我們未顯明"],
+        answer: "C",
+        explanation: "若望一書說「世界所以不認識我們，是因為不認識父」。"
+      },
+      {
+        text: "10. 根據《若望一書 3:1-3》，我們將來如何，若望怎麼說？",
+        options: ["A. 已經顯明", "B. 必定成聖", "C. 還沒有顯明", "D. 必得救恩", "E. 必見天主"],
+        answer: "C",
+        explanation: "經文說「我們將來如何，還沒有顯明」。"
+      },
+      {
+        text: "11. 根據《若望一書 3:1-3》，凡懷著希望的人應如何？",
+        options: ["A. 行善積德", "B. 聖潔自己", "C. 宣講福音", "D. 禱告不斷", "E. 愛人如己"],
+        answer: "B",
+        explanation: "若望一書說「凡對天主懷著這希望的，必聖潔自己」。"
+      },
+      {
+        text: "12. 根據《路加福音 14:1-6》，在耶穌面前站著一位患有什麼病的人？",
+        options: ["A. 天主的僕人", "B. 羔羊的門徒", "C. 天主的子女", "D. 聖山的居民", "E. 白衣的選民"],
+        answer: "C",
+        explanation: "若望一書說「使我們得稱為天主的子女，而且我們也真是如此」。"
+      },
+      {
+        text: "13. 根據《路加福音 14:1-6》，耶穌向法學士及法利塞人提出什麼問題？",
+        options: ["A. 飢渴慕義的人", "B.  心裡潔淨的人", "C. 締造和平的人", "D. 哀慟的人", "E. 神貧的人"],
+        answer: "B",
+        explanation: "耶穌說「心裡潔淨的人是有福的，因為他們要看見天主」。"
+      },
+      {
+        text: "14. 根據《瑪竇福音 5:1-12》，為義而受迫害的人有什麼福分？",
+        options: ["A. 得安慰", "B. 得飽飫", "C. 得憐憫", "D. 天國是他們的", "E.  稱為天主子女"],
+        answer: "D",
+        explanation: "耶穌說「為義而受迫害的人是有福的，因為天國是他們的」。"
+      },
+      {
+        text: "15. 根據《瑪竇福音 5:1-12》，耶穌教訓門徒時坐在那裡？",
+        options: ["A. 聖殿", "B. 山上", "C. 海邊", "D. 城門", "E. 橄欖山"],
+        answer: "B",
+        explanation: "經文開頭說「耶穌一見群眾，就上了山，坐下」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
