@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 十一月二日  追思已亡諸信者 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 十一月二日  追思已亡諸信者 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《智慧篇 3:1-9》，義人的靈魂在何處？",
+        options: ["A. 在陰間", "B. 在天主手裡", "C. 在天堂門外", "D. 在人間受苦", "E. 在審判台前"],
+        answer: "B",
+        explanation: "經文開首即說「義人的靈魂，在天主手裡」。"
+      },
+      {
+        text: "2. 根據《智慧篇 3:1-9》，天主如何試煉義人？",
+        options: ["A. 如同烈火焚燒", "B. 如同牧人引導", "C. 如同爐中的黃金", "D. 如同水中洗滌", "E. 如同風中飄搖"],
+        answer: "C",
+        explanation: "智慧篇說「他試煉了他們，好像爐中的黃金」。"
+      },
+      {
+        text: "3. 根據《智慧篇 3:1-9》，義人將來要做什麼？",
+        options: ["A. 傳福音於萬民", "B. 與天使同住", "C. 審判萬國，統治萬民", "D. 進入永罰", "E. 隱居於聖殿"],
+        answer: "C",
+        explanation: "經文明言「他們要審判萬國，統治萬民」。"
+      },
+      {
+        text: "4. 根據《智慧篇 3:1-9》，忠信於上主之愛的人有何福分？",
+        options: ["A. 得見天主容貌", "B. 與上主同住", "C. 得享世間安寧", "D. 被選為宗徒", "E.  得進入聖殿"],
+        answer: "B",
+        explanation: "智慧篇說「忠信於上主之愛的人，必與上主同住」。"
+      },
+      {
+        text: "5. 根據《聖詠 23:1-6》，上主是我的什麼？",
+        options: ["A. 君王", "B. 牧者", "C. 審判者", "D. 教師", "E. 父親"],
+        answer: "B",
+        explanation: "聖詠開頭即說「上主是我的牧者」。"
+      },
+      {
+        text: "6. 根據《聖詠 23:1-6》，上主領我走近何處？ ",
+        options: ["A. 聖殿門前", "B. 青綠的草場", "C. 幽靜的水旁", "D. 陰森的幽谷", "E. 榮耀的山頂"],
+        answer: "C",
+        explanation: "聖詠說「又領我走近幽靜的水旁」。"
+      },
+      {
+        text: "7. 根據《聖詠 23:1-6》，上主為我擺設筵席的地點是？  ",
+        options: ["A. 在聖殿中", "B. 在山上", "C. 在我對頭面前", "D. 在天主城裡", "E. 在曠野之中"],
+        answer: "C",
+        explanation: "聖詠說「在我對頭面前，你為我擺設了筵席」。"
+      },
+      {
+        text: "8. 根據《聖詠 23:1-6》，我將住在上主的殿裡多久？",
+        options: ["A. 三年", "B. 七十週年", "C. 直到永遠", "D. 直至悠遠的時日", "E. 直到審判之日"],
+        answer: "D",
+        explanation: "聖詠結尾說「我將住在上主的殿裡，直至悠遠的時日」。"
+      },
+      {
+        text: "9. 根據《保祿宗徒致羅馬人書 6:3-9》，我們受洗歸於誰的死亡？",
+        options: ["A. 若翰", "B. 基督耶穌", "C. 保祿宗徒", "D. 天主聖神", "E. 亞巴郎"],
+        answer: "B",
+        explanation: "保祿說「我們受過洗，歸於基督耶穌的人，就是受洗，歸於他的死亡」。"
+      },
+      {
+        text: "10. 根據《保祿宗徒致羅馬人書 6:3-9》，舊人與基督同釘在何處？",
+        options: ["A. 聖殿門口", "B. 十字架上", "C. 墳墓中", "D. 羅馬城外", "E. 橄欖山上"],
+        answer: "B",
+        explanation: "經文說「我們的舊人，已與他同釘在十字架上了」。"
+      },
+      {
+        text: "11. 根據《保祿宗徒致羅馬人書 6:3-9》，死亡對復活的基督有何影響？",
+        options: ["A. 再次統治", "B. 永遠存在", "C. 不再統治他", "D. 使他受苦", "E. 使他沉睡"],
+        answer: "C",
+        explanation: "保祿說「基督既從死者中復活，就不再死；死亡不再統治他了」。"
+      },
+      {
+        text: "12. 根據《保祿宗徒致羅馬人書 6:3-9》，死者有何轉變？",
+        options: ["A. 得見天主", "B. 成為義人", "C. 脫離罪惡", "D. 進入永生", "E. 成為宗徒"],
+        answer: "C",
+        explanation: "保祿說「因為已死的人，便脫離了罪惡」。"
+      },
+      {
+        text: "13. 根據《瑪竇福音 25:31-46》，人子降來時坐在那裡？",
+        options: ["A. 聖殿中", "B.  榮耀的寶座上", "C. 天主右邊", "D. 羔羊身旁", "E. 天使之間"],
+        answer: "B",
+        explanation: "耶穌說「他要坐在光榮的寶座上」。"
+      },
+      {
+        text: "14. 根據《瑪竇福音 25:31-46》，君王對右邊的人說了什麼？",
+        options: ["A. 離開我", "B. 你們受咒罵", "C. 你們來吧！承受國度", "D. 你們要受審判", "E.  你們要悔改"],
+        answer: "C",
+        explanation: "君王說「你們來吧！承受自創世以來，給你們預備了的國度吧！」。"
+      },
+      {
+        text: "15. 根據《瑪竇福音 25:31-46》，義人要進入那裡？",
+        options: ["A. 永罰", "B. 地獄", "C. 永生", "D. 審判台", "E. 天主城"],
+        answer: "C",
+        explanation: "耶穌說「那些義人，卻要進入永生」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
