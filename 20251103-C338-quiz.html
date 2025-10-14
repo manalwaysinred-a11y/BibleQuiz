@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十一周星期一 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十一周星期一 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 11:29-36》，天主的恩賜和召選有何特性？",
+        options: ["A. 只屬於義人", "B. 可被撤回", "C. 永遠隱藏", "D. 決不會撤回", "E. 只給以色列人"],
+        answer: "D",
+        explanation: "保祿宗徒明言「天主的恩賜和召選是決不會撤回的」。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 11:29-36》，天主為何把眾人禁錮在背叛之中？",
+        options: ["A. 為了懲罰罪人", "B. 為了顯示公義", "C. 為要憐憫眾人", "D. 為了試煉信德", "E. 為了彰顯能力"],
+        answer: "C",
+        explanation: "經文指出「天主把眾人都禁錮在背叛之中，是為要憐憫眾人」。"
+      },
+      {
+        text: "3. 根據《保祿宗徒致羅馬人書 11:29-36》，有誰曾當過天主的顧問？",
+        options: ["A. 梅瑟", "B. 達味", "C. 無人", "D. 以色列長老", "E. 若望宗徒"],
+        answer: "C",
+        explanation: "保祿反問：「有誰曾當過他的顧問？」暗示無人能當天主的顧問。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 11:29-36》，萬物的來源與歸屬是什麼？",
+        options: ["A. 出於人，歸於人", "B. 出於天使，歸於聖者", "C. 出於他，依賴他，而歸於他", "D. 出於教會，歸於信徒", "E.  出於先知，歸於選民"],
+        answer: "C",
+        explanation: "保祿說「萬物都出於他，依賴他，而歸於他」。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 11:29-36》，保祿宗徒對天主的智慧有何讚嘆？",
+        options: ["A. 深不可測", "B. 無法理解", "C. 高深莫測", "D. 無人知曉", "E. 超越人智"],
+        answer: "C",
+        explanation: "保祿讚嘆「天主的富饒、上智和知識，是多麼高深！」。"
+      },
+      {
+        text: "6. 根據《聖詠 69:30-31, 33-34, 36-37》，聖詠作者以何方式讚美天主？ ",
+        options: ["A. 獻祭", "B. 沉默", "C. 詩歌與感恩", "D. 祈禱與禁食", "E. 朝拜與舞蹈"],
+        answer: "C",
+        explanation: "聖詠說「我要用詩歌讚美天主的名號，並要用感恩的心宣揚天主的光榮」。"
+      },
+      {
+        text: "7. 根據《聖詠 69:30-31, 33-34, 36-37》，上主常俯聽誰的呼求？  ",
+        options: ["A. 義人", "B. 司祭", "C. 貧苦的人", "D. 君王", "E. 長老"],
+        answer: "C",
+        explanation: "聖詠說「上主常俯聽貧苦的人」。"
+      },
+      {
+        text: "8. 根據《聖詠 69:30-31, 33-34, 36-37》，被囚的人在天主眼中如何？",
+        options: ["A. 被遺忘", "B. 被懲罰", "C. 被記念", "D. 被揀選", "E. 被棄絕"],
+        answer: "C",
+        explanation: "聖詠說「從不忘記被囚的人」。"
+      },
+      {
+        text: "9. 根據《聖詠 69:30-31, 33-34, 36-37》，天主將重建那個地方？",
+        options: ["A. 耶路撒冷", "B. 撒瑪黎雅", "C. 熙雍與猶大的城池", "D. 加里肋亞", "E. 伯達尼"],
+        answer: "C",
+        explanation: "聖詠說「天主要拯救熙雍，重建猶大的城池」。"
+      },
+      {
+        text: "10. 根據《聖詠 69:30-31, 33-34, 36-37》，誰將承繼此地並住在那裏？",
+        options: ["A. 司祭與先知", "B. 君王與長老", "C. 僕人的後裔與愛慕他名的人", "D. 外邦人與信徒", "E. 羔羊與門徒"],
+        answer: "C",
+        explanation: "聖詠說「他僕人的後裔將要承繼此地，愛慕他名的人也要住在這裏」。"
+      },
+      {
+        text: "11. 根據《路加福音 14:12-14》，耶穌勸人設筵時不要邀請誰？",
+        options: ["A. 貧窮的人", "B. 殘廢的人", "C. 富有的鄰人", "D. 瞎眼的人", "E. 羅馬官員"],
+        answer: "C",
+        explanation: "耶穌說「不要請你的朋友、兄弟、親戚及富有的鄰人」。"
+      },
+      {
+        text: "12. 根據《路加福音 14:12-14》，為何不邀請富有者？",
+        options: ["A. 他們不感恩", "B. 他們不信主", "C. 他們會回請而還報", "D. 他們不守誡命", "E. 他們不願赴宴"],
+        answer: "C",
+        explanation: "耶穌說「怕他們也要回請而還報你」。"
+      },
+      {
+        text: "13. 根據《路加福音 14:12-14》，耶穌鼓勵邀請那些人？",
+        options: ["A. 外邦人", "B.  羅馬兵士", "C. 貧窮的、殘廢的、瘸腿的、瞎眼的人", "D. 門徒與宗徒", "E. 司祭與法利塞人"],
+        answer: "C",
+        explanation: "耶穌明言「要請貧窮的、殘廢的、瘸腿的、瞎眼的人」。"
+      },
+      {
+        text: "14. 根據《路加福音 14:12-14》，為何邀請貧弱者是有福的？",
+        options: ["A. 他們會感恩", "B. 他們會傳福音", "C. 他們沒有可報答你的", "D. 他們是天主的選民", "E.  他們會成為門徒"],
+        answer: "C",
+        explanation: "耶穌說「因為他們沒有可報答你的」。"
+      },
+      {
+        text: "15. 根據《路加福音 14:12-14》，在何時可得償報？",
+        options: ["A. 在審判之日", "B. 在逾越節", "C. 在義人復活的時候", "D. 在聖神降臨後", "E. 在末世來臨時"],
+        answer: "C",
+        explanation: "耶穌說「在義人復活的時候，你必能得到償報」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
