@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十一周星期四 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十一周星期四 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 14:7-12》，保祿宗徒的教導，我們生或死是為了誰？",
+        options: ["A. 為自己", "B. 為家庭", "C. 為社會", "D. 為主", "E. 為教會"],
+        answer: "D",
+        explanation: "保祿明言「我們或者生，是為主而生，或者死，是為主而死」。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 14:7-12》，基督死而復生的目的為何？",
+        options: ["A. 為了顯示奇蹟", "B. 為了審判罪人", "C. 為作生者和死者的主", "D. 為了建立教會", "E. 為了拯救以色列"],
+        answer: "C",
+        explanation: "經文指出「基督死而復生了，正是為作生者和死者的主」。"
+      },
+      {
+        text: "3.  根據《保祿宗徒致羅馬人書 14:7-12》，保祿宗徒責問信徒不應做什麼？",
+        options: ["A. 傳福音", "B. 判斷弟兄", "C. 祈禱", "D. 施捨", "E. 讚美天主"],
+        answer: "B",
+        explanation: "保祿問：「你為什麼判斷你的弟兄？」。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 14:7-12》，根據經上記載，眾膝與眾舌將如何對待天主？",
+        options: ["A. 跪拜與讚頌", "B. 逃避與否認 ", "C. 傾聽與服從", "D. 懷疑與質問", "E.  讚美與歌唱"],
+        answer: "A",
+        explanation: "「眾膝都要向我跪拜，眾舌都要讚頌天主。」。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 14:7-12》，最終每人都要向誰交自己的賬？",
+        options: ["A. 教會", "B. 主教", "C. 天主", "D. 保祿宗徒", "E. 耶穌 "],
+        answer: "C",
+        explanation: "「我們每人都要向天主交自己的賬。」。"
+      },
+      {
+        text: "6. 根據《聖詠 27:1, 4, 13-14》，上主是我的光明與什麼？ ",
+        options: ["A. 慈悲", "B. 真理", "C. 救援", "D. 智慧", "E. 安慰"],
+        answer: "C",
+        explanation: "「上主是我的光明，我的救援。」。"
+      },
+      {
+        text: "7. 根據《聖詠 27:1, 4, 13-14》，聖詠作者祈求能常住在那裡？  ",
+        options: ["A. 耶路撒冷城", "B. 上主的殿裏", "C. 聖經學院", "D. 天主的國", "E. 會堂"],
+        answer: "B",
+        explanation: "「使我一生的歲月，常居住在上主的殿裏。」。"
+      },
+      {
+        text: "8. 根據《聖詠 27:1, 4, 13-14》，聖詠作者希望瞻仰上主的什麼？",
+        options: ["A. 榮光", "B. 聖名", "C. 聖所的堂皇", "D. 審判", "E. 慈顏"],
+        answer: "C",
+        explanation: "「瞻仰上主聖所的堂皇。」。"
+      },
+      {
+        text: "9. 根據《聖詠 27:1, 4, 13-14》，聖詠作者深信能在何處享見上主的幸福？",
+        options: ["A. 天堂", "B. 耶路撒冷", "C. 活人地區", "D. 聖殿", "E. 祈禱中"],
+        answer: "C",
+        explanation: "「我深信在此活人地區，定會享見上主的幸福。」。"
+      },
+      {
+        text: "10. 根據《聖詠 27:1, 4, 13-14》，我們要如何面對困難？",
+        options: ["A. 逃避", "B. 沉默", "C. 鼓起勇氣，期望上主", "D. 自力更生", "E. 求助他人"],
+        answer: "C",
+        explanation: "「你要鼓起勇氣，期望上主！你要振作精神，期望上主！」。"
+      },
+      {
+        text: "11. 根據《路加福音 15:1-10》，耶穌設比喻是回應誰的議論？",
+        options: ["A. 門徒", "B. 羅馬人", "C. 法利塞人及經師", "D. 稅吏", "E. 群眾"],
+        answer: "C",
+        explanation: "「法利塞人及經師們竊竊私議…耶穌遂對他們設了這個比喻。」。"
+      },
+      {
+        text: "12. 根據《路加福音 15:1-10》，牧人尋回迷羊後的反應是什麼？",
+        options: ["A. 責罵牠", "B. 將牠賣掉", "C. 歡天喜地地背回家", "D. 將牠隔離", "E. 不再理會"],
+        answer: "C",
+        explanation: "「就歡天喜地把牠放在自己的肩膀上，回到家中。」。"
+      },
+      {
+        text: "13. 根據《路加福音 15:1-10》，耶穌說天上為何事更歡樂？",
+        options: ["A. 義人祈禱", "B.  罪人悔改", "C. 建聖殿", "D. 傳福音", "E. 守安息日"],
+        answer: "B",
+        explanation: "「因為一個罪人悔改，在天上也要這樣歡樂。」。"
+      },
+      {
+        text: "14. 根據《路加福音 15:1-10》，婦女尋回銀幣後邀請誰同樂？",
+        options: ["A. 丈夫與子女", "B. 鄰人與朋友", "C. 經師與法利塞人", "D. 商人與顧客", "E.  天主使者"],
+        answer: "B",
+        explanation: "「她就請朋友及鄰人來說：你們與我一同歡樂吧！」。"
+      },
+      {
+        text: "15. 根據《路加福音 15:1-10》，耶穌比喻中，婦女遺失了多少銀幣？",
+        options: ["A. 一個", "B. 兩個", "C. 三個", "D. 五個", "E. 十個"],
+        answer: "A",
+        explanation: "「若遺失了一個…因為我失去的那個銀幣又找到了。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
