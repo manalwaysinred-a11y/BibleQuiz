@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十一周星期五 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十一周星期五 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《保祿宗徒致羅馬人書 15:14-21》，保祿宗徒深信羅馬信徒具備哪些特質？",
+        options: ["A. 勇敢與堅毅", "B. 善意與知識", "C. 忍耐與謙遜", "D. 信德與希望", "E. 智慧與能力"],
+        answer: "B",
+        explanation: "「我本人深信你們是充滿善意，滿備各種知識的。」。"
+      },
+      {
+        text: "2. 根據《保祿宗徒致羅馬人書 15:14-21》，保祿宗徒自稱為外邦人擔任什麼職務？",
+        options: ["A. 教師", "B. 牧者", "C. 基督的使者", "D. 天主的僕人", "E. 聖殿的司祭"],
+        answer: "C",
+        explanation: "「使我為外邦人成了基督的使者。」。"
+      },
+      {
+        text: "3.  根據《保祿宗徒致羅馬人書 15:14-21》，外邦人藉著聖神的聖化成為什麼？",
+        options: ["A. 信徒", "B. 義人", "C. 蒙悅納的祭品", "D. 教會成員", "E. 天主的子民"],
+        answer: "C",
+        explanation: "「好使外邦人經聖神的聖化，成為蒙悅納的祭品。」。"
+      },
+      {
+        text: "4. 根據《保祿宗徒致羅馬人書 15:14-21》，保祿傳福音的範圍從哪裡到哪裡？",
+        options: ["A. 加里肋亞至耶路撒冷", "B. 耶路撒冷至依里黎苛", "C. 安提約基雅至羅馬", "D. 撒瑪黎雅至敘利亞", "E.  伯達尼至大馬士革"],
+        answer: "B",
+        explanation: "「我從耶路撒冷及其四周，直到依里黎苛，傳遍了基督的福音。」。"
+      },
+      {
+        text: "5. 根據《保祿宗徒致羅馬人書 15:14-21》，保祿立志在哪些地方傳福音？",
+        options: ["A. 猶太人聚居地", "B. 教會已建立之處", "C. 沒有認識基督的地方", "D. 聖殿附近", "E. 羅馬帝國中心"],
+        answer: "C",
+        explanation: "「並且立志專在沒有認識基督的地方傳布福音。」。"
+      },
+      {
+        text: "6. 根據《聖詠 98:1-4》，為何要向上主歌唱新歌？ ",
+        options: ["A. 因他創造天地", "B. 因他行了奇事", "C. 因他賜予生命", "D. 因他審判萬民", "E. 因他施行懲罰"],
+        answer: "B",
+        explanation: "「請眾向上主歌唱新歌，因為他行了奇事。」。"
+      },
+      {
+        text: "7. 根據《聖詠 98:1-4》，上主的右手與聖臂為他贏得了什麼？  ",
+        options: ["A. 榮耀", "B. 救恩", "C. 勝利", "D. 正義", "E. 聖名"],
+        answer: "C",
+        explanation: "「他的右手和他的聖臂，為他贏得了勝利。」。"
+      },
+      {
+        text: "8. 根據《聖詠 98:1-4》，上主向萬民啟示了什麼？",
+        options: ["A. 聖言", "B. 正義", "C. 真理", "D. 聖名", "E. 審判"],
+        answer: "B",
+        explanation: "「將自己的正義啟示給萬民。」。"
+      },
+      {
+        text: "9. 根據《聖詠 98:1-4》，上主記起了對以色列家族的什麼？",
+        options: ["A. 懲罰與審判", "B. 教導與誡命", "C. 良善與忠誠", "D. 聖約與律法", "E. 榮耀與權能"],
+        answer: "C",
+        explanation: "「他記起了自己的良善和忠誠，即向以色列家族廣施的寬仁。」。"
+      },
+      {
+        text: "10. 根據《聖詠 98:1-4》，全球看見了天主的什麼？",
+        options: ["A. 榮耀", "B. 聖名", "C. 救恩", "D. 聖言", "E. 審判"],
+        answer: "C",
+        explanation: "「全球看見了我們天主的救恩。」。"
+      },
+      {
+        text: "11. 根據《路加福音 16:1-8》，富翁的管家被告發了什麼？",
+        options: ["A. 偷竊財物", "B. 虐待債戶", "C. 揮霍主人的財物", "D. 隱瞞帳目", "E. 背叛主人"],
+        answer: "C",
+        explanation: "「有人在主人前告發這管家揮霍了主人的財物。」。"
+      },
+      {
+        text: "12. 根據《路加福音 16:1-8》，管家自言自語時，表示自己不願做什麼？",
+        options: ["A. 傳福音", "B. 掘地與討飯", "C. 管理帳目", "D. 服侍主人", "E. 出外奔走"],
+        answer: "B",
+        explanation: "「掘地罷，我沒有氣力；討飯罷，我又害羞。」。"
+      },
+      {
+        text: "13. 根據《路加福音 16:1-8》，管家如何減免債戶的債務？",
+        options: ["A. 全數免除", "B.  延期償還", "C. 改寫賬單", "D. 轉移債務", "E. 賣出資產"],
+        answer: "C",
+        explanation: "「拿你的賬單，坐下快寫作五十。」。"
+      },
+      {
+        text: "14. 根據《路加福音 16:1-8》，主人對管家的評價是什麼？",
+        options: ["A. 不義且愚昧", "B. 忠誠且仁慈", "C. 不義但精明", "D. 公正且誠實", "E.  懶惰且無能"],
+        answer: "C",
+        explanation: "「主人遂稱讚這個不義的管家，辦事精明。」。"
+      },
+      {
+        text: "15. 根據《路加福音 16:1-8》，耶穌指出誰在世俗事務上更精明？",
+        options: ["A. 光明之子", "B. 外邦人", "C. 法利塞人", "D. 世俗之子", "E. 門徒"],
+        answer: "D",
+        explanation: "「這些世俗之子應付世俗的事務，比光明之子更為精明。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
