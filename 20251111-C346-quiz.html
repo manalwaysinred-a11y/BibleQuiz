@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十二周星期二 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十二周星期二 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《智慧篇 2:23–3:9》，天主造人原本是怎樣的？",
+        options: ["A. 有罪的", "B. 不死不滅的", "C. 有限的", "D. 受苦的", "E. 需要救贖的"],
+        answer: "B",
+        explanation: "《智慧篇 2:23》指出「天主造了人，原是不死不滅的，使他成為自己本性的肖像。」。"
+      },
+      {
+        text: "2. 根據《智慧篇 2:23–3:9》，死亡進入世界的原因是什麼？",
+        options: ["A. 人的懶惰", "B. 天主的懲罰", "C. 魔鬼的嫉妒", "D. 自然的規律", "E. 原罪的結果"],
+        answer: "C",
+        explanation: "《智慧篇 2:24》說明「但因魔鬼的嫉妒，死亡才進入了世界。」。"
+      },
+      {
+        text: "3.  根據《智慧篇 2:23–3:9》，義人的靈魂在天主手中有何狀況？",
+        options: ["A. 被懲罰", "B. 受苦不斷", "C. 處於安寧中", "D. 歸於泯滅", "E. 被遺忘"],
+        answer: "C",
+        explanation: "《智慧篇 3:3》指出「其實，他們是處於安寧中。」。"
+      },
+      {
+        text: "4. 根據《智慧篇 2:23–3:9》，義人受試煉如同什麼？",
+        options: ["A. 銀子", "B. 鐵器", "C. 爐中的黃金", "D. 石頭", "E.  木材"],
+        answer: "C",
+        explanation: "《智慧篇 3:6》：「他試煉了他們，好像爐中的黃金。」。"
+      },
+      {
+        text: "5. 根據《智慧篇 2:23–3:9》，倚恃上主的人將會如何？",
+        options: ["A. 得到財富", "B. 明白真理", "C. 被世人讚美", "D. 免於死亡", "E. 成為先知"],
+        answer: "B",
+        explanation: "《智慧篇 3:9》：「倚恃上主的人，必明白真理。」。"
+      },
+      {
+        text: "6. 根據《聖詠 34:2-3, 16-19》，義人呼號時，上主如何回應？ ",
+        options: ["A. 沉默不語", "B. 遲疑不決", "C. 立即俯允", "D. 派遣天使", "E. 給予考驗"],
+        answer: "C",
+        explanation: "《聖詠 34:18》：「義人一呼號，上主立即俯允。」。"
+      },
+      {
+        text: "7. 根據《聖詠 34:2-3, 16-19》，上主的雙耳聽誰的哀聲",
+        options: ["A. 作惡的人", "B. 義人", "C. 先知", "D. 君王", "E. 司祭"],
+        answer: "B",
+        explanation: "《聖詠 34:16》：「上主的雙耳俯聽他們的哀聲」，指的是正義的人。"
+      },
+      {
+        text: "8. 根據《聖詠 34:2-3, 16-19》，上主的威容對作惡的人有何態度？",
+        options: ["A. 寬容", "B. 憐憫", "C. 敵視", "D. 忽略", "E. 教導"],
+        answer: "C",
+        explanation: "聖詠 34:17》：「上主的威容敵視作惡的人民。」。"
+      },
+      {
+        text: "9. 根據《聖詠 34:2-3, 16-19》，上主親近哪類人？",
+        options: ["A. 富有的人", "B. 心靈破碎的人", "C. 聰明的人", "D. 領袖", "E. 教師"],
+        answer: "B",
+        explanation: "《聖詠 34:19》：「上主親近心靈破碎的人。」。"
+      },
+      {
+        text: "10. 根據《聖詠 34:2-3, 16-19》，上主的讚頌應如何表達？",
+        options: ["A. 每週一次", "B. 在聖殿中", "C. 常在我口", "D. 由司祭代言", "E. 只在節日"],
+        answer: "C",
+        explanation: "《聖詠 34:2》：「對他的讚頌常在我口。」。"
+      },
+      {
+        text: "11. 根據《路加福音 17:7-10》，耶穌用什麼比喻來教導僕人的本分？",
+        options: ["A. 醫生與病人", "B.  主人與僕人", "C. 父親與兒子", "D. 司祭與信徒", "E. 牧人與羊群"],
+        answer: "B",
+        explanation: "《路加福音 17:7》：「你們中間誰有僕人耕田或放羊…」。"
+      },
+      {
+        text: "12. 根據《路加福音 17:7-10》，主人是否會向僕人道謝？",
+        options: ["A. 總是會", "B. 有時會", "C. 不一定", "D. 不會", "E. 取決於僕人表現"],
+        answer: "D",
+        explanation: "《路加福音 17:9》：「僕人做了吩咐的事，主人豈要向他道謝嗎？」。"
+      },
+      {
+        text: "13. 根據《路加福音 17:7-10》，僕人完成工作後應如何自我看待？",
+        options: ["A. 忠誠的僕人", "B.  有功的僕人", "C. 無用的僕人", "D. 榮耀的僕人", "E. 被選的僕人"],
+        answer: "C",
+        explanation: "《路加福音 17:10》：「我們是無用的僕人，我們不過做了我們應做的事。」。"
+      },
+      {
+        text: "14. 根據《路加福音 17:7-10》，僕人從田地回來後，主人首先要求什麼？",
+        options: ["A. 休息", "B. 吃飯", "C. 伺候主人", "D. 洗腳", "E.  禱告"],
+        answer: "C",
+        explanation: "《路加福音 17:8》：「預備我吃飯，束上腰伺候我…」。"
+      },
+      {
+        text: "15. 根據《路加福音 17:7-10》，耶穌此段教導的核心是什麼？",
+        options: ["A. 恩寵的賞賜", "B. 服事的謙卑", "C. 信德的力量", "D. 祈禱的重要", "E. 審判的準則"],
+        answer: "B",
+        explanation: "整段比喻強調僕人不可自誇，應謙卑服事，正是《路加福音 17:7-10》的主旨。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
