@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十二主日 祝聖拉特朗大殿慶日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十二主日 祝聖拉特朗大殿慶日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《厄則克耳先知書 47:1-2,8-9,12》，水從聖殿那一處湧出？",
+        options: ["A. 北門外", "B. 聖殿門限下", "C. 祭壇上方", "D. 西門口", "E. 聖殿屋頂"],
+        answer: "B",
+        explanation: "經文記載「有水從聖殿門限下湧出」，顯示水源來自聖殿底部。"
+      },
+      {
+        text: "2. 根據《厄則克耳先知書 47:1-2,8-9,12》，這水流向何處使海水變成好水？",
+        options: ["A. 加里肋亞海", "B. 約但河", "C. 鹽海", "D. 提洛港", "E. 阿辣巴湖"],
+        answer: "C",
+        explanation: "水流入鹽海，使海水變成好水，象徵潔淨與生命的更新。"
+      },
+      {
+        text: "3.  根據《厄則克耳先知書 47:1-2,8-9,12》，河流所到之處會發生什麼？",
+        options: ["A. 地震", "B. 火焰", "C. 百物生存", "D. 雨水停止", "E. 天使顯現"],
+        answer: "C",
+        explanation: "凡這水所到的地方，「百物必能生存」，顯示水的生命力。"
+      },
+      {
+        text: "4. 根據《厄則克耳先知書 47:1-2,8-9,12》，沿河兩岸的果樹有何特性？",
+        options: ["A. 每年結果一次", "B. 枝葉常凋零", "C. 果實可作藥材", "D. 果實可作食物", "E.  C與D皆是"],
+        answer: "E",
+        explanation: "果實可作食物，枝葉可作藥材，象徵聖所水源的滋養與治癒。"
+      },
+      {
+        text: "5. 根據《聖詠 46:2-3,5-6,8-9》，河流使那個地方歡樂？",
+        options: ["A. 撒瑪黎雅", "B. 天主的城邑", "C. 耶路撒冷外門", "D. 葛法翁", "E. 聖殿門限"],
+        answer: "B",
+        explanation: "聖詠說「河流要使天主的城邑歡樂」，象徵神聖居所的喜樂。"
+      },
+      {
+        text: "6. 根據《聖詠 46:2-3,5-6,8-9》，天主在患難中是什麼？ ",
+        options: ["A. 隱藏者", "B. 審判者", "C. 最易找到的保障", "D. 懲罰者", "E. 沉默者"],
+        answer: "C",
+        explanation: "聖詠稱天主為「患難中最易找到的保障」，顯示祂的臨在與保護。"
+      },
+      {
+        text: "7. 根據《聖詠 46:2-3,5-6,8-9》，天主定居其中，此城有何特性",
+        options: ["A. 常遭攻擊", "B. 決不動搖", "C. 被火焚燒", "D. 被水淹沒", "E. 被棄絕"],
+        answer: "B",
+        explanation: "天主居住的城「決不動搖」，象徵穩固與神聖的保護。"
+      },
+      {
+        text: "8. 根據《聖詠 46:2-3,5-6,8-9》，天主在何時加扶持？",
+        options: ["A. 夜晚", "B. 傍晚", "C. 清晨曙光一現", "D. 午時", "E. 日落之時"],
+        answer: "C",
+        explanation: "聖詠說「清晨曙光一現，天主即加扶持」，象徵新生與希望。"
+      },
+      {
+        text: "9. 根據《保祿宗徒致格林多人前書 3:9-11,16-17》，保祿自比為何種角色？",
+        options: ["A. 工匠", "B. 建築師", "C. 牧羊人", "D. 預言者", "E. 教師"],
+        answer: "B",
+        explanation: "保祿自稱「精明的建築師」，象徵他在信仰上的奠基角色。"
+      },
+      {
+        text: "10. 根據《保祿宗徒致格林多人前書 3:9-11,16-17》，根基只能奠立於誰？",
+        options: ["A. 若望", "B. 梅瑟", "C. 耶穌基督", "D. 撒慕爾", "E. 伯多祿"],
+        answer: "C",
+        explanation: "保祿強調「除已奠立了的根基，即耶穌基督外，任何人不能再奠立別的根基」。"
+      },
+      {
+        text: "11. 根據《保祿宗徒致格林多人前書 3:9-11,16-17》，信徒是什麼？",
+        options: ["A. 天主的工具", "B. 天主的子民", "C. 天主的宮殿", "D. 天主的祭品", "E. 天主的門徒"],
+        answer: "C",
+        explanation: "保祿說「你們是天主的宮殿」，象徵聖神居住於信徒內。"
+      },
+      {
+        text: "12. 根據《保祿宗徒致格林多人前書 3:9-11,16-17》，毀壞天主的宮殿者將如何？",
+        options: ["A. 被寬恕", "B. 被祝福", "C. 被天主毀壞", "D. 被驅逐", "E. 被審判"],
+        answer: "C",
+        explanation: "「誰若毀壞天主的宮殿，天主必要毀壞他」，顯示聖殿的神聖不可侵犯。"
+      },
+      {
+        text: "13. 根據《若望福音 2:13-22》，耶穌在聖殿中驅趕了那些人？",
+        options: ["A. 法利塞人", "B.  賣牛羊鴿子者與兌換銀錢者", "C. 撒杜塞人", "D. 門徒", "E. 羅馬士兵"],
+        answer: "B",
+        explanation: "耶穌用鞭子驅趕賣牛、羊、鴿子的人及兌換銀錢者，潔淨聖殿。"
+      },
+      {
+        text: "14. 根據《若望福音 2:13-22》，耶穌說三日重建的聖殿是指什麼？",
+        options: ["A. 耶路撒冷聖殿", "B. 天主的城邑", "C. 祂自己的身體", "D. 天主的宮殿", "E.  撒瑪黎雅的聖所"],
+        answer: "C",
+        explanation: "耶穌所說的聖殿是指祂自己的身體，預示復活。"
+      },
+      {
+        text: "15. 根據《若望福音 2:13-22》，門徒在何時想起耶穌的話並相信？",
+        options: ["A. 耶穌被捕時", "B. 耶穌升天後", "C. 耶穌復活後", "D. 耶穌受洗時", "E. 耶穌變容時"],
+        answer: "C",
+        explanation: "耶穌從死者中復活後，門徒想起祂的話並相信聖經與祂的話。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
