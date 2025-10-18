@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十二周星期一 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十二周星期一 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《智慧篇 1:1-7》，統治世界的人應如何尋求上主？",
+        options: ["A. 以權勢壓服", "B. 以智慧辯論", "C. 以誠樸的心", "D. 以祭品獻祭", "E. 以恐懼敬畏"],
+        answer: "C",
+        explanation: "經文教導「應以誠樸的心尋求上主」，顯示真誠是尋主的要素。"
+      },
+      {
+        text: "2. 根據《智慧篇 1:1-7》，上主向誰顯示自己？",
+        options: ["A. 傳道者", "B. 不失信的人", "C. 施行奇蹟者", "D. 祭司", "E. 預言者"],
+        answer: "B",
+        explanation: "經文說「對上主不失信的，上主必向他顯示自己」，強調忠信的重要。"
+      },
+      {
+        text: "3.  根據《智慧篇 1:1-7》，為何智慧不進入某些靈魂？",
+        options: ["A. 因缺乏知識", "B. 因未受洗", "C. 因存心不良", "D. 因未讀聖經", "E. 因未祈禱"],
+        answer: "C",
+        explanation: "「智慧不進入存心不良的靈魂裏」，顯示內心的純潔是智慧的居所。"
+      },
+      {
+        text: "4. 根據《智慧篇 1:1-7》，聖神對何種行為會退去？",
+        options: ["A. 疑惑", "B. 無知", "C. 不義", "D. 懷疑", "E.  懶惰"],
+        answer: "C",
+        explanation: "經文明言「不義一到，即刻退去」，聖神遠離罪惡。"
+      },
+      {
+        text: "5. 根據《智慧篇 1:1-7》，上主的神有何特性？",
+        options: ["A. 局限於聖殿", "B. 只臨於選民", "C. 充滿世界", "D. 隱藏不顯", "E. 只在高天"],
+        answer: "C",
+        explanation: "「上主的神充滿了世界，包羅萬象」，顯示祂的無所不在。"
+      },
+      {
+        text: "6. 根據《聖詠 139:1-10》，上主對人的行動有何認識？ ",
+        options: ["A. 模糊不清", "B. 由遠處洞悉", "C. 只知外表", "D. 需人告知", "E. 只知善行"],
+        answer: "B",
+        explanation: "「你由遠處已洞悉我的思考」，顯示上主的全知。"
+      },
+      {
+        text: "7. 根據《聖詠 139:1-10》，上主在何時已知人的言語",
+        options: ["A. 發言之後", "B. 沉默之時", "C. 舌頭尚未發言", "D. 祈禱之中", "E. 聽道之時"],
+        answer: "C",
+        explanation: "「我的舌頭尚未發言，上主，看，你已經知悉周全」，顯示祂的先知。"
+      },
+      {
+        text: "8. 根據《聖詠 139:1-10》，上主的奇事對人而言如何？",
+        options: ["A. 易於理解", "B. 超越理智", "C. 可用理性解釋", "D. 需經驗體會", "E. 由先知解釋"],
+        answer: "B",
+        explanation: "「這是超越我理智的奇事」，顯示上主的奧秘難以窮盡。"
+      },
+      {
+        text: "9. 根據《聖詠 139:1-10》，人能否逃避上主的面容？",
+        options: ["A. 可藏於聖殿", "B. 可避於曠野", "C. 可逃至陰府", "D. 無處可逃", "E. 可隱於人群"],
+        answer: "D",
+        explanation: "「我往何處，才能逃避你的面容？」暗示無處可逃，祂無所不在。"
+      },
+      {
+        text: "10. 根據《聖詠 139:1-10》，10. 上主的右手在何處扶持人？",
+        options: ["A. 高天", "B. 陰府", "C. 東方", "D. 西方海洋", "E. 任何地方"],
+        answer: "D",
+        explanation: "「我若住在海洋的西方，你的右手還在那裏扶持著我」，顯示祂的臨在。"
+      },
+      {
+        text: "11. 根據《路加福音 17:1-6》，耶穌對引人跌倒者有何警告？",
+        options: ["A. 懲罰七倍", "B. 被逐出聖殿", "C. 套磨石投入海中", "D. 被群眾譴責", "E. 被門徒責斥"],
+        answer: "C",
+        explanation: "「把一塊磨石套在他的頸上，投入海中」，顯示嚴重性。"
+      },
+      {
+        text: "12. 根據《路加福音 17:1-6》，若兄弟犯了罪，應如何？",
+        options: ["A. 忽視", "B. 公開責罵", "C. 規勸", "D. 報復", "E. 驅逐"],
+        answer: "C",
+        explanation: "「你就得規勸他」，顯示愛德與責任。"
+      },
+      {
+        text: "13. 根據《路加福音 17:1-6》，若兄弟後悔，應如何？",
+        options: ["A. 再觀察", "B.  寬恕", "C. 懲戒", "D. 教訓", "E. 驅逐"],
+        answer: "B",
+        explanation: "「他如果後悔了，你就得寬恕他」，顯示慈悲精神。"
+      },
+      {
+        text: "14. 根據《路加福音 17:1-6》，若一天七次得罪又七次悔改，應如何？",
+        options: ["A. 忍耐一次", "B. 寬恕三次", "C. 完全寬恕", "D. 報復一次", "E.  不再理會"],
+        answer: "C",
+        explanation: "「你也得寬恕他」，即使七次，顯示無限寬恕。"
+      },
+      {
+        text: "15. 根據《路加福音 17:1-6》，芥子般的信德能做什麼？",
+        options: ["A. 使病人痊癒", "B. 使水變酒", "C. 移植桑樹入海後", "D. 使死人復活", "E. 使石頭變麵包"],
+        answer: "C",
+        explanation: "「即使你們對這棵桑樹說：你連根拔出，移植到海中去！它也會服從你們」，顯示信德的力量。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
