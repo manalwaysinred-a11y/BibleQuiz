@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十三周星期一 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十三周星期一 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《瑪加伯書上 1:10-15,41-43,54-57,62-64》，安提約古厄丕法乃是誰的兒子？",
+        options: ["A. 達味", "B. 撒羅滿", "C.  安提約古", "D. 亞歷山大", "E. 瑪加伯"],
+        answer: "C",
+        explanation: "經文指出「安提約古的兒子安提約古厄丕法乃」，他是安提約古的後代。"
+      },
+      {
+        text: "2. 根據《瑪加伯書上 1:10-15,41-43,54-57,62-64》，以色列人中出現的歹徒主張與誰立約？",
+        options: ["A. 撒瑪黎雅人", "B. 外方人", "C. 法利塞人", "D. 羅馬人", "E. 埃及人"],
+        answer: "B",
+        explanation: "經文記載歹徒煽惑民眾說要與「四鄰的外方人立約」。"
+      },
+      {
+        text: "3.  根據《瑪加伯書上 1:10-15,41-43,54-57,62-64》，以色列人為服從外邦人規律而做了什麼？",
+        options: ["A. 建聖殿", "B. 修築城牆", "C. 彌補割損痕跡", "D. 祭獻牛羊", "E. 禁食"],
+        answer: "C",
+        explanation: "他們「彌補割損的痕跡，背離聖約」，象徵放棄猶太人的割禮。"
+      },
+      {
+        text: "4. 根據《瑪加伯書上 1:10-15,41-43,54-57,62-64》，國王在祭壇上立了什麼？",
+        options: ["A. 金牛犢", "B. 可憎惡的邪物", "C. 聖約櫃", "D. 天主的像", "E.  火壇"],
+        answer: "B",
+        explanation: "在「基色婁」月十五日，國王在祭壇上立了一個「可憎惡的邪物」。"
+      },
+      {
+        text: "5. 根據《瑪加伯書上 1:10-15,41-43,54-57,62-64》，以色列人為何被判死刑？",
+        options: ["A. 反抗國王", "B. 不獻祭", "C. 恪守法律", "D. 不服兵役", "E. 不繳稅"],
+        answer: "C",
+        explanation: "凡「存有約書或恪守法律者，不論是誰，都應按諭令處死」。"
+      },
+      {
+        text: "6. 根據《聖詠 119:53, 61, 134, 150, 155, 158》，聖詠作者求上主使他生活的目的為何？ ",
+        options: ["A. 得享安息", "B. 遠離惡人", "C. 遵守訓令", "D. 得見光明", "E. 獲得救恩"],
+        answer: "C",
+        explanation: "聖詠作者說：「上主，求你使我生活，我必遵守你的訓令。」。"
+      },
+      {
+        text: "7. 根據《聖詠 119:53, 61, 134, 150, 155, 158》，罪人背棄法律使聖詠作者有何反應？",
+        options: ["A. 悲傷", "B. 憐憫", "C. 怒火焚心", "D. 沉默不語", "E. 祈求寬恕"],
+        answer: "C",
+        explanation: "「背棄你法律的罪人，使我不知不覺地怒火焚心。」。"
+      },
+      {
+        text: "8. 根據《聖詠 119:53, 61, 134, 150, 155, 158》，聖詠作者雖被惡人纏繞，仍堅持什麼？",
+        options: ["A. 禱告", "B. 忍耐", "C. 忘記仇恨", "D. 未忘記法律", "E. 逃避迫害"],
+        answer: "D",
+        explanation: "「惡人的繩索雖將我纏起，我卻未忘記你的法律。」。"
+      },
+      {
+        text: "9. 根據《聖詠 119:53, 61, 134, 150, 155, 158》，聖詠作者如何形容非法迫害者？",
+        options: ["A. 他們是強暴者", "B. 他們遠離法令", "C. 他們是外邦人", "D. 他們是偶像崇拜者", "E. 他們是撒旦的僕人"],
+        answer: "B",
+        explanation: "「非法迫害我的人已臨近，他們都遠離了你的法令。」。"
+      },
+      {
+        text: "10. 根據《聖詠 119:53, 61, 134, 150, 155, 158》，聖詠作者見到不守規範者有何感受？",
+        options: ["A. 憐憫", "B. 厭惡", "C. 恐懼", "D. 憤怒", "E. 懷疑"],
+        answer: "B",
+        explanation: "「我一看見奸黨惡輩就會生厭，因為他們都不遵守你的規範。」。"
+      },
+      {
+        text: "11. 根據《路加福音 18:35-43》，瞎子坐在那裡討飯？",
+        options: ["A. 聖殿門口", "B.  耶路撒冷城牆", "C. 路旁", "D. 市場", "E. 耶里哥城內"],
+        answer: "C",
+        explanation: "經文說「有一個瞎子坐在路旁討飯」。"
+      },
+      {
+        text: "12. 根據《路加福音 18:35-43》，瞎子聽見群眾路過後做了什麼？",
+        options: ["A. 禱告", "B. 查問是什麼事", "C. 逃走", "D. 哭泣", "E. 沉默"],
+        answer: "B",
+        explanation: "「聽見群眾路過，便查問是什麼事。」。"
+      },
+      {
+        text: "13. 根據《路加福音 18:35-43》，瞎子如何稱呼耶穌？",
+        options: ["A. 主", "B.  納匝肋人", "C. 達味之子", "D. 天主的僕人", "E. 仁慈者"],
+        answer: "C",
+        explanation: "他喊叫說：「耶穌，達味之子，可憐我吧！」。"
+      },
+      {
+        text: "14. 根據《路加福音 18:35-43》，耶穌對瞎子說：「你的信德救了你」之後，瞎子有何反應？",
+        options: ["A. 回家", "B. 讚美耶穌", "C. 跟隨耶穌", "D. 向群眾講話", "E.  沉默不語"],
+        answer: "C",
+        explanation: "「他立刻看見了，遂跟隨著耶穌，光榮天主。」。"
+      },
+      {
+        text: "15. 根據《路加福音 18:35-43》，百姓見瞎子得看見後有何反應？",
+        options: ["A. 驚訝", "B. 懷疑", "C. 頌揚天主", "D.  沉默", "E. 離開"],
+        answer: "C",
+        explanation: "「所有百姓見了，也都頌揚天主。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
