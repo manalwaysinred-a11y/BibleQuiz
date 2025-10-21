@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十三主日 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十三主日 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《瑪拉基亞先知書 3:19-20》，瑪拉基亞預言的「那日子」將如什麼？",
+        options: ["A. 雷霆萬鈞", "B. 黑暗深淵", "C. 冒火的火爐", "D. 狂風暴雨", "E. 審判的寶座"],
+        answer: "C",
+        explanation: "「那日子來臨，必勢如冒火的火爐。」。"
+      },
+      {
+        text: "2. 根據《瑪拉基亞先知書 3:19-20》，在那日子，驕傲和作惡的人將成為什麼？",
+        options: ["A. 灰燼", "B. 塵土", "C. 禾稭", "D. 荊棘", "E. 泥濘"],
+        answer: "C",
+        explanation: "「所有驕傲的人，和作惡的人，都要成為禾稭。」。"
+      },
+      {
+        text: "3.  根據《瑪拉基亞先知書 3:19-20》，敬畏天主名號的人將迎來什麼？",
+        options: ["A. 天主的審判", "B. 正義的太陽", "C. 天使的保護", "D. 聖神的降臨", "E. 默西亞的來臨"],
+        answer: "B",
+        explanation: "「但為你們這些敬畏我名號的人，正義的太陽，將要升起。」。"
+      },
+      {
+        text: "4. 根據《瑪拉基亞先知書 3:19-20》，正義的太陽將以什麼普施救恩？",
+        options: ["A. 火焰", "B. 聖言", "C. 箭羽的光芒", "D. 雲彩", "E.  星辰"],
+        answer: "C",
+        explanation: "「以自己好似箭羽的光芒，普施救恩。」。"
+      },
+      {
+        text: "5. 根據《聖詠 98:5-9》，上主將以什麼審判普世人民？",
+        options: ["A. 威嚴", "B. 公義", "C. 正義", "D. 憐憫", "E. 智慧"],
+        answer: "C",
+        explanation: "「上主要以正義審判普世人民。」。"
+      },
+      {
+        text: "6. 根據《聖詠 98:5-9》，在上主君王面前，應以什麼謳歌？ ",
+        options: ["A. 鼓聲", "B. 喇叭與號角", "C. 鈴鐺", "D. 鳴鐘", "E. 鳴鑼"],
+        answer: "B",
+        explanation: "「吹起喇叭，響起號角，在上主君王面前謳歌。」。"
+      },
+      {
+        text: "7. 根據《聖詠 98:5-9》，那些自然界的元素被描寫為歡樂讚頌上主？",
+        options: ["A. 星辰與雲彩", "B. 沙漠與岩石", "C. 江河與山岳", "D. 花草與樹木", "E. 火焰與風暴"],
+        answer: "C",
+        explanation: "「江河拍手鼓掌；山岳舞蹈歡唱。」。"
+      },
+      {
+        text: "8. 根據《聖詠 98:5-9》，上主治理天下萬民的方式是什麼？",
+        options: ["A. 威嚴與懲罰", "B. 公義與慈悲", "C. 公平與正義", "D. 智慧與能力", "E. 寬恕與恩寵"],
+        answer: "C",
+        explanation: "「他要以公平，治理天下萬民。」。"
+      },
+      {
+        text: "9. 根據《保祿宗徒致得撒洛尼人後書 3:7-12》，保祿宗徒在得撒洛尼人中如何生活？",
+        options: ["A. 傳道為主，不工作", "B. 靠施捨維生", "C. 黑夜白日，辛苦勤勞地工作", "D. 依靠教會供養", "E. 只在安息日工作"],
+        answer: "C",
+        explanation: "「黑夜白日，辛苦勤勞地工作，免得加重你們任何人的負擔。」。"
+      },
+      {
+        text: "10. 根據《保祿宗徒致得撒洛尼人後書 3:7-12》，保祿宗徒的行為目的為何？",
+        options: ["A. 顯示權威", "B. 為以身作則", "C. 爭取信徒支持", "D. 逃避責任", "E. 保持清貧"],
+        answer: "B",
+        explanation: "「而是為以身作則，給你們立下榜樣。」。"
+      },
+      {
+        text: "11. 根據《保祿宗徒致得撒洛尼人後書 3:7-12》，保祿宗徒吩咐不願意工作的人應如何？",
+        options: ["A. 接受教導", "B.  禱告悔改", "C. 不應當吃飯", "D. 參與服事", "E. 受罰"],
+        answer: "C",
+        explanation: "「誰若不願意工作，就不應當吃飯。」。"
+      },
+      {
+        text: "12. 根據《保祿宗徒致得撒洛尼人後書 3:7-12》，保祿宗徒勸勉那些游手好閒的人應怎樣？",
+        options: ["A. 禱告悔改", "B. 參與教會事務", "C. 安靜工作，吃自己的飯", "D. 接受懲罰", "E. 離開社群"],
+        answer: "C",
+        explanation: "「並勸勉他們安靜工作，吃自己的飯。」。"
+      },
+      {
+        text: "13. 根據《路加福音 21:5-19》，耶穌預言聖殿將如何？",
+        options: ["A. 被火焚毀", "B.  成為聖地", "C. 沒有一塊石頭留在另一塊石頭上", "D. 被外邦人佔領", "E. 化為荒地"],
+        answer: "C",
+        explanation: "「便沒有一塊石頭，留在另一塊石頭上，而不被拆毀的。」。"
+      },
+      {
+        text: "14. 根據《路加福音 21:5-19》，耶穌警告門徒不要受誰的欺騙？",
+        options: ["A. 法利塞人", "B. 撒殫", "C. 假冒他名字的人", "D. 外邦君王", "E.  祭司長"],
+        answer: "C",
+        explanation: "「因為將有許多人，假冒我的名字而來。」。"
+      },
+      {
+        text: "15. 根據《路加福音 21:5-19》，面對迫害，耶穌應許給門徒什麼？",
+        options: ["A. 天使保護", "B. 逃脫之路", "C. 口才和明智", "D. 隱藏之地", "E. 神蹟能力"],
+        answer: "C",
+        explanation: "「因為我要給你們口才和明智，是你們一切仇敵，所不能抵抗及辯駁的。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
