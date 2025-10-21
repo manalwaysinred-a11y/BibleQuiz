@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十二周星期五 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十二周星期五 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《智慧篇 13:1-9》，人未能從看得見的美物發現誰？",
+        options: ["A. 自然之神", "B. 天主的使者", "C. 那自有者", "D. 天使長", "E. 造物主的靈"],
+        answer: "C",
+        explanation: "經文指出「凡不認識天主的人，都是真正的愚人，因為他們未能從看得見的美物，去發現那自有者。"
+      },
+      {
+        text: "2. 根據《智慧篇 13:1-9》，批評人們只注意工程卻忽略了什麼？",
+        options: ["A. 工程的價值", "B. 工程的美感", "C. 工程師", "D. 工程的歷史", "E. 工程的用途"],
+        answer: "C",
+        explanation: "經文說「注意了工程，卻不認識工程師」，暗示人們忽略了創造者。"
+      },
+      {
+        text: "3.  根據《智慧篇 13:1-9》，人若因美物著迷而奉之為神，應該明白什麼？",
+        options: ["A. 美物是天使所造", "B. 美物是自然演化的結果", "C. 美物的主宰更是美麗", "D. 美物是人類智慧的結晶", "E. 美物是偶然出現的"],
+        answer: "C",
+        explanation: "經文指出「這些美物的主宰更是美麗，因為都是美麗的唯一根源所創造的。"
+      },
+      {
+        text: "4. 根據《智慧篇 13:1-9》，人可以從受造物的偉大和美麗推想到什麼？",
+        options: ["A. 宇宙的起源", "B. 天主的法律", "C. 這些東西的創造者", "D. 人類的使命", "E.  天使的階級"],
+        answer: "C",
+        explanation: "「因為從受造物的偉大和美麗，人可以推想到這些東西的創造者。」。"
+      },
+      {
+        text: "5. 根據《智慧篇 13:1-9》，為何這些人仍不能推辭無過？",
+        options: ["A. 他們從未聽過天主", "B. 他們拒絕信仰", "C. 他們能探究宇宙卻未發現主宰", "D. 他們崇拜偶像", "E. 他們生活放縱"],
+        answer: "C",
+        explanation: "經文說「因為他們既然能知道得如此淵博，甚至能探究宇宙，為何不能及早發現這些東西的主宰呢。"
+      },
+      {
+        text: "6. 根據《聖詠 19:2-5》，高天陳述的是誰的光榮？ ",
+        options: ["A. 天使", "B. 天主", "C. 人子", "D. 聖神", "E. 教會"],
+        answer: "B",
+        explanation: "「高天陳述天主的光榮，穹蒼宣揚他的奇工妙化。」。"
+      },
+      {
+        text: "7. 根據《聖詠 19:2-5》，日與日之間如何傳遞信息？",
+        options: ["A. 以聲音", "B. 以文字", "C. 侃侃而談", "D. 以夢境", "E. 以圖像"],
+        answer: "C",
+        explanation: "「日與日侃侃而談，夜與夜知識相傳。」。"
+      },
+      {
+        text: "8. 根據《聖詠 19:2-5》，經文中提到的語言是怎樣的？",
+        options: ["A. 古老的語言", "B. 天使的語言", "C. 聽不到的語言", "D. 神秘的語言", "E. 外邦的語言"],
+        answer: "C",
+        explanation: "「不是語，也不是言，是聽不到的語言。」。"
+      },
+      {
+        text: "9. 根據《聖詠 19:2-5》，這些聲音和言語傳遍了那裡？",
+        options: ["A. 天主的選民", "B. 聖殿", "C. 普世與地極", "D. 教會與修院", "E. 天使的領域"],
+        answer: "C",
+        explanation: "「它們的聲音傳遍普世，它們的言語達於地極。」。"
+      },
+      {
+        text: "10. 根據《聖詠 19:2-5》，那個自然界的部分被用來宣揚天主的奇工？",
+        options: ["A. 海洋", "B. 山嶺", "C. 穹蒼", "D. 沙漠", "E. 星辰"],
+        answer: "C",
+        explanation: "「穹蒼宣揚他的奇工妙化。」。"
+      },
+      {
+        text: "11. 根據《路加福音 17:26-37》，在諾厄的日子裏，人們在洪水來臨前做了什麼？",
+        options: ["A. 禱告與悔改", "B.  建造聖殿", "C. 吃喝婚嫁", "D. 傳播福音", "E. 逃離城市"],
+        answer: "C",
+        explanation: "「那時，人們吃喝婚嫁，直到諾厄進入方舟的那天。」。"
+      },
+      {
+        text: "12. 根據《路加福音 17:26-37》，羅特離開索多瑪時，天主降下了什麼？",
+        options: ["A. 雷電", "B. 洪水", "C. 火及硫磺", "D. 黑暗", "E. 地震"],
+        answer: "C",
+        explanation: "「火及硫磺自天降下，消滅了所有的人。」。"
+      },
+      {
+        text: "13. 根據《路加福音 17:26-37》，耶穌提醒門徒要記得誰？",
+        options: ["A. 諾厄", "B.  羅特", "C. 羅特的妻子", "D. 梅瑟", "E. 撒辣"],
+        answer: "C",
+        explanation: "「你們要記得羅特的妻子！」。"
+      },
+      {
+        text: "14. 根據《路加福音 17:26-37》，根據耶穌的話，誰將被接去？",
+        options: ["A. 所有信徒", "B. 所有婦女", "C. 一個人而非兩個", "D. 所有在田裏的人", "E.  所有在屋頂上的人"],
+        answer: "C",
+        explanation: "「兩個人同在一張床上，一個被接去，而一個被遺棄。」。"
+      },
+      {
+        text: "15. 根據《路加福音 17:26-37》，耶穌如何回答門徒問「主，在那裏發生呢」？",
+        options: ["A. 在聖殿", "B. 在耶路撒冷", "C. 那裏有屍體，老鷹就聚集在那裏", "D. 在天主的國內", "E. 在人子顯現的地方"],
+        answer: "C",
+        explanation: "「耶穌回答說：『那裏有屍體，老鷹就聚集在那裏。』」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
