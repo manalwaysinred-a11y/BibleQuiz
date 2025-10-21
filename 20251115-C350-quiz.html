@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十二周星期六 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十二周星期六 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《智慧篇 18:14-16;19:6-9》，當黑夜已奔馳一半路程時，誰降臨地上？",
+        options: ["A. 天使長", "B. 天主的聖神", "C. 全能的聖言", "D. 默西亞", "E. 天主的使者"],
+        answer: "C",
+        explanation: "經文說「你全能的聖言，由天上的王座，如無情的戰士，降到這應毀滅的地上。"
+      },
+      {
+        text: "2. 根據《智慧篇 18:14-16;19:6-9》，聖言降臨時，帶著什麼作為武器？",
+        options: ["A. 火焰", "B. 雷霆", "C. 利劍", "D. 權杖", "E. 石板"],
+        answer: "C",
+        explanation: "「帶著你不可收回的成命當作利劍。」。"
+      },
+      {
+        text: "3.  根據《智慧篇 18:14-16;19:6-9》，紅海中出現了什麼奇蹟？",
+        options: ["A. 火柱引路", "B. 天使守護", "C. 一條無阻的道路", "D. 水變成酒", "E. 海水結冰"],
+        answer: "C",
+        explanation: "「紅海裏開出一條無阻的道路。」。"
+      },
+      {
+        text: "4. 根據《智慧篇 18:14-16;19:6-9》，百姓在經過紅海時的心情如何？",
+        options: ["A. 恐懼顫抖", "B. 懷疑不安", "C. 喜樂讚美", "D. 沉默無言", "E.  懊悔痛哭"],
+        answer: "C",
+        explanation: "「他們有如牧場上牧放的小馬，跳躍有如羔羊，讚美你——拯救他們的上主。」。"
+      },
+      {
+        text: "5. 根據《智慧篇 18:14-16;19:6-9》，各樣受造物如何保護天主的子女？",
+        options: ["A. 變成盾牌", "B. 重新受造，遵命行事", "C. 化為火牆", "D. 成為天使", "E. 隱藏他們"],
+        answer: "B",
+        explanation: "「各樣的受造物，按自己的本性，再重新受造，遵從你的命令，護衛你的子女。」。"
+      },
+      {
+        text: "6. 根據《聖詠 105:2-3, 36-37, 42-43》，聖詠呼籲人們記念什麼？ ",
+        options: ["A. 天主的懲罰", "B. 先知的話語", "C. 上主所行的奇蹟", "D. 教會的教導", "E. 祖先的歷史"],
+        answer: "C",
+        explanation: "「請你們記念上主所行的奇蹟。」。"
+      },
+      {
+        text: "7. 根據《聖詠 105:2-3, 36-37, 42-43》，上主打擊了哪一類人？",
+        options: ["A. 外邦人", "B. 罪人", "C. 境內所有的頭胎", "D. 祭司", "E. 逃亡者"],
+        answer: "C",
+        explanation: "「他打擊境內所有的頭胎。」。"
+      },
+      {
+        text: "8. 根據《聖詠 105:2-3, 36-37, 42-43》，以色列人離開時攜帶了什麼？",
+        options: ["A. 法櫃", "B. 金銀", "C. 食物", "D. 石板", "E. 香料"],
+        answer: "B",
+        explanation: "「他率領滿攜金銀的以色列離去。」。"
+      },
+      {
+        text: "9. 根據《聖詠 105:2-3, 36-37, 42-43》，上主常懷念哪位僕人？",
+        options: ["A. 梅瑟", "B. 撒慕爾", "C. 達味", "D. 亞巴郎", "E. 若瑟"],
+        answer: "D",
+        explanation: "「並且也常懷念他的僕人亞巴郎。」。"
+      },
+      {
+        text: "10. 根據《聖詠 105:2-3, 36-37, 42-43》，上主率領選民離去時的情況如何？",
+        options: ["A. 驚慌逃走", "B. 沉重悲傷", "C. 欣然出走", "D. 無聲離去", "E. 被迫離開"],
+        answer: "C",
+        explanation: "「他率領選民欣然出走。」。"
+      },
+      {
+        text: "11. 根據《路加福音 18:1-8》，耶穌設比喻的目的為何？",
+        options: ["A. 教導門徒禁食", "B.  勸人時常祈禱，不要灰心", "C. 譴責法利塞人", "D. 解釋天主的國", "E. 預言人子的來臨"],
+        answer: "B",
+        explanation: "「論及人應當時常祈禱，不要灰心。」。"
+      },
+      {
+        text: "12. 根據《路加福音 18:1-8》，判官的特點是什麼？",
+        options: ["A. 公義仁慈", "B. 敬畏天主", "C. 不敬畏天主，也不敬重人", "D. 愛護寡婦", "E. 遵守法律"],
+        answer: "C",
+        explanation: "「某城中曾有一個判官不敬畏天主，也不敬重人。」。"
+      },
+      {
+        text: "13. 根據《路加福音 18:1-8》，寡婦向判官請求什麼？",
+        options: ["A. 給予食物", "B.  保護她的家人", "C. 制裁對頭，為她伸冤", "D. 讓她搬離城市", "E. 給她金錢"],
+        answer: "C",
+        explanation: "「請你制裁我的對頭，為我伸寃吧！」。"
+      },
+      {
+        text: "14. 根據《路加福音 18:1-8》，判官最終為何決定伸冤？",
+        options: ["A. 因為他悔改", "B. 因為他敬畏天主", "C. 因為寡婦常來煩擾他", "D. 因為群眾壓力", "E.  因為他愛寡婦"],
+        answer: "C",
+        explanation: "「只是因為這個寡婦常來煩擾我，我要為她伸冤。」。"
+      },
+      {
+        text: "15. 根據《路加福音 18:1-8》，耶穌最後提出什麼問題？",
+        options: ["A. 誰是我的門徒？", "B. 人子來臨時，能在世上找到這樣的信德嗎？", "C. 你們願意跟隨我嗎？", "D. 天主的國何時來臨？", "E. 你們能喝我所喝的杯嗎？"],
+        answer: "B",
+        explanation: "「但是，人子來臨時，能在世上找到這樣的信德嗎？」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
