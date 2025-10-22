@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十三周星期二 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十三周星期二 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《瑪加伯書下 6:18-31》，厄肋阿匝爾拒絕吃豬肉的原因是：",
+        options: ["A. 他不喜歡豬肉味道", "B. 他已經吃飽了", "C.  他遵守天主的法律", "D. 他怕被人嘲笑", "E. 他想引起注意"],
+        answer: "C",
+        explanation: "厄肋阿匝爾寧願光榮捨命，也不願違反天主所立的神聖法律。"
+      },
+      {
+        text: "2. 根據《瑪加伯書下 6:18-31》，厄肋阿匝爾被勸說假裝吃祭肉的理由之一是：",
+        options: ["A. 可獲得財富", "B. 可逃避刑罰", "C. 可成為官員", "D. 可獲得國王賞賜", "E. 可離開國境"],
+        answer: "B",
+        explanation: "朋友勸他假裝吃合法肉以逃避死亡刑罰。"
+      },
+      {
+        text: "3.  根據《瑪加伯書下 6:18-31》，厄肋阿匝爾拒絕作偽的原因之一是：",
+        options: ["A. 他想成為烈士", "B. 他不信任朋友", "C. 他不想誤導青年人", "D. 他不懂如何假裝", "E. 他身體虛弱"],
+        answer: "C",
+        explanation: "他說明若作偽，會使青年誤以為年高者也接受外教禮俗。"
+      },
+      {
+        text: "4. 根據《瑪加伯書下 6:18-31》，厄肋阿匝爾臨終時的話語表達了：",
+        options: ["A. 憤怒與怨恨", "B. 對朋友的失望", "C. 對上主的敬畏與喜樂", "D. 對國王的控訴", "E.  對青年人的責備"],
+        answer: "C",
+        explanation: "他說雖身體疼痛，但心靈因敬畏上主而喜樂地忍受。"
+      },
+      {
+        text: "5. 根據《瑪加伯書下 6:18-31》，厄肋阿匝爾的死對人民的意義是：",
+        options: ["A. 引發叛亂", "B. 成為悲劇", "C. 留下剛勇的模範", "D. 被人遺忘", "E. 成為笑柄"],
+        answer: "C",
+        explanation: "經文明言他的死為青年與全國人民留下剛勇與大德的記錄。"
+      },
+      {
+        text: "6. 根據《聖詠 3:2-7》，很多人論及我說： ",
+        options: ["A. 上主必拯救他", "B. 他是義人", "C. 天主絕不拯救他", "D. 他必得勝", "E. 他已被遺棄"],
+        answer: "C",
+        explanation: "經文中提到「很多人論及我說：『天主絕不拯救他！』」。"
+      },
+      {
+        text: "7. 根據《聖詠 3:2-7》，上主被形容為：",
+        options: ["A. 火焰與風暴", "B. 審判者", "C. 保護的盾牌", "D. 隱藏的力量", "E. 沉默的見證"],
+        answer: "C",
+        explanation: "經文稱上主是「保護我的盾牌，是我的榮耀」。"
+      },
+      {
+        text: "8. 根據《聖詠 3:2-7》，我大聲呼號，上主的回應是：",
+        options: ["A. 沉默不語", "B. 從聖山上俯聽我", "C. 派遣天使", "D. 使我昏睡", "E. 使我逃亡"],
+        answer: "B",
+        explanation: "經文明言「他便從聖山上俯聽我」。"
+      },
+      {
+        text: "9. 根據《聖詠 3:2-7》，即使千萬人圍攻，我的反應是：",
+        options: ["A. 驚恐萬分", "B. 求助人群", "C. 絕望痛哭", "D. 絲毫不驚恐", "E. 逃入曠野"],
+        answer: "D",
+        explanation: "經文說「我絲毫也不驚恐」。"
+      },
+      {
+        text: "10. 根據《聖詠 3:2-7》，我能醒來的原因是：",
+        options: ["A. 天使守護", "B. 上主常扶持我", "C. 朋友幫助我", "D. 我身體強壯", "E. 我有智慧"],
+        answer: "B",
+        explanation: "經文說「我又醒了，因為上主常扶持著我」。"
+      },
+      {
+        text: "11. 根據《路加福音 19:1-10》，匝凱的職位是：？",
+        options: ["A. 司祭", "B.  經師", "C. 稅吏長", "D. 法利塞人", "E. 商人"],
+        answer: "C",
+        explanation: "經文明言匝凱是「稅吏長」。"
+      },
+      {
+        text: "12. 根據《路加福音 19:1-10》，匝凱攀上野桑樹的原因是：",
+        options: ["A. 躲避人群", "B. 想偷看耶穌", "C. 身材短小，看不見耶穌", "D. 想引起注意", "E. 想與耶穌對話"],
+        answer: "C",
+        explanation: "因人多且他身材短小，故攀樹望耶穌。"
+      },
+      {
+        text: "13. 根據《路加福音 19:1-10》，耶穌對匝凱說的第一句話是：",
+        options: ["A. 你是罪人", "B.  匝凱，你快下來", "C. 為何在樹上", "D. 我要醫治你", "E. 你信我嗎"],
+        answer: "B",
+        explanation: "耶穌抬頭說：「匝凱！你快下來！」。"
+      },
+      {
+        text: "14. 根據《路加福音 19:1-10》，匝凱對主的承諾包括：",
+        options: ["A. 施捨財物的一半", "B. 賣掉房屋", "C. 捨棄職位", "D. 禱告三日", "E.  前往聖殿"],
+        answer: "A",
+        explanation: "他說：「我把我財物的一半施捨給窮人。」。"
+      },
+      {
+        text: "15. 根據《路加福音 19:1-10》，耶穌說人子來是為了：",
+        options: ["A. 建立王國", "B. 審判罪人", "C. 尋找及拯救迷失了的人", "D.  教導法律", "E. 驅逐惡魔"],
+        answer: "C",
+        explanation: "耶穌說：「人子來，是為尋找及拯救迷失了的人。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
