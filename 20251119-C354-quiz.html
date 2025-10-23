@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十三周星期三 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十三周星期三 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《瑪加伯書下 7:1,20-31》，七兄弟被捕的原因是：",
+        options: ["A. 偷竊財物", "B. 不肯吃法律禁止的豬肉", "C.  反抗國王的命令", "D. 傳播異教思想", "E. 逃避兵役"],
+        answer: "B",
+        explanation: "國王強迫他們吃法律禁止的豬肉，他們拒絕，因此遭受酷刑。"
+      },
+      {
+        text: "2. 根據《瑪加伯書下 7:1,20-31》，母親能忍受七子殉道的原因是：",
+        options: ["A. 她已無感情", "B. 她希望復仇", "C. 她全心寄望於上主", "D. 她被迫接受", "E. 她已失去理智"],
+        answer: "C",
+        explanation: "經文明言她「全心寄望於上主」，因此能欣然忍受。"
+      },
+      {
+        text: "3.  根據《瑪加伯書下 7:1,20-31》，母親鼓勵兒子的話中，強調生命的來源是：",
+        options: ["A. 父母的結合", "B. 自然演化", "C. 天主的創造", "D. 社會的培育", "E. 自我意志"],
+        answer: "C",
+        explanation: "她說：「世界的創造者…也必會仁慈地把靈魂和生命償還給你們。"
+      },
+      {
+        text: "4. 根據《瑪加伯書下 7:1,20-31》，國王安提約古對母親的反應是：",
+        options: ["A. 尊敬她的信仰", "B. 欣賞她的勇氣", "C. 覺得受了輕慢", "D. 想要赦免她", "E.  對她毫無興趣"],
+        answer: "C",
+        explanation: "經文指出國王「自覺受了輕慢」，因此更加憤怒。"
+      },
+      {
+        text: "5. 根據《瑪加伯書下 7:1,20-31》，最幼的兒子對國王的回應是：",
+        options: ["A. 表示妥協", "B. 求情免死", "C. 拒絕命令，堅守法律", "D. 沉默不語", "E. 接受高官厚祿"],
+        answer: "C",
+        explanation: "他說：「我決不聽從國王的命令，我只聽從梅瑟給我們祖宗立定的法律。」。"
+      },
+      {
+        text: "6. 根據《聖詠 17:1,5-6,8,15》，聖詠作者向上主呼號的態度是： ",
+        options: ["A. 虛偽與懷疑", "B. 懇切與誠實", "C. 憤怒與控訴", "D. 沉默與冷漠", "E. 疑惑與逃避"],
+        answer: "B",
+        explanation: "經文說「請傾聽我絕無虛偽的祈禱」，顯示誠懇之心。"
+      },
+      {
+        text: "7. 根據《聖詠 17:1,5-6,8,15》，聖詠作者的腳步如何形容？",
+        options: ["A. 蹣跚不定", "B. 停滯不前", "C. 緊隨上主腳印", "D. 走入歧途", "E. 被敵人追趕"],
+        answer: "C",
+        explanation: "經文說「我的雙腳緊隨了你的腳印」。"
+      },
+      {
+        text: "8. 根據《聖詠 17:1,5-6,8,15》，聖詠作者向天主祈求的保護方式是：",
+        options: ["A. 以盾牌遮蔽", "B. 藏身於翼蔭下", "C. 隱藏於山洞中", "D. 逃入曠野", "E. 躲避於城牆後"],
+        answer: "B",
+        explanation: "經文說「求你讓我在你的翼蔭下藏身」。"
+      },
+      {
+        text: "9. 根據《聖詠 17:1,5-6,8,15》，聖詠作者希望醒來後能：",
+        options: ["A. 逃離敵人", "B. 重獲自由", "C. 欣賞天主慈顏", "D. 得到財富", "E. 見到親人"],
+        answer: "C",
+        explanation: "經文說「願我醒來能盡情欣賞你的慈顏」。"
+      },
+      {
+        text: "10. 根據《聖詠 17:1,5-6,8,15》，聖詠作者的正義使他能：",
+        options: ["A. 得到權力", "B. 擁有財物", "C. 享見天主聖容", "D. 被人尊敬", "E. 逃避審判"],
+        answer: "C",
+        explanation: "經文說「願我因正義能享見你的聖容」。"
+      },
+      {
+        text: "11. 根據《路加福音 19:11-28》，貴人離開的目的為：",
+        options: ["A. 旅行觀光", "B.  避開敵人", "C. 取得王位再回來", "D. 探訪親人", "E. 建設城市"],
+        answer: "C",
+        explanation: "耶穌說：「有一個貴人起身到遠方去，為取得了王位再回來。」。"
+      },
+      {
+        text: "12. 根據《路加福音 19:11-28》，貴人交給僕人的銀幣稱為：",
+        options: ["A. 德納", "B. 塔冷通", "C. 米納", "D. 小錢", "E. 銅錢"],
+        answer: "C",
+        explanation: "經文多次提到「米納」（銀幣）。"
+      },
+      {
+        text: "13. 根據《路加福音 19:11-28》，第一個僕人賺了多少米納？",
+        options: ["A. 五個", "B.  七個", "C. 十個", "D. 三個", "E. 十二個"],
+        answer: "C",
+        explanation: "他說：「你的那個米納賺了十個米納。」。"
+      },
+      {
+        text: "14. 根據《路加福音 19:11-28》，那個把米納藏起來的僕人被稱為：",
+        options: ["A. 忠僕", "B. 善僕", "C. 惡僕", "D. 懶僕", "E.  怕僕"],
+        answer: "C",
+        explanation: "主人說：「惡僕！我就憑你的口供定你的罪。」。"
+      },
+      {
+        text: "15. 根據《路加福音 19:11-28》，耶穌比喻中，那些不願貴人作王的人結局是：",
+        options: ["A. 被放逐", "B. 被赦免", "C. 被押到面前殺掉", "D.  被囚禁", "E. 被驅逐出城"],
+        answer: "C",
+        explanation: "主人說：「你們把他們押到這裏，在我面前殺掉。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
