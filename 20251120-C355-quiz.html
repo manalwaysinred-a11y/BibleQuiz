@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十三周星期四 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十三周星期四 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《瑪加伯書上 2:15-29》，君王派遣官吏到摩丁城的目的為何？",
+        options: ["A. 建造聖殿", "B. 分發金銀", "C.  強迫人民背教", "D. 教導法律", "E. 舉行節日"],
+        answer: "C",
+        explanation: "經文明言君王派來的官吏是為了強迫人民背教，並命令他們祭神。"
+      },
+      {
+        text: "2. 根據《瑪加伯書上 2:15-29》，瑪塔提雅拒絕君王諭令的原因是？",
+        options: ["A. 他不信神", "B. 他想成為君王", "C. 他要遵守祖先的盟約", "D. 他已經逃到曠野", "E. 他不懂法律"],
+        answer: "C",
+        explanation: "瑪塔提雅堅持遵守祖先的盟約，不願背棄法律與教規。"
+      },
+      {
+        text: "3.  根據《瑪加伯書上 2:15-29》，瑪塔提雅在摩丁城殺死了誰？",
+        options: ["A. 君王", "B. 他的兄弟", "C. 一位猶太人和官吏", "D. 一位外邦人", "E. 他的兒子"],
+        answer: "C",
+        explanation: "他殺死了在祭壇上祭神的猶太人及迫令人民獻祭的官吏。"
+      },
+      {
+        text: "4. 根據《瑪加伯書上 2:15-29》，瑪塔提雅的行動被比喻為誰的熱誠？",
+        options: ["A. 撒慕爾", "B. 達味", "C. 丕乃哈斯", "D. 厄里亞", "E.  若瑟"],
+        answer: "C",
+        explanation: "經文指出瑪塔提雅對法律的熱誠如同丕乃哈斯對齊默黎所作的一樣。"
+      },
+      {
+        text: "5. 根據《瑪加伯書上 2:15-29》，瑪塔提雅最後帶著兒子逃往何處？",
+        options: ["A. 耶路撒冷", "B. 曠野", "C. 聖殿", "D. 約旦河", "E. 撒瑪黎雅"],
+        answer: "B",
+        explanation: "他與兒子放棄家產，逃到山中，許多擁護正義的人也逃到曠野居住。"
+      },
+      {
+        text: "6. 根據《聖詠 50:1-2, 5-6, 14-15》，天主由哪裡發出光明？ ",
+        options: ["A. 耶路撒冷", "B. 熙雍", "C. 西乃山", "D. 加里肋亞", "E. 白冷"],
+        answer: "B",
+        explanation: "經文指出天主由美麗絕倫的熙雍發出光明。"
+      },
+      {
+        text: "7. 根據《聖詠 50:1-2, 5-6, 14-15》，天主召集哪些人與祂訂立盟約？",
+        options: ["A. 先知", "B. 君王", "C. 虔敬的人", "D. 外邦人", "E. 司祭"],
+        answer: "C",
+        explanation: "天主召集虔敬的人，就是那些以犧牲與祂訂立盟約的人。"
+      },
+      {
+        text: "8. 根據《聖詠 50:1-2, 5-6, 14-15》，根據聖詠，誰要宣示天主的公正？",
+        options: ["A. 地上的人", "B. 司祭", "C. 天使", "D. 諸天", "E. 熙雍"],
+        answer: "D",
+        explanation: "經文說「諸天要宣示天主的公正」。"
+      },
+      {
+        text: "9. 根據《聖詠 50:1-2, 5-6, 14-15》，在困厄時日，信徒應如何行動？",
+        options: ["A. 隱藏自己", "B. 呼號天主", "C. 逃往曠野", "D. 建造聖殿", "E. 舉行節日"],
+        answer: "B",
+        explanation: "經文教導信徒在困厄時日呼號天主，祂必拯救。"
+      },
+      {
+        text: "10. 根據《聖詠 50:1-2, 5-6, 14-15》，行為正直的人將享有什麼？",
+        options: ["A. 財富", "B. 長壽", "C. 天主的救恩", "D. 聖殿的祝福", "E. 君王的恩賜"],
+        answer: "C",
+        explanation: "詠文開頭即說「行為正直的人必享見天主的救恩」。"
+      },
+      {
+        text: "11. 根據《路加福音 19:41-44》，耶穌臨近耶路撒冷時有何反應？",
+        options: ["A. 高聲讚美", "B.  沉默不語", "C. 為城哀哭", "D. 宣告勝利", "E. 呼召門徒"],
+        answer: "C",
+        explanation: "經文明確指出耶穌望見京城，便為她哀哭。"
+      },
+      {
+        text: "12. 根據《路加福音 19:41-44》，耶穌哀哭的原因是？",
+        options: ["A. 城中無人迎接祂", "B. 城中充滿罪惡", "C. 城未認出平安之事", "D. 城牆倒塌", "E. 門徒離棄祂"],
+        answer: "C",
+        explanation: "耶穌說：「恨不得你知道有關你平安的事，但如今在你眼前是隱藏的。」。"
+      },
+      {
+        text: "13. 根據《路加福音 19:11-28》，第一個僕人賺了多少米納？",
+        options: ["A. 縱火焚城", "B.  築壘包圍", "C. 建造聖殿", "D. 立新君王", "E. 驅逐司祭"],
+        answer: "B",
+        explanation: "耶穌預言仇敵要築起壁壘，四面圍困京城。"
+      },
+      {
+        text: "14. 根據《路加福音 19:41-44》，耶穌說城內將發生何事",
+        options: ["A. 子民將逃亡", "B. 聖殿將重建", "C. 石上不留石", "D. 君王將來臨", "E.  天使將顯現"],
+        answer: "C",
+        explanation: "耶穌說：「在你內決不留一塊石頭在另一塊石頭上。」。"
+      },
+      {
+        text: "15. 根據《路加福音 19:41-44》，耶穌哀哭的根本原因是？",
+        options: ["A. 城未認出天主眷顧的時機", "B. 門徒不忠", "C. 群眾不聽教導", "D.  法利塞人反對祂", "E. 聖殿被褻瀆"],
+        answer: "A",
+        explanation: "耶穌指出：「因為你沒有認出天主眷顧你的時機。」。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
