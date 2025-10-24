@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十三周星期五 獻聖母於聖殿紀念 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十三周星期五 獻聖母於聖殿紀念 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《匝加利亞先知書 2:14-17》，熙雍女子被召喚要如何回應上主的臨在？",
+        options: ["A. 哀哭懺悔", "B. 歡呼喜樂", "C.  靜默祈禱", "D. 逃離聖地", "E. 建造聖殿"],
+        answer: "B",
+        explanation: "經文開頭即說：「熙雍女子，歡呼喜樂吧！」。"
+      },
+      {
+        text: "2. 根據《匝加利亞先知書 2:14-17》，上主說他要住在誰中間？",
+        options: ["A. 外邦人", "B. 司祭", "C. 熙雍女子", "D. 君王", "E. 先知"],
+        answer: "C",
+        explanation: "上主的斷語明言：「我要來住在你中間」，對象即是熙雍女子。"
+      },
+      {
+        text: "3.  根據《匝加利亞先知書 2:14-17》，那些人要歸依上主，成為他的百姓？",
+        options: ["A. 猶太人", "B. 司祭與先知", "C. 君王與領袖", "D. 君王與領袖", "E. 天使"],
+        answer: "D",
+        explanation: "經文指出「有許多民族要歸依上主，要成為他的百姓」。"
+      },
+      {
+        text: "4. 根據《匝加利亞先知書 2:14-17》，上主在聖地內佔據那一地作為自己的產業？",
+        options: ["A. 耶路撒冷", "B. 撒瑪黎雅", "C. 加里肋亞", "D. 猶大", "E.  白冷"],
+        answer: "D",
+        explanation: "經文說「上主必在聖地內佔據猶大，作為自己的產業」。"
+      },
+      {
+        text: "5. 根據《匝加利亞先知書 2:14-17》，為何凡有血肉的在上主面前應肅靜？",
+        options: ["A. 因為他要審判萬民", "B. 因為他已由他的聖所降臨", "C. 因為他要施行懲罰", "D. 因為他要建立聖殿", "E. 因為他要揀選君王"],
+        answer: "B",
+        explanation: "經文末尾指出：「因為他已由他的聖所降臨」。"
+      },
+      {
+        text: "6. 根據《路加福音 1:46-55》，瑪利亞說萬世萬代要如何稱她？ ",
+        options: ["A. 為主的婢女", "B. 為謙卑者", "C. 為有福的人", "D. 為先知", "E. 為母親"],
+        answer: "C",
+        explanation: "瑪利亞說：「今後萬世萬代都要稱我有福」。"
+      },
+      {
+        text: "7. 根據《路加福音 1:46-55》，全能者在瑪利亞身上行了什麼？",
+        options: ["A. 神蹟", "B. 大事", "C. 審判", "D. 懲罰", "E. 教導"],
+        answer: "B",
+        explanation: "經文說：「因全能者在我身上行了大事」。"
+      },
+      {
+        text: "8. 根據《路加福音 1:46-55》，上主的仁慈賜與誰？",
+        options: ["A. 所有民族", "B. 司祭與先知", "C. 敬畏他的人", "D. 富有者", "E. 君王"],
+        answer: "C",
+        explanation: "經文指出：「他的仁慈……賜與敬畏他的人」。"
+      },
+      {
+        text: "9. 根據《路加福音 1:46-55》，上主如何對待權勢者與卑微者？",
+        options: ["A. 賞賜權勢者，懲罰卑微者", "B. 推下權勢者，舉揚卑微者", "C. 忽略權勢者，憐憫卑微者", "D. 驅逐權勢者，召選卑微者", "E. 教導權勢者，祝福卑微者"],
+        answer: "B",
+        explanation: "經文明言：「他從高座上推下權勢者，卻舉揚了卑微貧困的人」。"
+      },
+      {
+        text: "10. 根據《路加福音 1:46-55》，上主曾回憶起自己的仁慈，施恩於誰？",
+        options: ["A. 亞巴郎和他的子孫", "B. 撒慕爾和他的後裔", "C. 達味和他的王朝", "D. 厄里亞和他的門徒", "E. 若瑟和他的兄弟"],
+        answer: "A",
+        explanation: "經文指出：「施恩於亞巴郎和他的子孫，直到永遠」。"
+      },
+      {
+        text: "11. 根據《瑪竇福音 12:46-50》，當耶穌與群眾說話時，誰站在外邊想要同他說話？",
+        options: ["A. 門徒", "B.  法利塞人", "C. 他的母親和兄弟", "D. 群眾", "E. 司祭"],
+        answer: "C",
+        explanation: "經文說：「他的母親和他的兄弟站在外邊，想要同他說話」。"
+      },
+      {
+        text: "12. 根據《瑪竇福音 12:46-50》，耶穌如何回應有人告訴他母親與兄弟在外？",
+        options: ["A. 立刻出去迎接", "B. 沉默不語", "C. 說「誰是我的母親？誰是我的兄弟？」", "D. 命門徒去請進", "E. 呼召群眾祈禱"],
+        answer: "C",
+        explanation: "耶穌回答：「誰是我的母親？誰是我的兄弟？」。"
+      },
+      {
+        text: "13. 根據《瑪竇福音 12:46-50》，耶穌伸手指著誰說「看！我的母親，我的兄弟！」？",
+        options: ["A. 法利塞人", "B.  群眾", "C. 門徒", "D. 司祭", "E. 兄弟"],
+        answer: "C",
+        explanation: "經文說：「遂伸出他的手，指著自己的門徒說：『看！我的母親，我的兄弟！』」。"
+      },
+      {
+        text: "14. 根據《瑪竇福音 12:46-50》，根據耶穌的教導，誰是他的兄弟、姊妹和母親",
+        options: ["A. 猶太人", "B. 司祭與先知", "C. 遵行天父旨意的人", "D. 與他同行者", "E.  受洗者"],
+        answer: "C",
+        explanation: "耶穌說：「不拘誰遵行我在天之父的旨意，他就是我的兄弟、姊妹和母親。」。"
+      },
+      {
+        text: "15. 根據《瑪竇福音 12:46-50》，耶穌的話語顯示出什麼屬靈原則？",
+        options: ["A. 血緣高於信仰", "B. 門徒不如親人", "C. 遵行天主旨意者為真親", "D.  聖殿為唯一居所", "E. 司祭為最高權威"],
+        answer: "C",
+        explanation: "耶穌以遵行天父旨意者為真正的兄弟、姊妹和母親，顯示屬靈親情高於血緣。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
