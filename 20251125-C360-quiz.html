@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十四周星期二 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十四周星期二 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《達尼爾先知書 2:31–45》，達尼爾向拿步高王解釋的夢中，立像的頭是什麼材質？",
+        options: ["A. 銀", "B. 銅", "C.  鐵", "D. 泥", "E. 金"],
+        answer: "E",
+        explanation: "立像的頭是純金的，象徵拿步高王的王權（達 2:32, 38）。"
+      },
+      {
+        text: "2. 根據《達尼爾先知書 2:31–45》，夢中擊碎立像的是什麼？",
+        options: ["A. 火焰", "B. 天使", "C. 石頭", "D. 雷聲", "E. 劍"],
+        answer: "C",
+        explanation: "一塊未經人手開鑿的石頭滾下，擊中立像的腳（達 2:34）。"
+      },
+      {
+        text: "3.  根據《達尼爾先知書 2:31–45》，立像的腳由那兩種材質組成？",
+        options: ["A. 銅與銀", "B. 鐵與泥", "C. 金與鐵", "D. 銀與泥", "E. 鐵與石"],
+        answer: "B",
+        explanation: "腳一部份是鐵，一部份是泥，象徵分裂與不穩定（達 2:33）。"
+      },
+      {
+        text: "4. 根據《達尼爾先知書 2:31–45》，石頭擊碎立像後變成了什麼？",
+        options: ["A. 聖殿", "B. 火柱", "C. 大山", "D. 王座", "E.  城牆"],
+        answer: "C",
+        explanation: "那塊石頭變成了一座大山，佔據了全地（達 2:35）。"
+      },
+      {
+        text: "5. 根據《達尼爾先知書 2:31–45》，第四個國家被形容為堅強如什麼？",
+        options: ["A. 銀", "B. 金", "C. 銅", "D. 鐵", "E. 石"],
+        answer: "D",
+        explanation: "第四個國家堅強如鐵，能粉碎和擊破一切（達 2:40）。"
+      },
+      {
+        text: "6. 根據《達尼爾先知書 2:31–45》，上天的大主將興起什麼樣的國度？ ",
+        options: ["A. 富饒的國度", "B. 永不滅亡的國度", "C. 強盛的王國", "D. 公義的國度", "E. 聖潔的王國"],
+        answer: "B",
+        explanation: "上天的大主必要興起一個永不滅亡的國家（達 2:44）。"
+      },
+      {
+        text: "7. 根據《達尼爾先知書 3:57–61》，誰應當受稱揚和讚頌直到永遠？",
+        options: ["A. 天使", "B. 上主", "C. 君王", "D. 先知", "E. 教會"],
+        answer: "B",
+        explanation: "上主，你當受稱揚和讚頌，直到永遠（達 3:57）。"
+      },
+      {
+        text: "8. 根據《達尼爾先知書 3:57–61》，上主的一切受造物應如何回應？",
+        options: ["A. 敬畏上主", "B. 讚美上主", "C. 侍奉上主", "D. 傳揚上主", "E. 跟隨上主"],
+        answer: "B",
+        explanation: "上主的一切受造物，請讚美上主（達 3:57）。"
+      },
+      {
+        text: "9. 根據《達尼爾先知書 3:57–61》，那一類天上的存在被呼籲讚美上主？",
+        options: ["A. 星辰", "B. 天使", "C. 革魯賓", "D. 聖者", "E. 先知"],
+        answer: "B",
+        explanation: "上主的天使，請讚美上主（達 3:58）。"
+      },
+      {
+        text: "10. 根據《達尼爾先知書 3:57–61》，層層高天應如何對待上主？",
+        options: ["A. 傳述他的作為", "B. 歌頌他的聖名", "C. 讚美上主", "D. 宣告他的王權", "E. 敬拜他的聖殿"],
+        answer: "C",
+        explanation: "層層高天，請讚美上主（達 3:59）。"
+      },
+      {
+        text: "11. 根據《達尼爾先知書 3:57–61》，天上的水被呼籲做什麼？",
+        options: ["A. 傳揚福音", "B. 歌頌聖名", "C. 讚美上主", "D. 滋潤大地", "E. 潔淨萬民"],
+        answer: "C",
+        explanation: "天上的水，請讚美上主（達 3:60）。"
+      },
+      {
+        text: "12. 根據《路加福音 21:5–11》，耶穌預言聖殿將如何？",
+        options: ["A. 被火焚毀", "B. 成為聖山", "C. 沒有一塊石頭留在另一塊石頭上", "D. 被外邦人佔領", "E. 成為默西亞的居所"],
+        answer: "C",
+        explanation: "耶穌說聖殿將被拆毀，沒有一塊石頭留在另一塊石頭上（路 21:6）。"
+      },
+      {
+        text: "13. 根據《路加福音 21:5–11》，耶穌警告門徒不要被誰欺騙？",
+        options: ["A. 法利塞人", "B.  撒殫", "C. 假冒他的名字的人", "D. 外邦君王", "E. 司祭"],
+        answer: "C",
+        explanation: "耶穌說將有許多人假冒他的名字，門徒不可跟隨他們（路 21:8）。"
+      },
+      {
+        text: "14. 根據《路加福音 21:5–11》，耶穌說聽見戰爭與叛亂時應如何？",
+        options: ["A. 逃離城外", "B. 聚集祈禱", "C. 不要驚惶", "D. 宣告默西亞來臨", "E.  建造聖殿 "],
+        answer: "C",
+        explanation: "耶穌說不要驚惶，因為這些事必須先發生（路 21:9）。"
+      },
+      {
+        text: "15. 根據《路加福音 21:5–11》，耶穌預言末世將出現那些現象？",
+        options: ["A. 天使顯現與聖火降臨", "B. 地震、饑荒、瘟疫與天上凶兆", "C. 聖殿重建與默西亞登基", "D.  星辰墜落與海水倒流", "E. 聖者復活與萬民悔改"],
+        answer: "B",
+        explanation: "耶穌說將有大地震、饑荒、瘟疫與天上可怖的凶兆（路 21:11）。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
