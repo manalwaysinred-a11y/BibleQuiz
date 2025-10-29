@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>丙年 常年期第三十四周星期二 彌撒讀經小測試</title>
+  <style>
+    body { font-family: "微軟正黑體", sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { color: #2c3e50; }
+    #timer { font-size: 20px; color: #e74c3c; margin-bottom: 20px; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin: 5px 0; }
+    #result { margin-top: 30px; font-weight: bold; color: #27ae60; }
+    .explanation { font-size: 14px; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>📖 丙年 常年期第三十四周星期二 彌撒讀經小測試</h1>
+  <div id="timer">⏱️ 剩餘時間：15 秒</div>
+  <div id="questionBox"></div>
+  <div id="result"></div>
+
+  <!-- 音效 -->
+  <audio id="correctSound" src="correct.mp3"></audio>
+  <audio id="wrongSound" src="wrong.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        text: "1. 根據《達尼爾先知書 5:1-6,13-14,16-17,23-28》，貝耳沙匝王在盛筵中使用了哪些器皿？",
+        options: ["A. 波斯王室的器皿", "B. 拿步高王的私人器皿", "C.  從耶路撒冷聖殿劫掠的金銀器皿", "D. 達尼爾的祭器", "E. 天使送來的聖器"],
+        answer: "C",
+        explanation: "貝耳沙匝王命人取出他父親拿步高從耶路撒冷聖殿中劫掠的金銀器皿，用來宴飲【達 5:2】。"
+      },
+      {
+        text: "2. 根據《達尼爾先知書 5:1-6,13-14,16-17,23-28》，王宮牆上出現的神秘文字是由什麼寫成的？",
+        options: ["A. 火焰", "B. 天主的聲音", "C. 一隻人的手指", "D. 天使的羽毛", "E. 達尼爾的筆跡"],
+        answer: "C",
+        explanation: "一隻人的手指在燈台後面王宮的粉牆上寫字，君王看見了那寫字的手掌【達 5:5】。"
+      },
+      {
+        text: "3.  根據《達尼爾先知書 5:1-6,13-14,16-17,23-28》，達尼爾如何回應君王的賞賜？",
+        options: ["A. 欣然接受", "B. 要求加倍", "C. 拒絕賞賜", "D. 轉送給妻妾", "E. 要求成為宰相"],
+        answer: "C",
+        explanation: "達尼爾說：「你的禮物仍歸你所有，你的酬報可賞給他人」【達 5:17】。"
+      },
+      {
+        text: "4. 根據《達尼爾先知書 5:1-6,13-14,16-17,23-28》，「默乃」的含義是什麼？",
+        options: ["A. 你的國將興盛", "B. 天主數算了你的國祚，使它完結", "C. 你被天主祝福", "D. 你將成為先知", "E.  你的子孫將繼承王位"],
+        answer: "B",
+        explanation: "「默乃」：天主數算了你的國祚，使它完結【達 5:26】。"
+      },
+      {
+        text: "5. 根據《達尼爾先知書 5:1-6,13-14,16-17,23-28》，貝耳沙匝王讚美了哪些神像？",
+        options: ["A. 天主的像", "B. 天使的像", "C. 金、銀、銅、鐵、木、石製的神像", "D. 拿步高的像", "E. 達尼爾的像"],
+        answer: "C",
+        explanation: "他讚美那些不能看、不能聽、不能知的金、銀、銅、鐵、木、石製的神像【達 5:23】。"
+      },
+      {
+        text: "6. 根據《達尼爾先知書 3:62-67》，誰應當受稱揚和讚頌直到永遠？ ",
+        options: ["A. 達尼爾", "B. 拿步高", "C. 上主", "D. 貝耳沙匝", "E. 天使"],
+        answer: "C",
+        explanation: "「上主，你當受稱揚和讚頌，直到永遠」【達 3:62】。"
+      },
+      {
+        text: "7. 根據《達尼爾先知書 3:62-67》，那些天體被召喚來讚美上主？",
+        options: ["A. 雲與霧", "B. 太陽與月亮", "C. 太陽與月亮", "D. 星座與行星", "E. 雷與閃電"],
+        answer: "B",
+        explanation: "「太陽月亮，請讚美上主」【達 3:63】。"
+      },
+      {
+        text: "8. 根據《達尼爾先知書 3:62-67》，那些自然現象被召喚來讚美上主？",
+        options: ["A. 雪與冰", "B. 雨與露", "C. 雷與火", "D. 地震與風暴", "E. 海浪與潮汐"],
+        answer: "B",
+        explanation: "「雨和露，請讚美上主」【達 3:64】。"
+      },
+      {
+        text: "9. 根據《達尼爾先知書 3:62-67》，根據答唱詠，那些氣候元素應讚美上主？",
+        options: ["A. 風與雲", "B. 火與熱", "C. 寒與暑", "D. A與B", "E. B與C"],
+        answer: "E",
+        explanation: "「火與熱，請讚美上主」「寒和暑，請讚美上主」【達 3:65-67】。"
+      },
+      {
+        text: "10. 根據《達尼爾先知書 3:62-67》，那些天上的存在被召喚來讚美上主？",
+        options: ["A. 天使與聖人", "B. 星辰", "C. 雲霧", "D. 天使長", "E. 天主之靈"],
+        answer: "B",
+        explanation: "「天上的星辰，請讚美上主」【達 3:64】。"
+      },
+      {
+        text: "11. 根據《路加福音 21:12-19》，耶穌說門徒將被押送到那裡？",
+        options: ["A. 聖殿與市集", "B. 君王及總督之前", "C. 法利塞人會堂", "D. 羅馬法庭", "E. 撒瑪黎雅村落"],
+        answer: "B",
+        explanation: "「且押送到君王及總督之前，為給你們一個作見證的機會」【路 21:12】。"
+      },
+      {
+        text: "12. 根據《路加福音 21:12-19》，耶穌如何安慰門徒面對迫害？",
+        options: ["A. 賜予財富", "B. 賜予軍隊保護", "C. 賜予口才和明智", "D. 賜予隱藏之地", "E. 賜予天使同行"],
+        answer: "C",
+        explanation: "「我要給你們口才和明智，是你們的一切仇敵所不能抵抗及辯駁的」【路 21:15】。"
+      },
+      {
+        text: "13. 根據《路加福音 21:12-19》，那些人可能會出賣門徒？",
+        options: ["A. 外邦人", "B.  法利塞人", "C. 父母、兄弟、親戚及朋友", "D. 羅馬士兵", "E. 稅吏"],
+        answer: "C",
+        explanation: "「你們要被父母、兄弟、親戚及朋友出賣」【路 21:16】。"
+      },
+      {
+        text: "14. 根據《路加福音 21:12-19》，耶穌說門徒將因什麼受憎恨？",
+        options: ["A. 傳福音", "B. 行奇蹟", "C. 為了他的名字", "D. 不守安息日", "E.  拒絕納稅 "],
+        answer: "C",
+        explanation: "「你們要為了我的名字受眾人的憎恨」【路 21:17】。"
+      },
+      {
+        text: "15. 根據《路加福音 21:5–11》，耶穌預言末世將出現那些現象？",
+        options: ["A. 天使顯現與聖火降臨", "B. 地震、饑荒、瘟疫與天上凶兆", "C. 聖殿重建與默西亞登基", "D.  星辰墜落與海水倒流", "E. 聖者復活與萬民悔改"],
+        answer: "B",
+        explanation: "耶穌說將有大地震、饑荒、瘟疫與天上可怖的凶兆（路 21:11）。"
+      }    ];
+
+    let current = 0;
+    let score = 0;
+    let timer;
+    const questionBox = document.getElementById("questionBox");
+    const timerDisplay = document.getElementById("timer");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        questionBox.innerHTML = "<h2>🎉 完成答題！</h2><p>你的總分是：" + score + " / " + questions.length + "</p>";
+        timerDisplay.style.display = "none";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${q.text}</strong><div class="options">`;
+      q.options.forEach((opt, i) => {
+        html += `<label><input type="radio" name="option" value="${opt.charAt(0)}"> ${opt}</label>`;
+      });
+      html += `</div><button onclick="submitAnswer()">提交答案</button><div class="explanation" id="explain${current}"></div></div>`;
+      questionBox.innerHTML = html;
+      startTimer();
+    }
+
+    function startTimer() {
+      let time = 15;
+      timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        time--;
+        timerDisplay.textContent = `⏱️ 剩餘時間：${time} 秒`;
+        if (time <= 0) {
+          clearInterval(timer);
+          submitAnswer(true);
+        }
+      }, 1000);
+    }
+
+    function submitAnswer(auto = false) {
+      clearInterval(timer);
+      const selected = document.querySelector('input[name="option"]:checked');
+      const correct = questions[current].answer;
+      const explanation = questions[current].explanation;
+      const explainBox = document.getElementById("explain" + current);
+
+      if (!selected && !auto) {
+        alert("請選擇一個答案！");
+        return;
+      }
+
+      const userAnswer = selected ? selected.value : "未作答❌ 答錯了。";
+      if (userAnswer === correct) {
+        score++;
+        document.getElementById("correctSound").play();
+        explainBox.innerHTML = `✅ 答對了！<br>${explanation}`;
+      } else {
+        document.getElementById("wrongSound").play();
+        explainBox.innerHTML = `正確答案是 ${correct}<br>${explanation}`;
+      }
+
+      setTimeout(() => {
+        current++;
+        loadQuestion();
+      }, 3000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
